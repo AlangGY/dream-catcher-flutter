@@ -1,5 +1,5 @@
-import 'package:dream_catcher/ui/ui_export.dart';
-import 'package:dream_catcher/widgets/common_bottom_nav_bar.dart';
+import 'package:dream_catcher/shared/common-ui/ui_export.dart';
+import 'package:dream_catcher/shared/widgets/common_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class DreamAlarmScreen extends StatefulWidget {

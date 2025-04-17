@@ -1,6 +1,6 @@
 import 'dart:math'; // sin 함수 사용을 위한 임포트
 
-import 'package:dream_catcher/ui/ui_export.dart';
+import 'package:dream_catcher/shared/common-ui/ui_export.dart';
 import 'package:flutter/material.dart';
 
 class DreamInterviewScreen extends StatefulWidget {

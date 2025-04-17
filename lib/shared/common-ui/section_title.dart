@@ -1,4 +1,4 @@
-import 'package:dream_catcher/ui/text_styles.dart';
+import 'package:dream_catcher/shared/common-ui/text_styles.dart';
 import 'package:flutter/material.dart';
 
 /// 화면 내 섹션의 제목과 부가 액션을 표시하는 공통 위젯

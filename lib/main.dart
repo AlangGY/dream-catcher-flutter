@@ -2,7 +2,7 @@ import 'package:dream_catcher/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'widgets/navigation_wrapper.dart';
+import 'shared/widgets/navigation_wrapper.dart';
 
 // 전역 navigator key 정의
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

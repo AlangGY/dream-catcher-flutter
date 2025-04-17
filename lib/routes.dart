@@ -1,13 +1,13 @@
-import 'package:dream_catcher/screen/analysis/dream_analysis_screen.dart';
-import 'package:dream_catcher/screen/auth/register_screen.dart';
-import 'package:dream_catcher/screen/dream/dream_alarm_screen.dart';
-import 'package:dream_catcher/screen/dream/dream_detail_screen.dart';
-import 'package:dream_catcher/screen/dream/dream_interview_screen.dart';
-import 'package:dream_catcher/screen/dream/dream_list_screen.dart';
-import 'package:dream_catcher/screen/dream/dream_realtime_chat_screen.dart';
-import 'package:dream_catcher/screen/home/home_screen.dart';
-import 'package:dream_catcher/screen/landing/landing_screen.dart';
-import 'package:dream_catcher/screen/profile/profile_screen.dart';
+import 'package:dream_catcher/features/analysis/presentation/screens/dream_analysis_screen.dart';
+import 'package:dream_catcher/features/auth/presentation/screens/register_screen.dart';
+import 'package:dream_catcher/features/dream/presentation/screens/dream_alarm_screen.dart';
+import 'package:dream_catcher/features/dream/presentation/screens/dream_detail_screen.dart';
+import 'package:dream_catcher/features/dream/presentation/screens/dream_interview_screen.dart';
+import 'package:dream_catcher/features/dream/presentation/screens/dream_list_screen.dart';
+import 'package:dream_catcher/features/dream/presentation/screens/dream_realtime_chat_screen.dart';
+import 'package:dream_catcher/features/home/presentation/screens/home_screen.dart';
+import 'package:dream_catcher/features/landing/presentation/screens/landing_screen.dart';
+import 'package:dream_catcher/features/profile/presentation/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 // 앱의 모든 라우트를 정의하는 클래스

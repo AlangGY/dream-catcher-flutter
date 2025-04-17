@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../main.dart'; // navigatorKey 임포트
+import '../../main.dart'; // navigatorKey 임포트
 
 class DevNavigation extends StatelessWidget {
   final BuildContext? navigatorContext;

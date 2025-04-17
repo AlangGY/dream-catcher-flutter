@@ -1,4 +1,4 @@
-import 'package:dream_catcher/ui/text_styles.dart';
+import 'package:dream_catcher/shared/common-ui/text_styles.dart';
 import 'package:flutter/material.dart';
 
 /// 데이터가 없는 상태를 표시하는 공통 위젯

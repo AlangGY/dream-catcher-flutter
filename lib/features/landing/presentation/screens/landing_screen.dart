@@ -1,5 +1,5 @@
-import 'package:dream_catcher/widgets/app_logo.dart';
-import 'package:dream_catcher/widgets/kakao_login_button.dart';
+import 'package:dream_catcher/shared/widgets/app_logo.dart';
+import 'package:dream_catcher/shared/widgets/kakao_login_button.dart';
 import 'package:flutter/material.dart';
 
 class LandingScreen extends StatefulWidget {
