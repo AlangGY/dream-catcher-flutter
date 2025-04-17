@@ -1,0 +1,50 @@
+name: dream_catcher
+description: "A new Flutter project."
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_svg: ^2.0.17
+  google_fonts: ^6.0.0
+  kakao_flutter_sdk: ^1.9.7+3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/kakao_login/ko/
+    - assets/kakao_login/
+
+  fonts:
+    - family: PretendardStd
+      fonts:
+        - asset: assets/fonts/PretendardStd-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/PretendardStd-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/PretendardStd-Light.ttf
+          weight: 300
+        - asset: assets/fonts/PretendardStd-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/PretendardStd-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/PretendardStd-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/PretendardStd-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/PretendardStd-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/PretendardStd-Black.ttf
+          weight: 900
+        - asset: assets/fonts/PretendardStdVariable.ttf
+          style: normal
