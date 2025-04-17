@@ -1,5 +1,6 @@
 import 'dart:math'; // sin 함수 사용을 위한 임포트
 
+import 'package:dream_catcher/ui/ui_export.dart';
 import 'package:flutter/material.dart';
 
 class DreamInterviewScreen extends StatefulWidget {
@@ -112,24 +113,12 @@ class _DreamInterviewScreenState extends State<DreamInterviewScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF2F2FF),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF6666CC)),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          'AI 꿈 인터뷰',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF4D4D99),
-          ),
-        ),
+      appBar: CommonAppBar(
+        title: 'AI 꿈 인터뷰',
         actions: [
           IconButton(
-            icon: const Icon(Icons.help_outline, color: Color(0xFF6666CC)),
+            icon:
+                Icon(Icons.help_outline, color: Theme.of(context).primaryColor),
             onPressed: () {
               // 도움말 표시
               _showHelpDialog();
@@ -141,9 +130,9 @@ class _DreamInterviewScreenState extends State<DreamInterviewScreen>
         children: [
           Expanded(
             child: _isInitializing
-                ? const Center(
+                ? Center(
                     child: CircularProgressIndicator(
-                      color: Color(0xFF6666CC),
+                      color: Theme.of(context).primaryColor,
                     ),
                   )
                 : _buildChatList(),
@@ -178,8 +167,8 @@ class _DreamInterviewScreenState extends State<DreamInterviewScreen>
           Container(
             width: 40,
             height: 40,
-            decoration: const BoxDecoration(
-              color: Color(0xFF6666CC),
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
               shape: BoxShape.circle,
             ),
             child: const Icon(
@@ -192,13 +181,10 @@ class _DreamInterviewScreenState extends State<DreamInterviewScreen>
           AnimatedBuilder(
             animation: _animationController,
             builder: (context, child) {
-              return Container(
+              return CommonCard(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                ),
+                borderRadius: 16,
                 child: Row(
                   children: [
                     _buildDot(0),
@@ -222,8 +208,8 @@ class _DreamInterviewScreenState extends State<DreamInterviewScreen>
     return Container(
       width: size,
       height: size,
-      decoration: const BoxDecoration(
-        color: Color(0xFF6666CC),
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
         shape: BoxShape.circle,
       ),
     );
@@ -254,7 +240,7 @@ class _DreamInterviewScreenState extends State<DreamInterviewScreen>
               controller: _textController,
               decoration: InputDecoration(
                 hintText: '메시지 입력...',
-                hintStyle: const TextStyle(color: Color(0xFF8080B2)),
+                hintStyle: AppTextStyles.caption,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(24),
                   borderSide: BorderSide.none,
@@ -271,14 +257,14 @@ class _DreamInterviewScreenState extends State<DreamInterviewScreen>
           const SizedBox(width: 8),
           // 텍스트 전송 버튼
           IconButton(
-            icon: const Icon(Icons.send, color: Color(0xFF6666CC)),
+            icon: Icon(Icons.send, color: Theme.of(context).primaryColor),
             onPressed: () => _handleSubmitted(_textController.text),
           ),
           // 음성 녹음 버튼
           FloatingActionButton(
             mini: true,
             backgroundColor:
-                _isRecording ? Colors.red : const Color(0xFF6666CC),
+                _isRecording ? Colors.red : Theme.of(context).primaryColor,
             elevation: 2,
             onPressed: _toggleRecording,
             child: Icon(
@@ -296,36 +282,41 @@ class _DreamInterviewScreenState extends State<DreamInterviewScreen>
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text(
+          title: Text(
             'AI 꿈 인터뷰 도움말',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF4D4D99),
-            ),
+            style: AppTextStyles.heading2(context),
           ),
-          content: const Column(
+          content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('1. 마이크 버튼을 눌러 음성으로 꿈에 대해 이야기할 수 있습니다.'),
-              SizedBox(height: 8),
-              Text('2. 텍스트로 직접 입력하여 대화할 수도 있습니다.'),
-              SizedBox(height: 8),
-              Text('3. AI가 질문하는 내용에 따라 자유롭게 대답해주세요.'),
-              SizedBox(height: 8),
-              Text('4. 인터뷰가 끝나면 꿈 기록이 자동으로 저장됩니다.'),
+              Text(
+                '1. 마이크 버튼을 눌러 음성으로 꿈에 대해 이야기할 수 있습니다.',
+                style: AppTextStyles.body,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '2. 텍스트로 직접 입력하여 대화할 수도 있습니다.',
+                style: AppTextStyles.body,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '3. AI가 질문하는 내용에 따라 자유롭게 대답해주세요.',
+                style: AppTextStyles.body,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '4. 인터뷰가 끝나면 꿈 기록이 자동으로 저장됩니다.',
+                style: AppTextStyles.body,
+              ),
             ],
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text(
+              child: Text(
                 '확인',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xFF6666CC),
-                ),
+                style: AppTextStyles.bodyEmphasis(context),
               ),
             ),
           ],
@@ -358,8 +349,8 @@ class ChatMessage extends StatelessWidget {
             Container(
               width: 40,
               height: 40,
-              decoration: const BoxDecoration(
-                color: Color(0xFF6666CC),
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
                 shape: BoxShape.circle,
               ),
               child: const Icon(
@@ -371,27 +362,17 @@ class ChatMessage extends StatelessWidget {
             const SizedBox(width: 8),
           ],
           Flexible(
-            child: Container(
+            child: CommonCard(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-              decoration: BoxDecoration(
-                color: isUserMessage ? const Color(0xFFE1E1F9) : Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0x0F000000),
-                    blurRadius: 2,
-                    offset: Offset(0, isUserMessage ? 1 : 2),
-                  ),
-                ],
-              ),
+              backgroundColor:
+                  isUserMessage ? const Color(0xFFE1E1F9) : Colors.white,
+              borderRadius: 16,
               child: Text(
                 text,
-                style: TextStyle(
-                  color: isUserMessage
-                      ? const Color(0xFF4D4D99)
-                      : const Color(0xFF333333),
-                ),
+                style: isUserMessage
+                    ? AppTextStyles.bodyEmphasis(context)
+                    : AppTextStyles.body,
               ),
             ),
           ),
@@ -400,13 +381,13 @@ class ChatMessage extends StatelessWidget {
             Container(
               width: 40,
               height: 40,
-              decoration: const BoxDecoration(
-                color: Color(0xFFE1E1F9),
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor.withOpacity(0.2),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.person,
-                color: Color(0xFF6666CC),
+                color: Theme.of(context).primaryColor,
                 size: 24,
               ),
             ),

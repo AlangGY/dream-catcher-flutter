@@ -32,6 +32,13 @@ class MyApp extends StatelessWidget {
           primary: const Color(0xFF6666CC),
         ),
         fontFamily: 'PretendardStd',
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          titleTextStyle: TextStyle(
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
         useMaterial3: true,
       ),
       builder: (context, child) {

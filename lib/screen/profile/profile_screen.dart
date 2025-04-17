@@ -1,3 +1,4 @@
+import 'package:dream_catcher/ui/ui_export.dart';
 import 'package:dream_catcher/widgets/common_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -55,20 +56,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF2F2FF),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          '프로필',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF4D4D99),
-          ),
-        ),
+      appBar: CommonAppBar(
+        title: '프로필',
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: const Icon(Icons.edit_outlined, color: Color(0xFF6666CC)),
+            icon: Icon(Icons.edit_outlined,
+                color: Theme.of(context).primaryColor),
             onPressed: () {
               // 프로필 편집 화면으로 이동
               // Navigator.pushNamed(context, '/edit_profile');
@@ -95,19 +89,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildProfileHeader() {
-    return Container(
-      width: double.infinity,
+    return CommonCard(
       padding: const EdgeInsets.all(24),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x0F000000),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
+      margin: EdgeInsets.zero,
+      width: double.infinity,
+      borderRadius: 0,
       child: Column(
         children: [
           Container(
@@ -117,7 +103,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               shape: BoxShape.circle,
               color: const Color(0xFFE1E1F9),
               border: Border.all(
-                color: const Color(0xFF6666CC),
+                color: Theme.of(context).primaryColor,
                 width: 3,
               ),
             ),
@@ -125,27 +111,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
           const SizedBox(height: 16),
           Text(
             _userData['name'],
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF4D4D99),
-            ),
+            style: AppTextStyles.heading1(context),
           ),
           const SizedBox(height: 4),
           Text(
             _userData['email'],
-            style: const TextStyle(
-              fontSize: 16,
-              color: Color(0xFF8080B2),
-            ),
+            style: AppTextStyles.caption,
           ),
           const SizedBox(height: 8),
           Text(
             '가입일: ${_userData['joinDate']}',
-            style: const TextStyle(
-              fontSize: 14,
-              color: Color(0xFF8080B2),
-            ),
+            style: AppTextStyles.captionSmall,
           ),
         ],
       ),
@@ -153,33 +129,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildStatsCard() {
-    return Container(
-      width: double.infinity,
+    return CommonCard(
       margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x0F000000),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            '나의 통계',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF4D4D99),
-            ),
+          SectionTitle(
+            title: '나의 통계',
+            padding: const EdgeInsets.only(bottom: 16),
           ),
-          const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -213,33 +171,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Icon(
           icon,
           size: 28,
-          color: const Color(0xFF6666CC),
+          color: Theme.of(context).primaryColor,
         ),
         const SizedBox(height: 8),
         Text(
           value,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF4D4D99),
-          ),
+          style: AppTextStyles.heading3(context),
         ),
         const SizedBox(height: 4),
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Color(0xFF8080B2),
-          ),
+          style: AppTextStyles.caption,
         ),
         if (subtitle != null) ...[
           const SizedBox(height: 2),
           Text(
             subtitle,
-            style: const TextStyle(
-              fontSize: 12,
-              color: Color(0xFF8080B2),
-            ),
+            style: AppTextStyles.captionSmall,
           ),
         ],
       ],
@@ -247,32 +195,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildSettingsSection() {
-    return Container(
-      width: double.infinity,
+    return CommonCard(
       margin: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x0F000000),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
+      padding: const EdgeInsets.all(0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.all(16),
+          Padding(
+            padding: const EdgeInsets.all(16),
             child: Text(
               '설정',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF4D4D99),
-              ),
+              style: AppTextStyles.heading2(context),
             ),
           ),
           const Divider(height: 1),
@@ -316,19 +249,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return ListTile(
       leading: Icon(
         icon,
-        color: const Color(0xFF6666CC),
+        color: Theme.of(context).primaryColor,
       ),
       title: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 16,
-          color: Color(0xFF4D4D99),
+          color: Theme.of(context).primaryColor.withOpacity(0.8),
         ),
       ),
       trailing: Switch(
         value: value,
         onChanged: onChanged,
-        activeColor: const Color(0xFF6666CC),
+        activeColor: Theme.of(context).primaryColor,
       ),
     );
   }
@@ -337,13 +270,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return ListTile(
       leading: Icon(
         icon,
-        color: const Color(0xFF6666CC),
+        color: Theme.of(context).primaryColor,
       ),
       title: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 16,
-          color: Color(0xFF4D4D99),
+          color: Theme.of(context).primaryColor.withOpacity(0.8),
         ),
       ),
       trailing: const Icon(

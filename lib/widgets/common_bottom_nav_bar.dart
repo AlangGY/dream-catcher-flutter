@@ -26,8 +26,8 @@ class CommonBottomNavBar extends StatelessWidget {
       child: BottomNavigationBar(
         currentIndex: currentIndex,
         backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFF6666CC),
-        unselectedItemColor: const Color(0xFF8080B2),
+        selectedItemColor: Theme.of(context).primaryColor,
+        unselectedItemColor: Theme.of(context).primaryColor.withOpacity(0.8),
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: true,
         showUnselectedLabels: true,

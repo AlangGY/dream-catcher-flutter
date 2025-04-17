@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:dream_catcher/ui/ui_export.dart';
 import 'package:flutter/material.dart';
 
 class DreamRealtimeChatScreen extends StatefulWidget {
@@ -58,20 +59,19 @@ class _DreamRealtimeChatScreenState extends State<DreamRealtimeChatScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+      appBar: CommonAppBar(
+        title: '',
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: const Icon(Icons.file_download_outlined,
-                color: Color(0xFF6666CC)),
+            icon: Icon(Icons.file_download_outlined,
+                color: Theme.of(context).primaryColor),
             onPressed: () {
               // 저장 기능
             },
           ),
           IconButton(
-            icon: const Icon(Icons.settings, color: Color(0xFF6666CC)),
+            icon: Icon(Icons.settings, color: Theme.of(context).primaryColor),
             onPressed: () {
               // 설정 기능
             },
@@ -130,7 +130,6 @@ class _DreamRealtimeChatScreenState extends State<DreamRealtimeChatScreen>
                       );
                     },
                   ),
-                  const SizedBox(height: 40),
                   // 음성 인식 텍스트
                 ],
               ),
@@ -150,14 +149,15 @@ class _DreamRealtimeChatScreenState extends State<DreamRealtimeChatScreen>
                     width: 70,
                     height: 70,
                     decoration: BoxDecoration(
-                      color:
-                          _isListening ? Colors.red : const Color(0xFF6666CC),
+                      color: _isListening
+                          ? Colors.red
+                          : Theme.of(context).primaryColor,
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
                           color: (_isListening
                                   ? Colors.red
-                                  : const Color(0xFF6666CC))
+                                  : Theme.of(context).primaryColor)
                               .withOpacity(0.3),
                           blurRadius: 10,
                           spreadRadius: 2,
@@ -181,7 +181,8 @@ class _DreamRealtimeChatScreenState extends State<DreamRealtimeChatScreen>
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
-                    icon: const Icon(Icons.close, color: Color(0xFF8080B2)),
+                    icon: Icon(Icons.close,
+                        color: Theme.of(context).primaryColor.withOpacity(0.5)),
                     onPressed: () {
                       Navigator.pop(context);
                     },

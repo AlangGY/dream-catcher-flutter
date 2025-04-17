@@ -56,9 +56,9 @@ class FeatureItem extends StatelessWidget {
         const SizedBox(width: 10),
         Text(
           text,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 16,
-            color: Color(0xFF4D4D99), // 텍스트 색상 #4D4D99
+            color: Theme.of(context).primaryColor.withOpacity(0.8),
           ),
         ),
       ],

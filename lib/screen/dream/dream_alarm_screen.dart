@@ -1,3 +1,4 @@
+import 'package:dream_catcher/ui/ui_export.dart';
 import 'package:dream_catcher/widgets/common_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -31,21 +32,8 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF2F2FF),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF6666CC)),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          '꿈 알람 설정',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF4D4D99),
-          ),
-        ),
+      appBar: CommonAppBar(
+        title: '꿈 알람 설정',
         actions: [
           IconButton(
             icon: const Icon(Icons.info_outline, color: Color(0xFF6666CC)),
@@ -68,35 +56,13 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
   }
 
   Widget _buildEmptyState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.alarm_off,
-            size: 70,
-            color: const Color(0xFF6666CC).withOpacity(0.5),
-          ),
-          const SizedBox(height: 24),
-          const Text(
-            '설정된 알람이 없습니다',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF4D4D99),
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            '+ 버튼을 눌러 꿈 기록을 위한 알람을 추가하세요',
-            style: TextStyle(
-              fontSize: 16,
-              color: Color(0xFF8080B2),
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
+    return EmptyStateWidget(
+      message: '설정된 알람이 없습니다\n+ 버튼을 눌러 꿈 기록을 위한 알람을 추가하세요',
+      icon: Icons.alarm_off,
+      actionLabel: '알람 추가하기',
+      onAction: () {
+        _showAddAlarmDialog();
+      },
     );
   }
 
@@ -138,7 +104,7 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('알람이 삭제되었습니다'),
-            backgroundColor: const Color(0xFF6666CC),
+            backgroundColor: Theme.of(context).primaryColor,
             action: SnackBarAction(
               label: '실행 취소',
               textColor: Colors.white,
@@ -155,19 +121,8 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
         onTap: () {
           _showEditAlarmDialog(alarm);
         },
-        child: Container(
+        child: CommonCard(
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: const Color(0x0F000000),
-                blurRadius: 4,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -191,10 +146,10 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
                         alarm.isEnabled = value;
                       });
                     },
-                    activeColor: const Color(0xFF6666CC),
-                    trackColor: MaterialStateProperty.resolveWith<Color>(
-                      (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.selected)) {
+                    activeColor: Theme.of(context).primaryColor,
+                    trackColor: WidgetStateProperty.resolveWith<Color>(
+                      (Set<WidgetState> states) {
+                        if (states.contains(WidgetState.selected)) {
                           return const Color(0xFFE1E1F9);
                         }
                         return const Color(0xFFE0E0E0);
@@ -206,13 +161,9 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
               const SizedBox(height: 4),
               Text(
                 alarm.label,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: alarm.isEnabled
-                      ? const Color(0xFF4D4D99)
-                      : const Color(0xFF8080B2),
-                ),
+                style: alarm.isEnabled
+                    ? AppTextStyles.heading3(context)
+                    : AppTextStyles.caption,
               ),
               const SizedBox(height: 8),
               Row(
@@ -220,12 +171,12 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
                 children: [
                   Text(
                     repeatText,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: alarm.isEnabled
-                          ? const Color(0xFF8080B2)
-                          : const Color(0xFFB2B2E5),
-                    ),
+                    style: alarm.isEnabled
+                        ? AppTextStyles.caption
+                        : const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xFFB2B2E5),
+                          ),
                   ),
                   Row(
                     children: [
@@ -233,8 +184,8 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
                         Icons.nightlight_round,
                         size: 16,
                         color: alarm.isEnabled
-                            ? const Color(0xFF6666CC)
-                            : const Color(0xFFB2B2E5),
+                            ? Theme.of(context).primaryColor
+                            : Theme.of(context).primaryColor.withOpacity(0.5),
                       ),
                       const SizedBox(width: 4),
                       Text(
@@ -242,8 +193,8 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
                         style: TextStyle(
                           fontSize: 14,
                           color: alarm.isEnabled
-                              ? const Color(0xFF6666CC)
-                              : const Color(0xFFB2B2E5),
+                              ? Theme.of(context).primaryColor
+                              : Theme.of(context).primaryColor.withOpacity(0.5),
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -321,17 +272,16 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           '새 알람 추가',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF4D4D99),
-                          ),
+                          style: AppTextStyles.heading2(context),
                         ),
                         IconButton(
-                          icon:
-                              const Icon(Icons.close, color: Color(0xFF8080B2)),
+                          icon: Icon(
+                            Icons.close,
+                            color:
+                                Theme.of(context).primaryColor.withOpacity(0.5),
+                          ),
                           onPressed: () {
                             Navigator.pop(context);
                           },
@@ -388,7 +338,7 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF6666CC),
+                          backgroundColor: Theme.of(context).primaryColor,
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -447,17 +397,13 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           '알람 편집',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF4D4D99),
-                          ),
+                          style: AppTextStyles.heading2(context),
                         ),
                         IconButton(
                           icon:
-                              const Icon(Icons.close, color: Color(0xFF8080B2)),
+                              Icon(Icons.close, color: const Color(0xFF8080B2)),
                           onPressed: () {
                             Navigator.pop(context);
                           },
@@ -532,7 +478,7 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
                               Navigator.pop(context);
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF6666CC),
+                              backgroundColor: Theme.of(context).primaryColor,
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -569,13 +515,9 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           '시간',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF4D4D99),
-          ),
+          style: AppTextStyles.heading3(context),
         ),
         const SizedBox(height: 12),
         InkWell(
@@ -610,10 +552,7 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
               children: [
                 Text(
                   _formatTime(initialTime),
-                  style: const TextStyle(
-                    fontSize: 18,
-                    color: Color(0xFF4D4D99),
-                  ),
+                  style: AppTextStyles.body,
                 ),
                 const Icon(
                   Icons.access_time,
@@ -634,20 +573,16 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           '레이블',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF4D4D99),
-          ),
+          style: AppTextStyles.heading3(context),
         ),
         const SizedBox(height: 12),
         TextField(
           controller: controller,
           decoration: InputDecoration(
             hintText: '알람 이름을 입력하세요',
-            hintStyle: const TextStyle(color: Color(0xFF8080B2)),
+            hintStyle: AppTextStyles.caption,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: Color(0xFFB2B2E5)),
@@ -658,9 +593,10 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Color(0xFF6666CC)),
+              borderSide: BorderSide(color: Theme.of(context).primaryColor),
             ),
-            prefixIcon: const Icon(Icons.label, color: Color(0xFF6666CC)),
+            prefixIcon:
+                Icon(Icons.label, color: Theme.of(context).primaryColor),
           ),
           onChanged: (value) {
             onLabelChanged(value);
@@ -677,13 +613,9 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           '반복',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF4D4D99),
-          ),
+          style: AppTextStyles.heading3(context),
         ),
         const SizedBox(height: 12),
         Row(
@@ -705,11 +637,13 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: isSelected ? const Color(0xFF6666CC) : Colors.white,
+                  color: isSelected
+                      ? Theme.of(context).primaryColor
+                      : Colors.white,
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: isSelected
-                        ? const Color(0xFF6666CC)
+                        ? Theme.of(context).primaryColor
                         : const Color(0xFFB2B2E5),
                   ),
                 ),
@@ -790,20 +724,16 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text(
+        Text(
           '알람 활성화',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF4D4D99),
-          ),
+          style: AppTextStyles.heading3(context),
         ),
         Switch(
           value: isEnabled,
           onChanged: (value) {
             onChanged(value);
           },
-          activeColor: const Color(0xFF6666CC),
+          activeColor: Theme.of(context).primaryColor,
           trackColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states) {
               if (states.contains(MaterialState.selected)) {
@@ -828,37 +758,48 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text(
+          title: Text(
             '꿈 알람이란?',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF4D4D99),
-            ),
+            style: AppTextStyles.heading2(context),
           ),
-          content: const Column(
+          content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('꿈 알람은 정해진 시간에 꿈 인터뷰를 시작하도록 알림을 제공합니다.'),
-              SizedBox(height: 12),
-              Text('• 취침 전: 잠들기 전 꿈을 기록하고 싶은 의도 설정'),
-              SizedBox(height: 8),
-              Text('• 기상 직후: 깨어난 직후 꿈을 기억하기 쉬울 때 알림'),
-              SizedBox(height: 8),
-              Text('• 반복 설정: 특정 요일에만 알람이 울리도록 설정 가능'),
-              SizedBox(height: 12),
-              Text('알람이 울리면 꿈 인터뷰가 자동으로 시작되어 AI와 대화를 통해 꿈을 기록할 수 있습니다.'),
+              Text(
+                '꿈 알람은 정해진 시간에 꿈 인터뷰를 시작하도록 알림을 제공합니다.',
+                style: AppTextStyles.body,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                '• 취침 전: 잠들기 전 꿈을 기록하고 싶은 의도 설정',
+                style: AppTextStyles.caption,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '• 기상 직후: 깨어난 직후 꿈을 기억하기 쉬울 때 알림',
+                style: AppTextStyles.caption,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '• 반복 설정: 특정 요일에만 알람이 울리도록 설정 가능',
+                style: AppTextStyles.caption,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                '알람이 울리면 꿈 인터뷰가 자동으로 시작되어 AI와 대화를 통해 꿈을 기록할 수 있습니다.',
+                style: AppTextStyles.body,
+              ),
             ],
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text(
+              child: Text(
                 '확인',
                 style: TextStyle(
                   fontSize: 16,
-                  color: Color(0xFF6666CC),
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),

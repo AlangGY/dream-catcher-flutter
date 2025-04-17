@@ -1,4 +1,5 @@
 import 'package:dream_catcher/routes.dart';
+import 'package:dream_catcher/ui/ui_export.dart';
 import 'package:dream_catcher/widgets/common_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       bottomNavigationBar: const CommonBottomNavBar(),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFF6666CC),
+        backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {
           Navigator.pushNamed(context, AppRoutes.dreamInterview);
         },
@@ -52,32 +53,21 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildAppBar() {
-    return Container(
+    return CommonCard(
+      width: double.infinity,
+      margin: EdgeInsets.zero,
+      borderRadius: 0,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x0F000000),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
+          Text(
             'Dream Catcher',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF4D4D99),
-            ),
+            style: AppTextStyles.heading2(context),
           ),
           IconButton(
-            icon: const Icon(Icons.notifications_outlined,
-                color: Color(0xFF6666CC)),
+            icon: Icon(Icons.notifications_outlined,
+                color: Theme.of(context).primaryColor),
             onPressed: () {
               // 알림 기능
             },
@@ -91,33 +81,23 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           '안녕하세요, 사용자님',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF4D4D99),
-          ),
+          style: AppTextStyles.heading1(context),
         ),
         const SizedBox(height: 8),
         Text(
           '${DateTime.now().year}년 ${DateTime.now().month}월 ${DateTime.now().day}일',
-          style: const TextStyle(
-            fontSize: 16,
-            color: Color(0xFF8080B2),
-          ),
+          style: AppTextStyles.caption,
         ),
       ],
     );
   }
 
   Widget _buildDreamSummary() {
-    return Container(
+    return CommonCard(
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: const Color(0xFF6666CC),
-        borderRadius: BorderRadius.circular(16),
-      ),
+      backgroundColor: Theme.of(context).primaryColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -177,106 +157,71 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              '최근 꿈',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF4D4D99),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                // 모든 꿈 목록 화면으로 이동
-              },
-              child: const Text(
-                '모두 보기',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF6666CC),
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        _buildDreamItem(
-          title: '바다에서 수영하는 꿈',
-          date: '2023년 5월 15일',
-          mood: '평화로움',
-          color: const Color(0xFF6699CC),
+        SectionTitleWithMore(
+          title: '최근 꿈',
+          onMoreTap: () {
+            Navigator.pushNamed(context, AppRoutes.dreamList);
+          },
         ),
         const SizedBox(height: 12),
-        _buildDreamItem(
-          title: '하늘을 나는 꿈',
-          date: '2023년 5월 12일',
-          mood: '신남',
-          color: const Color(0xFF66CCCC),
+        _buildDreamCard(
+          '바다에서 수영하는 꿈',
+          '2023년 5월 15일',
+          '평화로움',
+          const Color(0xFF6699CC),
+        ),
+        const SizedBox(height: 12),
+        _buildDreamCard(
+          '하늘을 나는 꿈',
+          '2023년 5월 12일',
+          '신남',
+          const Color(0xFF66CCCC),
         ),
       ],
     );
   }
 
-  Widget _buildDreamItem({
-    required String title,
-    required String date,
-    required String mood,
-    required Color color,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x0F000000),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
+  Widget _buildDreamCard(String title, String date, String mood, Color color) {
+    return CommonCard(
       child: Row(
         children: [
           Container(
-            width: 4,
-            height: 50,
+            width: 6,
+            height: 100,
             decoration: BoxDecoration(
               color: color,
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(3),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF4D4D99),
-                  ),
+                  style: AppTextStyles.heading3(context),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  '$date · $mood',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF8080B2),
-                  ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Icon(Icons.calendar_today, size: 12, color: color),
+                    const SizedBox(width: 4),
+                    Text(date, style: AppTextStyles.captionSmall),
+                    const SizedBox(width: 16),
+                    Icon(Icons.emoji_emotions_outlined, size: 12, color: color),
+                    const SizedBox(width: 4),
+                    Text(mood, style: AppTextStyles.captionSmall),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                TagsWrap(
+                  tags: ['바다', '수영'],
+                  tagColor: color,
+                  showHashtag: true,
                 ),
               ],
             ),
-          ),
-          const Icon(
-            Icons.arrow_forward_ios,
-            size: 16,
-            color: Color(0xFF8080B2),
           ),
         ],
       ),
@@ -287,35 +232,33 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          '꿈 통계',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF4D4D99),
-          ),
+        SectionTitle(
+          title: '나의 꿈 통계',
         ),
-        const SizedBox(height: 16),
-        Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x0F000000),
-                blurRadius: 4,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
+        CommonCard(
           child: Column(
             children: [
-              _buildStatItem('가장 많은 감정', '평화로움', const Color(0xFF66CCCC)),
-              const SizedBox(height: 16),
-              _buildStatItem('가장 많은 장소', '바다', const Color(0xFF6699CC)),
-              const SizedBox(height: 16),
-              _buildStatItem('가장 자주 등장하는 인물', '친구', const Color(0xFFCC6699)),
+              _buildStatRow('가장 많이 꾸는 꿈', '바다에서의 경험 (32%)'),
+              const Divider(),
+              _buildStatRow('가장 많은 감정', '평화로움 (45%)'),
+              const Divider(),
+              _buildStatRow('이번 달 기록', '12회'),
+              const Divider(),
+              _buildStatRow('평균 선명도', '3.2 / 5'),
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, AppRoutes.dreamAnalysis);
+                  },
+                  child: Text(
+                    '자세한 분석 보기',
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -323,36 +266,19 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildStatItem(String label, String value, Color color) {
-    return Row(
-      children: [
-        Container(
-          width: 12,
-          height: 12,
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
+  Widget _buildStatRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: AppTextStyles.caption),
+          Text(
+            value,
+            style: AppTextStyles.bodyEmphasis(context),
           ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            label,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Color(0xFF8080B2),
-            ),
-          ),
-        ),
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF4D4D99),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

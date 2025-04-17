@@ -1,3 +1,4 @@
+import 'package:dream_catcher/ui/ui_export.dart';
 import 'package:dream_catcher/widgets/common_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -88,20 +89,11 @@ class _DreamListScreenState extends State<DreamListScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF2F2FF),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          '꿈 기록',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF4D4D99),
-          ),
-        ),
+      appBar: CommonAppBar(
+        title: '꿈 기록',
         actions: [
           IconButton(
-            icon: const Icon(Icons.search, color: Color(0xFF6666CC)),
+            icon: Icon(Icons.search, color: Theme.of(context).primaryColor),
             onPressed: () {
               _showSearchDialog();
             },
@@ -120,7 +112,7 @@ class _DreamListScreenState extends State<DreamListScreen> {
       ),
       bottomNavigationBar: const CommonBottomNavBar(),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFF6666CC),
+        backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {
           // 새 꿈 기록 화면으로 이동
         },
@@ -130,18 +122,11 @@ class _DreamListScreenState extends State<DreamListScreen> {
   }
 
   Widget _buildFilterTabs() {
-    return Container(
+    return CommonCard(
+      width: double.infinity,
+      margin: EdgeInsets.zero,
+      borderRadius: 0,
       padding: const EdgeInsets.symmetric(vertical: 8),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x0F000000),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -159,7 +144,7 @@ class _DreamListScreenState extends State<DreamListScreen> {
                     });
                   }
                 },
-                selectedColor: const Color(0xFF6666CC),
+                selectedColor: Theme.of(context).primaryColor,
                 backgroundColor: Colors.white,
                 labelStyle: TextStyle(
                   color: _selectedFilterIndex == index
@@ -201,43 +186,27 @@ class _DreamListScreenState extends State<DreamListScreen> {
         // 꿈 상세 화면으로 이동
         Navigator.pushNamed(context, '/dream_detail');
       },
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0x0F000000),
-              blurRadius: 4,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
+      child: CommonCard(
         child: Row(
           children: [
             Container(
-              width: 4,
-              height: 80,
+              width: 6,
+              height: 120,
               decoration: BoxDecoration(
                 color: dream['color'] as Color,
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: BorderRadius.circular(3),
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     dream['title'] as String,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF4D4D99),
-                    ),
+                    style: AppTextStyles.heading3(context),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 8),
                   Row(
                     children: [
                       Icon(
@@ -248,10 +217,7 @@ class _DreamListScreenState extends State<DreamListScreen> {
                       const SizedBox(width: 4),
                       Text(
                         dream['date'] as String,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFF8080B2),
-                        ),
+                        style: AppTextStyles.captionSmall,
                       ),
                       const SizedBox(width: 16),
                       Icon(
@@ -262,30 +228,24 @@ class _DreamListScreenState extends State<DreamListScreen> {
                       const SizedBox(width: 4),
                       Text(
                         dream['mood'] as String,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFF8080B2),
-                        ),
+                        style: AppTextStyles.captionSmall,
                       ),
                     ],
                   ),
                   const SizedBox(height: 8),
                   Text(
                     dream['content'] as String,
+                    style: AppTextStyles.caption,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFF666666),
-                    ),
                   ),
                 ],
               ),
             ),
-            const Icon(
+            Icon(
               Icons.arrow_forward_ios,
               size: 16,
-              color: Color(0xFF8080B2),
+              color: Theme.of(context).primaryColor.withOpacity(0.5),
             ),
           ],
         ),
@@ -294,107 +254,64 @@ class _DreamListScreenState extends State<DreamListScreen> {
   }
 
   Widget _buildEmptyState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.nightlight_outlined,
-            size: 70,
-            color: const Color(0xFF6666CC).withOpacity(0.5),
-          ),
-          const SizedBox(height: 24),
-          const Text(
-            '꿈 기록이 없습니다',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF4D4D99),
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            '오른쪽 하단의 + 버튼을 눌러 꿈을 기록해보세요',
-            style: TextStyle(
-              fontSize: 16,
-              color: Color(0xFF8080B2),
-            ),
-          ),
-        ],
-      ),
+    return EmptyStateWidget(
+      message: '아직 기록된 꿈이 없습니다.\n새로운 꿈을 기록해보세요!',
+      icon: Icons.nights_stay_outlined,
+      actionLabel: '꿈 기록하기',
+      onAction: () {
+        // 새 꿈 기록 화면으로 이동
+      },
     );
   }
 
   void _showSearchDialog() {
     showDialog(
       context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text(
-            '꿈 검색',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF4D4D99),
+      builder: (context) => AlertDialog(
+        title: Text('꿈 검색', style: AppTextStyles.heading2(context)),
+        content: TextField(
+          decoration: InputDecoration(
+            hintText: '검색어를 입력하세요',
+            hintStyle: AppTextStyles.caption,
+            prefixIcon:
+                Icon(Icons.search, color: Theme.of(context).primaryColor),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor.withOpacity(0.3)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(color: Theme.of(context).primaryColor),
             ),
           ),
-          content: TextField(
-            autofocus: true,
-            decoration: InputDecoration(
-              hintText: '검색어를 입력하세요',
-              prefixIcon: const Icon(Icons.search, color: Color(0xFF8080B2)),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: Color(0xFFB2B2E5)),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: Color(0xFF6666CC)),
-              ),
+          onChanged: (value) {
+            setState(() {
+              _searchQuery = value;
+            });
+            Navigator.pop(context);
+          },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              '취소',
+              style: TextStyle(color: Colors.grey),
             ),
-            onChanged: (value) {
-              setState(() {
-                _searchQuery = value;
-              });
+          ),
+          TextButton(
+            onPressed: () {
+              // 검색 실행
+              Navigator.pop(context);
             },
+            child: Text(
+              '검색',
+              style: TextStyle(color: Theme.of(context).primaryColor),
+            ),
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                setState(() {
-                  _searchQuery = '';
-                });
-              },
-              child: const Text(
-                '취소',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xFF8080B2),
-                ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF6666CC),
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text(
-                '검색',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ],
-        );
-      },
+        ],
+      ),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:dream_catcher/ui/ui_export.dart';
 import 'package:flutter/material.dart';
 
 class DreamDetailScreen extends StatefulWidget {
@@ -29,22 +30,18 @@ class _DreamDetailScreenState extends State<DreamDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF2F2FF),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF6666CC)),
-          onPressed: () => Navigator.pop(context),
-        ),
+      appBar: CommonAppBar(
+        title: '',
         actions: [
           IconButton(
-            icon: const Icon(Icons.edit, color: Color(0xFF6666CC)),
+            icon: Icon(Icons.edit, color: Theme.of(context).primaryColor),
             onPressed: () {
               // 꿈 편집 화면으로 이동
             },
           ),
           IconButton(
-            icon: const Icon(Icons.delete_outline, color: Color(0xFF6666CC)),
+            icon: Icon(Icons.delete_outline,
+                color: Theme.of(context).primaryColor),
             onPressed: () {
               // 꿈 삭제 다이얼로그 표시
               _showDeleteDialog();
@@ -90,11 +87,7 @@ class _DreamDetailScreenState extends State<DreamDetailScreen> {
             Expanded(
               child: Text(
                 dreamData['title'] as String,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF4D4D99),
-                ),
+                style: AppTextStyles.heading1(context),
               ),
             ),
           ],
@@ -112,10 +105,7 @@ class _DreamDetailScreenState extends State<DreamDetailScreen> {
               const SizedBox(width: 6),
               Text(
                 dreamData['date'] as String,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF8080B2),
-                ),
+                style: AppTextStyles.caption,
               ),
               const SizedBox(width: 16),
               Icon(
@@ -126,10 +116,7 @@ class _DreamDetailScreenState extends State<DreamDetailScreen> {
               const SizedBox(width: 6),
               Text(
                 dreamData['mood'] as String,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF8080B2),
-                ),
+                style: AppTextStyles.caption,
               ),
             ],
           ),
@@ -139,26 +126,11 @@ class _DreamDetailScreenState extends State<DreamDetailScreen> {
   }
 
   Widget _buildContent() {
-    return Container(
+    return CommonCard(
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x0F000000),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
       child: Text(
         dreamData['content'] as String,
-        style: const TextStyle(
-          fontSize: 16,
-          height: 1.6,
-          color: Color(0xFF333333),
-        ),
+        style: AppTextStyles.body,
       ),
     );
   }
@@ -168,154 +140,37 @@ class _DreamDetailScreenState extends State<DreamDetailScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          '태그',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF4D4D99),
-          ),
+        SectionTitle(
+          title: '태그',
+          padding: const EdgeInsets.only(bottom: 12),
         ),
-        const SizedBox(height: 12),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: tags.map((tag) {
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: dreamData['color'].withOpacity(0.2),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                '#$tag',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: dreamData['color'] as Color,
-                ),
-              ),
-            );
-          }).toList(),
+        TagsWrap(
+          tags: tags,
+          tagColor: dreamData['color'] as Color,
         ),
       ],
     );
   }
 
   Widget _buildDetailSection() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x0F000000),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          _buildDetailItem('등장인물', (dreamData['people'] as List).join(', ')),
-          const Divider(height: 24),
-          _buildDetailItem('선명도', '${dreamData['clearness']}/5'),
-          const Divider(height: 24),
-          _buildDetailItem('명료함', '${dreamData['lucidity']}/5'),
-          const Divider(height: 24),
-          _buildDetailItem('상징', dreamData['symbolism'] as String),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDetailItem(String label, String value) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 2,
-          child: Text(
-            label,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Color(0xFF8080B2),
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 3,
-          child: Text(
-            value,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF4D4D99),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildInterpretationSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          '해몽',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF4D4D99),
-          ),
+        SectionTitle(
+          title: '세부 정보',
+          padding: const EdgeInsets.only(bottom: 16),
         ),
-        const SizedBox(height: 12),
-        Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: const Color(0xFF6666CC).withOpacity(0.1),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: const Color(0xFF6666CC).withOpacity(0.3),
-              width: 1,
-            ),
-          ),
+        CommonCard(
           child: Column(
             children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF6666CC).withOpacity(0.2),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.auto_awesome,
-                      size: 16,
-                      color: Color(0xFF6666CC),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  const Text(
-                    'AI 해몽',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF6666CC),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Text(
-                dreamData['interpretation'] as String,
-                style: const TextStyle(
-                  fontSize: 16,
-                  height: 1.6,
-                  color: Color(0xFF4D4D99),
-                ),
-              ),
+              _buildDetailItem(
+                  '등장인물', _formatList(dreamData['people'] as List<String>)),
+              const Divider(),
+              _buildDetailItem('선명도', '${dreamData['clearness']}/5'),
+              const Divider(),
+              _buildDetailItem('자각몽 여부', '${dreamData['lucidity']}/5'),
+              const Divider(),
+              _buildDetailItem('상징', dreamData['symbolism']),
             ],
           ),
         ),
@@ -323,60 +178,72 @@ class _DreamDetailScreenState extends State<DreamDetailScreen> {
     );
   }
 
+  Widget _buildDetailItem(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: AppTextStyles.bodyEmphasis(context),
+          ),
+          Text(
+            value,
+            style: AppTextStyles.body,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInterpretationSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SectionTitle(
+          title: '해석',
+          padding: const EdgeInsets.only(bottom: 16),
+        ),
+        CommonCard(
+          child: Text(
+            dreamData['interpretation'] as String,
+            style: AppTextStyles.body,
+          ),
+        ),
+      ],
+    );
+  }
+
+  String _formatList(List<String> items) {
+    if (items.isEmpty) return '없음';
+    return items.join(', ');
+  }
+
   void _showDeleteDialog() {
     showDialog(
       context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text(
-            '꿈 기록 삭제',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF4D4D99),
-            ),
+      builder: (context) => AlertDialog(
+        title: Text('꿈 기록 삭제', style: AppTextStyles.heading2(context)),
+        content: Text(
+          '이 꿈 기록을 삭제하시겠습니까?\n삭제 후에는 복구할 수 없습니다.',
+          style: AppTextStyles.body,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('취소', style: TextStyle(color: Colors.grey)),
           ),
-          content: const Text(
-            '정말로 이 꿈 기록을 삭제하시겠습니까? 삭제된 기록은 복구할 수 없습니다.',
-            style: TextStyle(
-              fontSize: 16,
-              color: Color(0xFF666666),
-            ),
+          TextButton(
+            onPressed: () {
+              // 삭제 로직 처리
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
+            child: Text('삭제', style: TextStyle(color: Colors.red)),
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text(
-                '취소',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xFF8080B2),
-                ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // 삭제 로직 구현
-                Navigator.pop(context); // 다이얼로그 닫기
-                Navigator.pop(context); // 상세 화면 닫기
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red[400],
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text(
-                '삭제',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ],
-        );
-      },
+        ],
+      ),
     );
   }
 }

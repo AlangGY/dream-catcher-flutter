@@ -1,3 +1,4 @@
+import 'package:dream_catcher/ui/ui_export.dart';
 import 'package:dream_catcher/widgets/common_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -71,22 +72,13 @@ class _DreamAnalysisScreenState extends State<DreamAnalysisScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF2F2FF),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          '꿈 분석',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF4D4D99),
-          ),
-        ),
+      appBar: CommonAppBar(
+        title: '꿈 분석',
         bottom: TabBar(
           controller: _tabController,
-          labelColor: const Color(0xFF6666CC),
+          labelColor: Theme.of(context).primaryColor,
           unselectedLabelColor: const Color(0xFF8080B2),
-          indicatorColor: const Color(0xFF6666CC),
+          indicatorColor: Theme.of(context).primaryColor,
           tabs: _tabs.map((tab) => Tab(text: tab)).toList(),
         ),
       ),
@@ -127,10 +119,7 @@ class _DreamAnalysisScreenState extends State<DreamAnalysisScreen>
     return Center(
       child: Text(
         '월간 분석 준비 중...',
-        style: TextStyle(
-          fontSize: 18,
-          color: Color(0xFF8080B2),
-        ),
+        style: AppTextStyles.caption,
       ),
     );
   }
@@ -140,21 +129,15 @@ class _DreamAnalysisScreenState extends State<DreamAnalysisScreen>
     return Center(
       child: Text(
         '연간 분석 준비 중...',
-        style: TextStyle(
-          fontSize: 18,
-          color: Color(0xFF8080B2),
-        ),
+        style: AppTextStyles.caption,
       ),
     );
   }
 
   Widget _buildSummaryCard() {
-    return Container(
+    return CommonCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color(0xFF6666CC),
-        borderRadius: BorderRadius.circular(16),
-      ),
+      backgroundColor: Theme.of(context).primaryColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -206,7 +189,7 @@ class _DreamAnalysisScreenState extends State<DreamAnalysisScreen>
         Text(
           value,
           style: const TextStyle(
-            fontSize: 22,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
@@ -224,172 +207,153 @@ class _DreamAnalysisScreenState extends State<DreamAnalysisScreen>
   }
 
   Widget _buildEmotionDistribution() {
-    return _buildSectionCard(
-      title: '감정별 꿈 분포',
-      child: Column(
-        children: _emotionCounts.entries.map((entry) {
-          final percent = (entry.value /
-                  _emotionCounts.values
-                      .fold<double>(0, (a, b) => a + b.toDouble()) *
-                  100)
-              .toInt();
-          final color = _getEmotionColor(entry.key);
-
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 12,
-                      height: 12,
-                      decoration: BoxDecoration(
-                        color: color,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      '${entry.key} (${entry.value})',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFF4D4D99),
-                      ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      '$percent%',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF4D4D99),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                LinearProgressIndicator(
-                  value: entry.value.toDouble() /
-                      _emotionCounts.values
-                          .fold<double>(0, (a, b) => a + b.toDouble()),
-                  backgroundColor: const Color(0xFFE1E1F9),
-                  valueColor: AlwaysStoppedAnimation<Color>(color),
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ],
-            ),
-          );
-        }).toList(),
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SectionTitle(
+          title: '감정 분포',
+        ),
+        CommonCard(
+          child: Column(
+            children: _emotionCounts.entries.map((entry) {
+              final percentage = (entry.value /
+                      _emotionCounts.values.reduce((a, b) => a + b) *
+                      100)
+                  .toInt();
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: _buildProgressBar(
+                    entry.key, percentage, _getEmotionColor(entry.key)),
+              );
+            }).toList(),
+          ),
+        ),
+      ],
     );
   }
 
   Widget _buildDreamThemes() {
-    return _buildSectionCard(
-      title: '꿈 주제 분석',
-      child: Row(
-        children: [
-          Expanded(
-            flex: 6,
-            child: SizedBox(
-              height: 180,
-              child: CustomPaint(
-                painter: PieChartPainter(_dreamThemes),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SectionTitle(
+          title: '꿈 테마',
+        ),
+        CommonCard(
+          child: Column(
+            children: _dreamThemes.entries.map((entry) {
+              final percentage = (entry.value /
+                      _dreamThemes.values.reduce((a, b) => a + b) *
+                      100)
+                  .toInt();
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: _buildProgressBar(
+                    entry.key, percentage, Theme.of(context).primaryColor),
+              );
+            }).toList(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProgressBar(String label, int percentage, Color color) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(label, style: AppTextStyles.bodyEmphasis(context)),
+            Text('$percentage%', style: AppTextStyles.caption),
+          ],
+        ),
+        const SizedBox(height: 6),
+        Stack(
+          children: [
+            Container(
+              height: 10,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(5),
               ),
             ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            flex: 5,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: _dreamThemes.entries.map((entry) {
-                final color = _getThemeColor(entry.key);
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 12,
-                        height: 12,
-                        decoration: BoxDecoration(
-                          color: color,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          '${entry.key} (${entry.value})',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Color(0xFF4D4D99),
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }).toList(),
+            Container(
+              height: 10,
+              width:
+                  MediaQuery.of(context).size.width * (percentage / 100) * 0.8,
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(5),
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
+      ],
     );
   }
 
   Widget _buildWeeklyPattern() {
-    final daysOfWeek = ['월', '화', '수', '목', '금', '토', '일'];
-
-    return _buildSectionCard(
-      title: '주간 기록 패턴',
-      child: SizedBox(
-        height: 160,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: List.generate(7, (index) {
-            final count = _weeklyDreamCounts[index];
-            final maxCount = _weeklyDreamCounts.reduce((a, b) => a > b ? a : b);
-            final height = count > 0 ? 100 * (count / maxCount) : 10;
-
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  width: 30,
-                  height: height.toDouble(),
-                  decoration: BoxDecoration(
-                    color: count > 0
-                        ? const Color(0xFF6666CC)
-                        : const Color(0xFFE1E1F9),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    count.toString(),
-                    style: TextStyle(
-                      color: count > 0 ? Colors.white : const Color(0xFF8080B2),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  daysOfWeek[index],
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF8080B2),
-                  ),
-                ),
-              ],
-            );
-          }),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SectionTitle(
+          title: '요일별 꿈 기록',
         ),
-      ),
+        CommonCard(
+          child: Column(
+            children: [
+              const SizedBox(height: 8),
+              SizedBox(
+                height: 150,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: List.generate(7, (index) {
+                    final height = _weeklyDreamCounts[index] * 30.0;
+                    return _buildDayBar(
+                      _getDayName(index),
+                      height > 0 ? height : 10,
+                      _weeklyDreamCounts[index],
+                      Theme.of(context)
+                          .primaryColor
+                          .withOpacity(height > 0 ? 1.0 : 0.3),
+                    );
+                  }),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDayBar(String day, double height, int count, Color color) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Text(
+          count.toString(),
+          style: AppTextStyles.caption,
+        ),
+        const SizedBox(height: 4),
+        Container(
+          width: 30,
+          height: height,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(4),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          day,
+          style: AppTextStyles.caption,
+        ),
+      ],
     );
   }
 
@@ -397,210 +361,75 @@ class _DreamAnalysisScreenState extends State<DreamAnalysisScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(left: 8, bottom: 8),
-          child: Text(
-            'AI 인사이트',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF4D4D99),
-            ),
-          ),
+        SectionTitle(
+          title: '꿈 인사이트',
         ),
-        ..._insights.map((insight) => _buildInsightCard(insight)),
+        Column(
+          children: _insights.map((insight) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: CommonCard(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: insight['color'].withOpacity(0.2),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        insight['icon'] as IconData,
+                        color: insight['color'] as Color,
+                        size: 24,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            insight['title'] as String,
+                            style: AppTextStyles.heading3(context),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            insight['description'] as String,
+                            style: AppTextStyles.caption,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }).toList(),
+        ),
       ],
     );
   }
 
-  Widget _buildInsightCard(Map<String, dynamic> insight) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x0F000000),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: (insight['color'] as Color).withOpacity(0.1),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              insight['icon'] as IconData,
-              color: insight['color'] as Color,
-              size: 24,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  insight['title'] as String,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF4D4D99),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  insight['description'] as String,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF666666),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSectionCard({required String title, required Widget child}) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x0F000000),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF4D4D99),
-              ),
-            ),
-          ),
-          const Divider(height: 1),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: child,
-          ),
-        ],
-      ),
-    );
+  String _getDayName(int index) {
+    const days = ['월', '화', '수', '목', '금', '토', '일'];
+    return days[index];
   }
 
   Color _getEmotionColor(String emotion) {
     switch (emotion) {
       case '평화로움':
-        return const Color(0xFF66CCCC);
+        return Colors.blue;
       case '불안함':
-        return const Color(0xFFCC6666);
+        return Colors.orange;
       case '기쁨':
-        return const Color(0xFF66CC99);
+        return Colors.green;
       case '혼란스러움':
-        return const Color(0xFFCC9966);
+        return Colors.purple;
       case '공포':
-        return const Color(0xFF9966CC);
+        return Colors.red;
       default:
-        return const Color(0xFF8080B2);
-    }
-  }
-
-  Color _getThemeColor(String theme) {
-    switch (theme) {
-      case '물/바다':
-        return const Color(0xFF6699CC);
-      case '비행':
-        return const Color(0xFF66CCCC);
-      case '추격':
-        return const Color(0xFFCC6666);
-      case '시험':
-        return const Color(0xFFCC9966);
-      case '사랑하는 사람':
-        return const Color(0xFFCC66CC);
-      default:
-        return const Color(0xFF8080B2);
-    }
-  }
-}
-
-// 파이 차트를 그리기 위한 커스텀 페인터
-class PieChartPainter extends CustomPainter {
-  final Map<String, int> data;
-
-  PieChartPainter(this.data);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width < size.height ? size.width / 2 : size.height / 2;
-
-    final total = data.values.reduce((a, b) => a + b);
-    var startAngle = -1.5708; // -90도, 12시 방향에서 시작
-
-    data.forEach((key, value) {
-      final sweepAngle = value / total * 6.2832; // 2 * pi
-      final paint = Paint()
-        ..style = PaintingStyle.fill
-        ..color = _getThemeColor(key);
-
-      canvas.drawArc(
-        Rect.fromCircle(center: center, radius: radius),
-        startAngle,
-        sweepAngle,
-        true,
-        paint,
-      );
-
-      startAngle += sweepAngle;
-    });
-
-    // 중앙에 흰색 원 그리기 (도넛 모양으로 만들기)
-    final centerPaint = Paint()
-      ..style = PaintingStyle.fill
-      ..color = Colors.white;
-
-    canvas.drawCircle(center, radius * 0.6, centerPaint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
-
-  Color _getThemeColor(String theme) {
-    switch (theme) {
-      case '물/바다':
-        return const Color(0xFF6699CC);
-      case '비행':
-        return const Color(0xFF66CCCC);
-      case '추격':
-        return const Color(0xFFCC6666);
-      case '시험':
-        return const Color(0xFFCC9966);
-      case '사랑하는 사람':
-        return const Color(0xFFCC66CC);
-      default:
-        return const Color(0xFF8080B2);
+        return Theme.of(context).primaryColor;
     }
   }
 }
