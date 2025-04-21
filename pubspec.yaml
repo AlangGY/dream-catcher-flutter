@@ -6,18 +6,34 @@ version: 0.1.0
 environment:
   sdk: ^3.5.4
 
+scripts:
+  build_mocks: dart run build_runner build
+
 dependencies:
+  connectivity_plus: ^6.1.3
+  dartz: ^0.10.1
+  equatable: ^2.0.7
   flutter:
     sdk: flutter
+  flutter_bloc: ^9.1.0
   flutter_svg: ^2.0.17
+  get_it: ^8.0.3
   go_router: ^15.0.0
   google_fonts: ^6.0.0
+  http: ^1.3.0
+  internet_connection_checker: ^3.0.1
+  intl: ^0.20.2
   kakao_flutter_sdk: ^1.9.7+3
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  mockito: ^5.4.4
+  build_runner: ^2.4.13
+  derry: ^1.5.0
+  bloc_test: ^10.0.0
 
 flutter:
   uses-material-design: true

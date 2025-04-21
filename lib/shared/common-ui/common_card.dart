@@ -11,7 +11,7 @@ class CommonCard extends StatelessWidget {
   final double? height;
 
   const CommonCard({
-    Key? key,
+    super.key,
     required this.child,
     this.margin,
     this.padding = const EdgeInsets.all(16),
@@ -19,7 +19,7 @@ class CommonCard extends StatelessWidget {
     this.backgroundColor,
     this.width = double.infinity,
     this.height,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

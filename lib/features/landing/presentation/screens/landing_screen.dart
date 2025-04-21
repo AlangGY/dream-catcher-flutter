@@ -36,32 +36,3 @@ class _LandingScreenState extends State<LandingScreen> {
     );
   }
 }
-
-// 기능 설명 아이템을 위한 위젯
-class FeatureItem extends StatelessWidget {
-  final Widget icon;
-  final String text;
-
-  const FeatureItem({
-    Key? key,
-    required this.icon,
-    required this.text,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        icon,
-        const SizedBox(width: 10),
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: 16,
-            color: Theme.of(context).primaryColor.withOpacity(0.8),
-          ),
-        ),
-      ],
-    );
-  }
-}

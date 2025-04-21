@@ -1,4 +1,4 @@
-import 'package:dream_catcher/shared/common-ui/ui_export.dart';
+import 'package:dream_catcher/shared/common-ui/common-ui.dart';
 import 'package:flutter/material.dart';
 
 class DreamAnalysisScreen extends StatefulWidget {
