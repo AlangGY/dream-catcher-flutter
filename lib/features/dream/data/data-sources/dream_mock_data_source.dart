@@ -4,12 +4,21 @@ import 'package:dream_catcher/features/dream/data/data-sources/dream_data_source
 import 'package:dream_catcher/features/dream/data/models/dream_detail_model.dart';
 import 'package:dream_catcher/features/dream/data/models/dream_list_item_model.dart';
 import 'package:dream_catcher/features/dream/data/models/dream_list_model.dart';
-import 'package:dream_catcher/fixtures/fixture_reader.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class DreamMockDataSource implements DreamDataSource {
   static const dreamListFactory = DreamListModelFactory();
-  final DreamListModel _dreams =
-      dreamListFactory.fromJson(json.decode(fixture('dream_list.json')));
+  late DreamListModel _dreams;
+
+  Future<void> _loadDreams() async {
+    final jsonString =
+        await rootBundle.loadString('lib/fixtures/dream_list.json');
+    _dreams = dreamListFactory.fromJson(json.decode(jsonString));
+  }
+
+  Future<void> init() async {
+    await _loadDreams();
+  }
 
   @override
   Future<DreamListModel> getDreams() async {

@@ -41,6 +41,7 @@ flutter:
   assets:
     - assets/kakao_login/ko/
     - assets/kakao_login/
+    - lib/fixtures/
 
   fonts:
     - family: PretendardStd

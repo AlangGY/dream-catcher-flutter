@@ -40,7 +40,7 @@ class DreamThinkingIndicator extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 width: null,
-                borderRadius: 16,
+                borderRadius: const BorderRadius.all(Radius.circular(16)),
                 child: Row(
                   children: [
                     _buildDot(context, 0),

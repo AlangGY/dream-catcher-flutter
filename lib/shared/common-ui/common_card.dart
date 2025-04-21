@@ -5,7 +5,7 @@ class CommonCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
-  final double borderRadius;
+  final BorderRadius? borderRadius;
   final Color? backgroundColor;
   final double? width;
   final double? height;
@@ -15,7 +15,7 @@ class CommonCard extends StatelessWidget {
     required this.child,
     this.margin,
     this.padding = const EdgeInsets.all(16),
-    this.borderRadius = 16,
+    this.borderRadius = const BorderRadius.all(Radius.circular(16)),
     this.backgroundColor,
     this.width = double.infinity,
     this.height,
@@ -30,7 +30,7 @@ class CommonCard extends StatelessWidget {
       padding: padding,
       decoration: BoxDecoration(
         color: backgroundColor ?? Colors.white,
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: borderRadius,
         boxShadow: const [
           BoxShadow(
             color: Color(0x0F000000),

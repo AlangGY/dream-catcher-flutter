@@ -18,7 +18,7 @@ class DreamFilterTabs extends StatelessWidget {
     return CommonCard(
       width: double.infinity,
       margin: EdgeInsets.zero,
-      borderRadius: 0,
+      borderRadius: const BorderRadius.all(Radius.circular(0)),
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,

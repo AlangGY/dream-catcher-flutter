@@ -42,7 +42,7 @@ class ChatMessage extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
               backgroundColor:
                   isUserMessage ? const Color(0xFFE1E1F9) : Colors.white,
-              borderRadius: 16,
+              borderRadius: const BorderRadius.all(Radius.circular(16)),
               child: Text(
                 text,
                 style: isUserMessage

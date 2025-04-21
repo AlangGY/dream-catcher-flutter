@@ -90,7 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: const EdgeInsets.all(24),
       margin: EdgeInsets.zero,
       width: double.infinity,
-      borderRadius: 0,
+      borderRadius: const BorderRadius.all(Radius.circular(0)),
       child: Column(
         children: [
           Container(

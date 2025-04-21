@@ -2,20 +2,23 @@ import 'package:dream_catcher/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'injection_container.dart' as di;
+
 // 전역 navigator key 정의
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  await di.init();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

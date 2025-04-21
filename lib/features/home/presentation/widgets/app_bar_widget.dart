@@ -9,7 +9,7 @@ class HomeAppBar extends StatelessWidget {
     return CommonCard(
       width: double.infinity,
       margin: EdgeInsets.zero,
-      borderRadius: 0,
+      borderRadius: const BorderRadius.all(Radius.circular(0)),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
