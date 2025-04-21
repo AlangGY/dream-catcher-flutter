@@ -1,35 +1,38 @@
+import 'package:dream_catcher/features/dream/domain/entities/dream_interview.dart';
+import 'package:dream_catcher/features/dream/presentation/bloc/dream_interview_bloc.dart';
+import 'package:dream_catcher/injection_container.dart';
 import 'package:dream_catcher/shared/common-ui/common-ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widgets/widgets.dart';
 
-class DreamInterviewScreen extends StatefulWidget {
+class DreamInterviewScreen extends StatelessWidget {
   const DreamInterviewScreen({super.key});
 
   @override
-  State<DreamInterviewScreen> createState() => _DreamInterviewScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider<DreamInterviewBloc>(
+      create: (_) => sl<DreamInterviewBloc>(),
+      child: _DreamInterviewContent(),
+    );
+  }
 }
 
-class _DreamInterviewScreenState extends State<DreamInterviewScreen>
+class _DreamInterviewContent extends StatefulWidget {
+  @override
+  State<_DreamInterviewContent> createState() => _DreamInterviewContentState();
+}
+
+class _DreamInterviewContentState extends State<_DreamInterviewContent>
     with SingleTickerProviderStateMixin {
   final TextEditingController _textController = TextEditingController();
-  final List<ChatMessage> _messages = [];
   final ScrollController _scrollController = ScrollController();
-  bool _isRecording = false;
-  bool _isAIThinking = false;
   late AnimationController _animationController;
-  bool _isInitializing = true;
+  bool _isRecording = false;
 
-  // AI 프롬프트 및 대화 시나리오
-  final List<String> _aiPrompts = [
-    "안녕하세요. 꿈 기록을 도와드릴 AI 인터뷰어입니다. 최근에 기억나는, 인상깊었던 꿈에 대해 이야기해 주세요.",
-    "그 꿈에서 어떤 감정을 느끼셨나요?",
-    "꿈에서 특별히 인상깊었던 장소나 물체가 있었나요?",
-    "꿈에 등장한 인물들이 있었다면 누구였는지 말씀해주세요.",
-    "그 꿈이 현실의 어떤 부분과 연관되어 있다고 생각하시나요?",
-    "꿈의 내용을 요약해서 한 번 더 말씀해주시겠어요?"
-  ];
-  int _currentPromptIndex = 0;
+  DreamInterview? _currentInterview;
+  List<DreamInterviewMessage> _messages = [];
 
   @override
   void initState() {
@@ -40,13 +43,11 @@ class _DreamInterviewScreenState extends State<DreamInterviewScreen>
     );
     _animationController.repeat();
 
-    // 초기 AI 메시지 추가 (약간의 지연 후)
-    Future.delayed(const Duration(milliseconds: 1000), () {
-      _addMessage(_aiPrompts[_currentPromptIndex], false);
-      setState(() {
-        _currentPromptIndex++;
-        _isInitializing = false;
-      });
+    // 인터뷰 시작 (약간의 지연을 줘서 BuildContext가 준비된 후 실행)
+    Future.microtask(() {
+      if (mounted) {
+        context.read<DreamInterviewBloc>().add(const StartInterviewEvent());
+      }
     });
   }
 
@@ -58,15 +59,57 @@ class _DreamInterviewScreenState extends State<DreamInterviewScreen>
     super.dispose();
   }
 
-  void _addMessage(String text, bool isUserMessage) {
-    setState(() {
-      _messages.add(ChatMessage(
-        text: text,
-        isUserMessage: isUserMessage,
-      ));
-    });
+  void _handleSubmitted(String text) {
+    if (text.isEmpty || _currentInterview == null) return;
 
-    // 메시지가 추가된 후 스크롤
+    _textController.clear();
+
+    // 사용자 메시지 추가
+    context.read<DreamInterviewBloc>().add(AddMessageEvent(
+          interviewId: _currentInterview!.id,
+          speakerType: SpeakerType.me,
+          content: text,
+        ));
+
+    // BlocConsumer에서 메시지 추가가 완료되면 봇 응답을 요청하도록 변경
+    // 별도로 봇 응답 요청하지 않음
+  }
+
+  // 사용자 메시지가 추가된 후 봇 응답을 요청하는 메서드
+  void _requestBotResponse() {
+    if (_currentInterview != null) {
+      context.read<DreamInterviewBloc>().add(GetBotResponseEvent(
+            interviewId: _currentInterview!.id,
+            previousMessages: _messages,
+          ));
+    }
+  }
+
+  void _toggleRecording() {
+    setState(() {
+      _isRecording = !_isRecording;
+
+      if (!_isRecording && _currentInterview != null) {
+        // 녹음 중지 시 음성 데이터를 텍스트로 변환 요청
+        // 실제 구현에서는 음성 데이터를 캡처하여 전달
+        // 현재는 더미 데이터 사용
+        context.read<DreamInterviewBloc>().add(
+              ConvertVoiceToTextEvent(audioData: [1, 2, 3, 4, 5]),
+            );
+      }
+    });
+  }
+
+  void _completeInterview() {
+    if (_currentInterview != null) {
+      context.read<DreamInterviewBloc>().add(
+            CompleteInterviewEvent(interviewId: _currentInterview!.id),
+          );
+    }
+  }
+
+  // 스크롤을 맨 아래로 이동
+  void _scrollToBottom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
@@ -78,107 +121,167 @@ class _DreamInterviewScreenState extends State<DreamInterviewScreen>
     });
   }
 
-  void _handleSubmitted(String text) {
-    if (text.isEmpty) return;
-
-    _textController.clear();
-    _addMessage(text, true);
-    setState(() {
-      _isAIThinking = true;
-    });
-
-    // AI 응답 시뮬레이션 (실제로는 AI 모델에 요청을 보내야 함)
-    Future.delayed(const Duration(milliseconds: 1500), () {
-      if (!mounted) return;
-
-      setState(() {
-        _isAIThinking = false;
-      });
-
-      if (_currentPromptIndex < _aiPrompts.length) {
-        _addMessage(_aiPrompts[_currentPromptIndex], false);
-        setState(() {
-          _currentPromptIndex++;
-        });
-      } else {
-        // 모든 프롬프트가 끝나면 마무리 메시지
-        _addMessage(
-          "감사합니다. 꿈 분석을 완료했습니다. 꿈 기록을 저장하시겠습니까?",
-          false,
-        );
-      }
-    });
-  }
-
-  void _toggleRecording() {
-    setState(() {
-      _isRecording = !_isRecording;
-
-      if (!_isRecording) {
-        // 녹음 중지 시 - 실제로는 음성 인식 결과를 가져와야 함
-        // 여기서는 테스트용 텍스트로 대체
-        String recognizedText =
-            "저는 바다에서 수영하는 꿈을 꾸었어요. 파란 바다였고 물고기들과 함께 헤엄치고 있었습니다.";
-        _handleSubmitted(recognizedText);
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF2F2FF),
-      appBar: CommonAppBar(
-        title: 'AI 꿈 인터뷰',
-        actions: [
-          IconButton(
-            icon:
-                Icon(Icons.help_outline, color: Theme.of(context).primaryColor),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => const DreamHelpDialog(),
-              );
-            },
+    return BlocConsumer<DreamInterviewBloc, DreamInterviewState>(
+      listener: (context, state) {
+        if (state.interview != null) {
+          setState(() {
+            _currentInterview = state.interview;
+            _messages = state.interview!.messages;
+          });
+        }
+        if (state is DreamInterviewLoaded) {
+          _scrollToBottom();
+
+          // 마지막 메시지가 사용자 메시지인 경우 봇 응답 요청
+          if (_messages.isNotEmpty &&
+              _messages.last.speakerType == SpeakerType.me) {
+            _requestBotResponse();
+          }
+        } else if (state is BotResponseLoadingState) {
+          _scrollToBottom();
+        } else if (state is VoiceToTextLoaded) {
+          // 음성에서 변환된 텍스트를 입력으로 처리
+          _handleSubmitted(state.text);
+        } else if (state is VoiceToTextLoadingState &&
+            state.interview != null) {
+        } else if (state is DreamInterviewBotResponseLoaded) {
+        } else if (state is DreamInterviewCompleted) {
+          // 인터뷰 완료 후 처리 (예: 다음 화면으로 이동)
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('인터뷰가 완료되었습니다.')),
+          );
+          Navigator.of(context).pop();
+        } else if (state is DreamInterviewError) {
+          // 오류 메시지 표시
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message)),
+          );
+        }
+      },
+      builder: (context, state) {
+        // 초기 로딩 상태인지 확인
+        final bool isInitialLoading = state is InitialLoadingState ||
+            state is DreamInterviewInitial ||
+            _currentInterview == null;
+
+        // 봇이 응답 중인지 확인
+        final bool isBotThinking = state is BotResponseLoadingState;
+
+        // 음성이 인식 중인지 확인
+        final bool isVoiceRecognizing = state is VoiceToTextLoadingState;
+
+        return Scaffold(
+          backgroundColor: const Color(0xFFF2F2FF),
+          appBar: CommonAppBar(
+            title: 'AI 꿈 인터뷰',
+            actions: [
+              IconButton(
+                icon: Icon(Icons.help_outline,
+                    color: Theme.of(context).primaryColor),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => const DreamHelpDialog(),
+                  );
+                },
+              ),
+              if (_messages.isNotEmpty)
+                IconButton(
+                  icon:
+                      Icon(Icons.check, color: Theme.of(context).primaryColor),
+                  onPressed: _completeInterview,
+                ),
+            ],
           ),
-        ],
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: _isInitializing
-                ? Center(
-                    child: CircularProgressIndicator(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  )
-                : _buildChatList(),
+          body: Column(
+            children: [
+              Expanded(
+                child: isInitialLoading
+                    ? Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            const SizedBox(height: 16),
+                            const Text('인터뷰를 불러오는 중...'),
+                          ],
+                        ),
+                      )
+                    : _buildChatList(
+                        isBotThinking: isBotThinking,
+                        isVoiceRecognizing: isVoiceRecognizing,
+                      ),
+              ),
+              DreamInputArea(
+                textController: _textController,
+                onSubmitted: _handleSubmitted,
+                isRecording: _isRecording || isVoiceRecognizing,
+                onRecordPressed: _toggleRecording,
+              ),
+            ],
           ),
-          DreamInputArea(
-            textController: _textController,
-            onSubmitted: _handleSubmitted,
-            isRecording: _isRecording,
-            onRecordPressed: _toggleRecording,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  Widget _buildChatList() {
+  Widget _buildChatList({
+    required bool isBotThinking,
+    required bool isVoiceRecognizing,
+  }) {
+    // 상태 우선순위 결정
+    // 음성 인식 > 봇 응답 > 메시지 추가 순으로 우선순위 지정
+    Widget? additionalWidget;
+    bool showAdditional = false;
+
+    if (isVoiceRecognizing) {
+      additionalWidget = _buildVoiceRecognizingIndicator();
+      showAdditional = true;
+    } else if (isBotThinking) {
+      additionalWidget = DreamThinkingIndicator(
+        animationController: _animationController,
+      );
+      showAdditional = true;
+    }
+
     return ListView.builder(
       controller: _scrollController,
       padding: const EdgeInsets.all(16.0),
-      itemCount: _messages.length + (_isAIThinking ? 1 : 0),
+      itemCount: _messages.length + (showAdditional ? 1 : 0),
       itemBuilder: (context, index) {
-        if (index == _messages.length && _isAIThinking) {
-          return DreamThinkingIndicator(
-            animationController: _animationController,
-          );
+        if (index == _messages.length && showAdditional) {
+          return additionalWidget!;
         }
 
-        return _messages[index];
+        final message = _messages[index];
+        return ChatMessage(
+          text: message.content,
+          isUserMessage: message.speakerType == SpeakerType.me,
+        );
       },
+    );
+  }
+
+  Widget _buildVoiceRecognizingIndicator() {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.all(16.0),
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.mic, color: Theme.of(context).primaryColor),
+          const SizedBox(width: 8),
+          Text(
+            '음성을 인식하는 중...',
+            style: TextStyle(color: Theme.of(context).primaryColor),
+          ),
+        ],
+      ),
     );
   }
 }

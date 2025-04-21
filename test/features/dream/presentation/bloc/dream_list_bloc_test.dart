@@ -1,7 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dream_catcher/core/error/failure.dart';
-import 'package:dream_catcher/features/dream/domain/entities/dream_detail.dart';
 import 'package:dream_catcher/features/dream/domain/entities/dream_list.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/delete_dream.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/filter_dreams_by_date.dart';
@@ -45,21 +44,6 @@ void main() {
     mood: '평화로움',
     color: const Color(0xff6fafcc),
     content: '오늘 꿈에서 넓고 푸른 바다에서 수영을 하고 있었다...',
-  );
-
-  final tDreamDetail = DreamDetail(
-    id: '1',
-    title: '바다에서 수영하는 꿈',
-    date: DateTime(2024, 3, 15),
-    mood: '평화로움',
-    color: const Color(0xff6fafcc),
-    content: '오늘 꿈에서 넓고 푸른 바다에서 수영을 하고 있었다...',
-    tags: ['바다', '수영'],
-    people: ['없음'],
-    clearness: 4,
-    lucidity: 2,
-    symbolism: '자유, 평화',
-    interpretation: '내면의 평화와 자유를 향한 욕구를 상징합니다.',
   );
 
   final tDreamList = DreamList(dreams: [tDream]);

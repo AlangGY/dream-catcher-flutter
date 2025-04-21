@@ -23,6 +23,7 @@ import 'package:dream_catcher/features/dream/domain/use-cases/save_dream.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/search_dreams.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/update_dream.dart';
 import 'package:dream_catcher/features/dream/presentation/bloc/dream_detail_bloc.dart';
+import 'package:dream_catcher/features/dream/presentation/bloc/dream_interview_bloc.dart';
 import 'package:dream_catcher/features/dream/presentation/bloc/dream_list_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -135,8 +136,10 @@ void _initUseCases() {
 
 /// 6. Bloc 초기화
 void _initBloc() {
+  // Bloc 인스턴스
   sl.registerFactory(() => DreamDetailBloc(getDream: sl<GetDream>()));
 
+  // DreamListBloc 등록
   sl.registerFactory(
     () => DreamListBloc(
       getDreams: sl<GetDreams>(),
@@ -147,5 +150,15 @@ void _initBloc() {
     ),
   );
 
-  // DreamInterviewBloc은 프레젠테이션 레이어에서 구현할 예정
+  // DreamInterviewBloc 등록
+  sl.registerFactory(
+    () => DreamInterviewBloc(
+      startInterview: sl<StartInterview>(),
+      addMessage: sl<AddMessage>(),
+      getBotResponse: sl<GetBotResponse>(),
+      completeInterview: sl<CompleteInterview>(),
+      convertVoiceToText: sl<ConvertVoiceToText>(),
+      getCurrentInterview: sl<GetCurrentInterview>(),
+    ),
+  );
 }
