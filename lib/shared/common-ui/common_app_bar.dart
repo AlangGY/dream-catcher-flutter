@@ -1,4 +1,6 @@
+import 'package:dream_catcher/router.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 /// 모든 화면에서 공통으로 사용하는 앱바 위젯
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -35,7 +37,13 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
               ? IconButton(
                   icon: Icon(Icons.arrow_back_ios,
                       color: Theme.of(context).primaryColor),
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () {
+                    try {
+                      context.pop();
+                    } catch (e) {
+                      context.go(AppRoutePath.home);
+                    }
+                  },
                 )
               : null),
       actions: actions,

@@ -1,9 +1,9 @@
+import 'package:dream_catcher/router.dart';
 import 'package:dream_catcher/shared/common-ui/ui_export.dart';
-import 'package:dream_catcher/shared/widgets/common_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class DreamListScreen extends StatefulWidget {
-  final bool showBottomNav = true;
   const DreamListScreen({Key? key}) : super(key: key);
 
   @override
@@ -91,6 +91,7 @@ class _DreamListScreenState extends State<DreamListScreen> {
       backgroundColor: const Color(0xFFF2F2FF),
       appBar: CommonAppBar(
         title: '꿈 기록',
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             icon: Icon(Icons.search, color: Theme.of(context).primaryColor),
@@ -110,7 +111,6 @@ class _DreamListScreenState extends State<DreamListScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: const CommonBottomNavBar(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {
@@ -183,8 +183,7 @@ class _DreamListScreenState extends State<DreamListScreen> {
   Widget _buildDreamItem(Map<String, dynamic> dream) {
     return GestureDetector(
       onTap: () {
-        // 꿈 상세 화면으로 이동
-        Navigator.pushNamed(context, '/dream_detail');
+        context.push(AppRoutePath.dreamDetail);
       },
       child: CommonCard(
         child: Row(
@@ -294,7 +293,7 @@ class _DreamListScreenState extends State<DreamListScreen> {
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => context.pop(),
             child: Text(
               '취소',
               style: TextStyle(color: Colors.grey),
@@ -302,8 +301,7 @@ class _DreamListScreenState extends State<DreamListScreen> {
           ),
           TextButton(
             onPressed: () {
-              // 검색 실행
-              Navigator.pop(context);
+              context.pop();
             },
             child: Text(
               '검색',

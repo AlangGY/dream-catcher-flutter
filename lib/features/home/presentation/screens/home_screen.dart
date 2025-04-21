@@ -1,10 +1,9 @@
-import 'package:dream_catcher/routes.dart';
+import 'package:dream_catcher/router.dart';
 import 'package:dream_catcher/shared/common-ui/ui_export.dart';
-import 'package:dream_catcher/shared/widgets/common_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
-  final bool showBottomNav = true;
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -41,11 +40,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: const CommonBottomNavBar(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {
-          Navigator.pushNamed(context, AppRoutes.dreamInterview);
+          context.push(AppRoutePath.dreamInterview);
         },
         child: const Icon(Icons.add, color: Colors.white),
       ),
@@ -160,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
         SectionTitleWithMore(
           title: '최근 꿈',
           onMoreTap: () {
-            Navigator.pushNamed(context, AppRoutes.dreamList);
+            context.go(AppRoutePath.dreamList);
           },
         ),
         const SizedBox(height: 12),
@@ -248,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Center(
                 child: TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, AppRoutes.dreamAnalysis);
+                    context.go(AppRoutePath.dreamAnalysis);
                   },
                   child: Text(
                     '자세한 분석 보기',

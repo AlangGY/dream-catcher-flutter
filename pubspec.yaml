@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: ^2.0.17
+  go_router: ^15.0.0
   google_fonts: ^6.0.0
   kakao_flutter_sdk: ^1.9.7+3
 

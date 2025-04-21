@@ -2,6 +2,7 @@ import 'dart:math'; // sin 함수 사용을 위한 임포트
 
 import 'package:dream_catcher/shared/common-ui/ui_export.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class DreamInterviewScreen extends StatefulWidget {
   const DreamInterviewScreen({Key? key}) : super(key: key);
@@ -313,7 +314,7 @@ class _DreamInterviewScreenState extends State<DreamInterviewScreen>
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => context.pop(),
               child: Text(
                 '확인',
                 style: AppTextStyles.bodyEmphasis(context),

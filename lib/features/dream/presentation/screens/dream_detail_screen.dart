@@ -1,5 +1,6 @@
 import 'package:dream_catcher/shared/common-ui/ui_export.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class DreamDetailScreen extends StatefulWidget {
   const DreamDetailScreen({Key? key}) : super(key: key);
@@ -237,8 +238,8 @@ class _DreamDetailScreenState extends State<DreamDetailScreen> {
           TextButton(
             onPressed: () {
               // 삭제 로직 처리
-              Navigator.pop(context);
-              Navigator.pop(context);
+              context.pop();
+              context.pop();
             },
             child: Text('삭제', style: TextStyle(color: Colors.red)),
           ),

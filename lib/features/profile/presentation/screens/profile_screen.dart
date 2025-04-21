@@ -1,9 +1,7 @@
 import 'package:dream_catcher/shared/common-ui/ui_export.dart';
-import 'package:dream_catcher/shared/widgets/common_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final bool showBottomNav = true;
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
@@ -65,7 +63,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: Theme.of(context).primaryColor),
             onPressed: () {
               // 프로필 편집 화면으로 이동
-              // Navigator.pushNamed(context, '/edit_profile');
+              // context.goNamed(AppRouteName.editProfile);
             },
           ),
         ],
@@ -84,7 +82,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: const CommonBottomNavBar(),
     );
   }
 
@@ -236,7 +233,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 item['icon'],
                 () {
                   // 해당 설정 화면으로 이동
-                  // Navigator.pushNamed(context, item['route']);
+                  // context.goNamed(item['routeName']);
                 },
               )),
         ],

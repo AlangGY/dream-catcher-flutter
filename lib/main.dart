@@ -1,8 +1,6 @@
-import 'package:dream_catcher/routes.dart';
+import 'package:dream_catcher/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'shared/widgets/navigation_wrapper.dart';
 
 // 전역 navigator key 정의
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -21,8 +19,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: navigatorKey, // 네비게이터 키 설정
+    return MaterialApp.router(
+      routerConfig: router,
       title: 'Dream Catcher',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -41,14 +39,6 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      builder: (context, child) {
-        return NavigationWrapper(
-          child: child!,
-        );
-      },
-
-      initialRoute: '/',
-      routes: AppRoutes.getRoutes(),
     );
   }
 }

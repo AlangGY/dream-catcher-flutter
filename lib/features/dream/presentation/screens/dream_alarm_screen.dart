@@ -1,6 +1,6 @@
 import 'package:dream_catcher/shared/common-ui/ui_export.dart';
-import 'package:dream_catcher/shared/widgets/common_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class DreamAlarmScreen extends StatefulWidget {
   const DreamAlarmScreen({Key? key}) : super(key: key);
@@ -51,7 +51,6 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
         },
         child: const Icon(Icons.add, color: Colors.white),
       ),
-      bottomNavigationBar: const CommonBottomNavBar(),
     );
   }
 
@@ -283,7 +282,7 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
                                 Theme.of(context).primaryColor.withOpacity(0.5),
                           ),
                           onPressed: () {
-                            Navigator.pop(context);
+                            context.pop();
                           },
                         ),
                       ],
@@ -335,7 +334,7 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
                           setState(() {
                             _alarms.add(newAlarm);
                           });
-                          Navigator.pop(context);
+                          context.pop();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).primaryColor,
@@ -405,7 +404,7 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
                           icon:
                               Icon(Icons.close, color: const Color(0xFF8080B2)),
                           onPressed: () {
-                            Navigator.pop(context);
+                            context.pop();
                           },
                         ),
                       ],
@@ -446,7 +445,7 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
                           child: OutlinedButton(
                             onPressed: () {
                               _deleteAlarm(alarm);
-                              Navigator.pop(context);
+                              context.pop();
                             },
                             style: OutlinedButton.styleFrom(
                               foregroundColor: Colors.red[400],
@@ -475,7 +474,7 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
                                 alarm.repeatDays = repeatDays;
                                 alarm.isEnabled = isEnabled;
                               });
-                              Navigator.pop(context);
+                              context.pop();
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Theme.of(context).primaryColor,
@@ -794,7 +793,7 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => context.pop(),
               child: Text(
                 '확인',
                 style: TextStyle(

@@ -1,9 +1,7 @@
 import 'package:dream_catcher/shared/common-ui/ui_export.dart';
-import 'package:dream_catcher/shared/widgets/common_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class DreamAnalysisScreen extends StatefulWidget {
-  final bool showBottomNav = true;
   const DreamAnalysisScreen({Key? key}) : super(key: key);
 
   @override
@@ -74,6 +72,7 @@ class _DreamAnalysisScreenState extends State<DreamAnalysisScreen>
       backgroundColor: const Color(0xFFF2F2FF),
       appBar: CommonAppBar(
         title: '꿈 분석',
+        automaticallyImplyLeading: false,
         bottom: TabBar(
           controller: _tabController,
           labelColor: Theme.of(context).primaryColor,
@@ -90,7 +89,6 @@ class _DreamAnalysisScreenState extends State<DreamAnalysisScreen>
           _buildYearlyAnalysis(),
         ],
       ),
-      bottomNavigationBar: const CommonBottomNavBar(),
     );
   }
 

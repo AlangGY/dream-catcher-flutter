@@ -1,7 +1,9 @@
 import 'dart:math';
 
+import 'package:dream_catcher/router.dart';
 import 'package:dream_catcher/shared/common-ui/ui_export.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class DreamRealtimeChatScreen extends StatefulWidget {
   const DreamRealtimeChatScreen({Key? key}) : super(key: key);
@@ -184,7 +186,11 @@ class _DreamRealtimeChatScreenState extends State<DreamRealtimeChatScreen>
                     icon: Icon(Icons.close,
                         color: Theme.of(context).primaryColor.withOpacity(0.5)),
                     onPressed: () {
-                      Navigator.pop(context);
+                      try {
+                        context.pop();
+                      } catch (e) {
+                        context.go(AppRoutePath.home);
+                      }
                     },
                   ),
                 ),
