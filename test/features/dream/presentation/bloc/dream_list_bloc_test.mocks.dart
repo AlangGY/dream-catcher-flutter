@@ -12,18 +12,14 @@ import 'package:dream_catcher/features/dream/domain/entities/dream_list.dart'
 import 'package:dream_catcher/features/dream/domain/repositories/dream_repository.dart'
     as _i2;
 import 'package:dream_catcher/features/dream/domain/use-cases/delete_dream.dart'
-    as _i10;
+    as _i8;
 import 'package:dream_catcher/features/dream/domain/use-cases/filter_dreams_by_date.dart'
-    as _i13;
+    as _i11;
 import 'package:dream_catcher/features/dream/domain/use-cases/filter_dreams_by_mood.dart'
-    as _i12;
+    as _i10;
 import 'package:dream_catcher/features/dream/domain/use-cases/get_dreams.dart'
     as _i4;
-import 'package:dream_catcher/features/dream/domain/use-cases/save_dream.dart'
-    as _i8;
 import 'package:dream_catcher/features/dream/domain/use-cases/search_dreams.dart'
-    as _i11;
-import 'package:dream_catcher/features/dream/domain/use-cases/update_dream.dart'
     as _i9;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -105,100 +101,10 @@ class MockGetDreams extends _i1.Mock implements _i4.GetDreams {
       ) as _i5.Future<_i3.Either<_i6.Failure, _i7.DreamList>>);
 }
 
-/// A class which mocks [SaveDream].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockSaveDream extends _i1.Mock implements _i8.SaveDream {
-  @override
-  _i2.DreamRepository get repository => (super.noSuchMethod(
-        Invocation.getter(#repository),
-        returnValue: _FakeDreamRepository_0(
-          this,
-          Invocation.getter(#repository),
-        ),
-        returnValueForMissingStub: _FakeDreamRepository_0(
-          this,
-          Invocation.getter(#repository),
-        ),
-      ) as _i2.DreamRepository);
-
-  @override
-  _i5.Future<_i3.Either<_i6.Failure, _i3.Unit>> call(
-          _i8.SaveDreamParams? params) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #call,
-          [params],
-        ),
-        returnValue: _i5.Future<_i3.Either<_i6.Failure, _i3.Unit>>.value(
-            _FakeEither_1<_i6.Failure, _i3.Unit>(
-          this,
-          Invocation.method(
-            #call,
-            [params],
-          ),
-        )),
-        returnValueForMissingStub:
-            _i5.Future<_i3.Either<_i6.Failure, _i3.Unit>>.value(
-                _FakeEither_1<_i6.Failure, _i3.Unit>(
-          this,
-          Invocation.method(
-            #call,
-            [params],
-          ),
-        )),
-      ) as _i5.Future<_i3.Either<_i6.Failure, _i3.Unit>>);
-}
-
-/// A class which mocks [UpdateDream].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockUpdateDream extends _i1.Mock implements _i9.UpdateDream {
-  @override
-  _i2.DreamRepository get repository => (super.noSuchMethod(
-        Invocation.getter(#repository),
-        returnValue: _FakeDreamRepository_0(
-          this,
-          Invocation.getter(#repository),
-        ),
-        returnValueForMissingStub: _FakeDreamRepository_0(
-          this,
-          Invocation.getter(#repository),
-        ),
-      ) as _i2.DreamRepository);
-
-  @override
-  _i5.Future<_i3.Either<_i6.Failure, _i3.Unit>> call(
-          _i9.UpdateDreamParams? params) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #call,
-          [params],
-        ),
-        returnValue: _i5.Future<_i3.Either<_i6.Failure, _i3.Unit>>.value(
-            _FakeEither_1<_i6.Failure, _i3.Unit>(
-          this,
-          Invocation.method(
-            #call,
-            [params],
-          ),
-        )),
-        returnValueForMissingStub:
-            _i5.Future<_i3.Either<_i6.Failure, _i3.Unit>>.value(
-                _FakeEither_1<_i6.Failure, _i3.Unit>(
-          this,
-          Invocation.method(
-            #call,
-            [params],
-          ),
-        )),
-      ) as _i5.Future<_i3.Either<_i6.Failure, _i3.Unit>>);
-}
-
 /// A class which mocks [DeleteDream].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockDeleteDream extends _i1.Mock implements _i10.DeleteDream {
+class MockDeleteDream extends _i1.Mock implements _i8.DeleteDream {
   @override
   _i2.DreamRepository get repository => (super.noSuchMethod(
         Invocation.getter(#repository),
@@ -214,7 +120,7 @@ class MockDeleteDream extends _i1.Mock implements _i10.DeleteDream {
 
   @override
   _i5.Future<_i3.Either<_i6.Failure, _i3.Unit>> call(
-          _i10.DeleteDreamParams? params) =>
+          _i8.DeleteDreamParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
@@ -243,7 +149,7 @@ class MockDeleteDream extends _i1.Mock implements _i10.DeleteDream {
 /// A class which mocks [SearchDreams].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSearchDreams extends _i1.Mock implements _i11.SearchDreams {
+class MockSearchDreams extends _i1.Mock implements _i9.SearchDreams {
   @override
   _i2.DreamRepository get repository => (super.noSuchMethod(
         Invocation.getter(#repository),
@@ -259,7 +165,7 @@ class MockSearchDreams extends _i1.Mock implements _i11.SearchDreams {
 
   @override
   _i5.Future<_i3.Either<_i6.Failure, _i7.DreamList>> call(
-          _i11.SearchDreamsParams? params) =>
+          _i9.SearchDreamsParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
@@ -289,7 +195,7 @@ class MockSearchDreams extends _i1.Mock implements _i11.SearchDreams {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockFilterDreamsByMood extends _i1.Mock
-    implements _i12.FilterDreamsByMood {
+    implements _i10.FilterDreamsByMood {
   @override
   _i2.DreamRepository get repository => (super.noSuchMethod(
         Invocation.getter(#repository),
@@ -305,7 +211,7 @@ class MockFilterDreamsByMood extends _i1.Mock
 
   @override
   _i5.Future<_i3.Either<_i6.Failure, _i7.DreamList>> call(
-          _i12.FilterDreamsByMoodParams? params) =>
+          _i10.FilterDreamsByMoodParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
@@ -335,7 +241,7 @@ class MockFilterDreamsByMood extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockFilterDreamsByDate extends _i1.Mock
-    implements _i13.FilterDreamsByDate {
+    implements _i11.FilterDreamsByDate {
   @override
   _i2.DreamRepository get repository => (super.noSuchMethod(
         Invocation.getter(#repository),
@@ -351,7 +257,7 @@ class MockFilterDreamsByDate extends _i1.Mock
 
   @override
   _i5.Future<_i3.Either<_i6.Failure, _i7.DreamList>> call(
-          _i13.FilterDreamsByDateParams? params) =>
+          _i11.FilterDreamsByDateParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
