@@ -1,0 +1,329 @@
+import 'package:dartz/dartz.dart';
+import 'package:dream_catcher/core/error/failure.dart';
+import 'package:dream_catcher/features/dream/data/data-sources/dream_interview_data_source.dart';
+import 'package:dream_catcher/features/dream/data/models/dream_interview_model.dart';
+import 'package:dream_catcher/features/dream/data/repositories/dream_interview_repository_impl.dart';
+import 'package:dream_catcher/features/dream/domain/entities/dream_interview.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+
+@GenerateNiceMocks([
+  MockSpec<DreamInterviewDataSource>(),
+  MockSpec<DreamInterviewModelFactory>(),
+  MockSpec<DreamInterviewMessageModelFactory>(),
+])
+import 'dream_interview_repository_impl_test.mocks.dart';
+
+void main() {
+  late DreamInterviewRepositoryImpl repository;
+  late MockDreamInterviewDataSource mockDataSource;
+  late MockDreamInterviewModelFactory mockModelFactory;
+  late MockDreamInterviewMessageModelFactory mockMessageModelFactory;
+
+  setUp(() {
+    mockDataSource = MockDreamInterviewDataSource();
+    mockModelFactory = MockDreamInterviewModelFactory();
+    mockMessageModelFactory = MockDreamInterviewMessageModelFactory();
+
+    repository = DreamInterviewRepositoryImpl(
+      dataSource: mockDataSource,
+      modelFactory: mockModelFactory,
+      messageFactory: mockMessageModelFactory,
+    );
+  });
+
+  group('startInterview', () {
+    final tInterviewModel = DreamInterviewModel(
+      id: 'interview1',
+      messages: [],
+      date: DateTime(2024, 1, 1),
+      isCompleted: false,
+    );
+
+    final tInterview = DreamInterview(
+      id: 'interview1',
+      messages: [],
+      date: DateTime(2024, 1, 1),
+      isCompleted: false,
+    );
+
+    test(
+      '인터뷰를 성공적으로 시작하면 DreamInterview를 반환해야 한다',
+      () async {
+        // arrange
+        when(mockDataSource.startInterview())
+            .thenAnswer((_) async => tInterviewModel);
+
+        // act
+        final result = await repository.startInterview();
+
+        // assert
+        expect(result, Right(tInterview));
+        verify(mockDataSource.startInterview());
+        verifyNoMoreInteractions(mockDataSource);
+      },
+    );
+
+    test(
+      '인터뷰 시작 중 예외가 발생하면 ServerFailure를 반환해야 한다',
+      () async {
+        // arrange
+        when(mockDataSource.startInterview()).thenThrow(Exception());
+
+        // act
+        final result = await repository.startInterview();
+
+        // assert
+        expect(result, isA<Left<Failure, DreamInterview>>());
+        verify(mockDataSource.startInterview());
+        verifyNoMoreInteractions(mockDataSource);
+      },
+    );
+  });
+
+  group('addMessage', () {
+    final tInterviewId = 'interview1';
+    final tSpeakerType = SpeakerType.me;
+    final tContent = '안녕하세요';
+
+    final tInterviewModel = DreamInterviewModel(
+      id: tInterviewId,
+      messages: [],
+      date: DateTime(2024, 1, 1),
+      isCompleted: false,
+    );
+
+    final tInterview = DreamInterview(
+      id: tInterviewId,
+      messages: [],
+      date: DateTime(2024, 1, 1),
+      isCompleted: false,
+    );
+
+    test(
+      '메시지를 성공적으로 추가하면 업데이트된 DreamInterview를 반환해야 한다',
+      () async {
+        // arrange
+        when(mockDataSource.addMessage(tInterviewId, tSpeakerType, tContent))
+            .thenAnswer((_) async => tInterviewModel);
+
+        // act
+        final result =
+            await repository.addMessage(tInterviewId, tSpeakerType, tContent);
+
+        // assert
+        expect(result, Right(tInterview));
+        verify(mockDataSource.addMessage(tInterviewId, tSpeakerType, tContent));
+        verifyNoMoreInteractions(mockDataSource);
+      },
+    );
+
+    test(
+      '메시지 추가 중 예외가 발생하면 ServerFailure를 반환해야 한다',
+      () async {
+        // arrange
+        when(mockDataSource.addMessage(tInterviewId, tSpeakerType, tContent))
+            .thenThrow(Exception());
+
+        // act
+        final result =
+            await repository.addMessage(tInterviewId, tSpeakerType, tContent);
+
+        // assert
+        expect(result, isA<Left<Failure, DreamInterview>>());
+        verify(mockDataSource.addMessage(tInterviewId, tSpeakerType, tContent));
+        verifyNoMoreInteractions(mockDataSource);
+      },
+    );
+  });
+
+  group('getBotResponse', () {
+    final tInterviewId = 'interview1';
+    final tMessage = DreamInterviewMessage(
+      id: 'message1',
+      speakerType: SpeakerType.me,
+      content: '안녕하세요',
+      timestamp: DateTime(2024, 1, 1),
+    );
+    final tMessageModel = DreamInterviewMessageModel(
+      id: 'message1',
+      speakerType: SpeakerType.me,
+      content: '안녕하세요',
+      timestamp: DateTime(2024, 1, 1),
+    );
+    final tPreviousMessages = [tMessage];
+    final tMessageModels = [tMessageModel];
+    final tBotResponse = '안녕하세요, 무엇을 도와드릴까요?';
+
+    test(
+      '봇 응답을 성공적으로 가져오면 응답 문자열을 반환해야 한다',
+      () async {
+        // arrange
+        when(mockMessageModelFactory.fromEntity(tMessage))
+            .thenReturn(tMessageModel);
+        when(mockDataSource.getBotResponse(tInterviewId, tMessageModels))
+            .thenAnswer((_) async => tBotResponse);
+
+        // act
+        final result =
+            await repository.getBotResponse(tInterviewId, tPreviousMessages);
+
+        // assert
+        expect(result, Right(tBotResponse));
+        verify(mockMessageModelFactory.fromEntity(tMessage));
+        verify(mockDataSource.getBotResponse(tInterviewId, tMessageModels));
+        verifyNoMoreInteractions(mockDataSource);
+      },
+    );
+
+    test(
+      '봇 응답 가져오기 중 예외가 발생하면 ServerFailure를 반환해야 한다',
+      () async {
+        // arrange
+        when(mockMessageModelFactory.fromEntity(tMessage))
+            .thenReturn(tMessageModel);
+        when(mockDataSource.getBotResponse(tInterviewId, tMessageModels))
+            .thenThrow(Exception());
+
+        // act
+        final result =
+            await repository.getBotResponse(tInterviewId, tPreviousMessages);
+
+        // assert
+        expect(result, isA<Left<Failure, String>>());
+        verify(mockMessageModelFactory.fromEntity(tMessage));
+        verify(mockDataSource.getBotResponse(tInterviewId, tMessageModels));
+        verifyNoMoreInteractions(mockDataSource);
+      },
+    );
+  });
+
+  group('completeInterview', () {
+    final tInterviewId = 'interview1';
+
+    test(
+      '인터뷰를 성공적으로 완료하면 Unit을 반환해야 한다',
+      () async {
+        // arrange
+        when(mockDataSource.completeInterview(tInterviewId))
+            .thenAnswer((_) async => {});
+
+        // act
+        final result = await repository.completeInterview(tInterviewId);
+
+        // assert
+        expect(result, const Right(unit));
+        verify(mockDataSource.completeInterview(tInterviewId));
+        verifyNoMoreInteractions(mockDataSource);
+      },
+    );
+
+    test(
+      '인터뷰 완료 중 예외가 발생하면 ServerFailure를 반환해야 한다',
+      () async {
+        // arrange
+        when(mockDataSource.completeInterview(tInterviewId))
+            .thenThrow(Exception());
+
+        // act
+        final result = await repository.completeInterview(tInterviewId);
+
+        // assert
+        expect(result, isA<Left<Failure, Unit>>());
+        verify(mockDataSource.completeInterview(tInterviewId));
+        verifyNoMoreInteractions(mockDataSource);
+      },
+    );
+  });
+
+  group('getCurrentInterview', () {
+    final tInterviewId = 'interview1';
+    final tInterviewModel = DreamInterviewModel(
+      id: tInterviewId,
+      messages: [],
+      date: DateTime(2024, 1, 1),
+      isCompleted: false,
+    );
+
+    final tInterview = DreamInterview(
+      id: tInterviewId,
+      messages: [],
+      date: DateTime(2024, 1, 1),
+      isCompleted: false,
+    );
+
+    test(
+      '진행 중인 인터뷰를 성공적으로 가져오면 DreamInterview를 반환해야 한다',
+      () async {
+        // arrange
+        when(mockDataSource.getCurrentInterview(tInterviewId))
+            .thenAnswer((_) async => tInterviewModel);
+
+        // act
+        final result = await repository.getCurrentInterview(tInterviewId);
+
+        // assert
+        expect(result, Right(tInterview));
+        verify(mockDataSource.getCurrentInterview(tInterviewId));
+        verifyNoMoreInteractions(mockDataSource);
+      },
+    );
+
+    test(
+      '진행 중인 인터뷰 가져오기 중 예외가 발생하면 ServerFailure를 반환해야 한다',
+      () async {
+        // arrange
+        when(mockDataSource.getCurrentInterview(tInterviewId))
+            .thenThrow(Exception());
+
+        // act
+        final result = await repository.getCurrentInterview(tInterviewId);
+
+        // assert
+        expect(result, isA<Left<Failure, DreamInterview>>());
+        verify(mockDataSource.getCurrentInterview(tInterviewId));
+        verifyNoMoreInteractions(mockDataSource);
+      },
+    );
+  });
+
+  group('convertVoiceToText', () {
+    final tAudioData = [1, 2, 3, 4, 5];
+    final tText = '안녕하세요';
+
+    test(
+      '음성을 성공적으로 텍스트로 변환하면 텍스트 문자열을 반환해야 한다',
+      () async {
+        // arrange
+        when(mockDataSource.convertVoiceToText(tAudioData))
+            .thenAnswer((_) async => tText);
+
+        // act
+        final result = await repository.convertVoiceToText(tAudioData);
+
+        // assert
+        expect(result, Right(tText));
+        verify(mockDataSource.convertVoiceToText(tAudioData));
+        verifyNoMoreInteractions(mockDataSource);
+      },
+    );
+
+    test(
+      '음성-텍스트 변환 중 예외가 발생하면 ServerFailure를 반환해야 한다',
+      () async {
+        // arrange
+        when(mockDataSource.convertVoiceToText(tAudioData))
+            .thenThrow(Exception());
+
+        // act
+        final result = await repository.convertVoiceToText(tAudioData);
+
+        // assert
+        expect(result, isA<Left<Failure, String>>());
+        verify(mockDataSource.convertVoiceToText(tAudioData));
+        verifyNoMoreInteractions(mockDataSource);
+      },
+    );
+  });
+}
