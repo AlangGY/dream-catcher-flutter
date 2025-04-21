@@ -8,6 +8,7 @@ import 'package:flutter/services.dart' show rootBundle;
 
 class DreamMockDataSource implements DreamDataSource {
   static const dreamListFactory = DreamListModelFactory();
+  static const dreamDetailFactory = DreamDetailModelFactory();
   late DreamListModel _dreams;
 
   Future<void> _loadDreams() async {
@@ -24,6 +25,15 @@ class DreamMockDataSource implements DreamDataSource {
   Future<DreamListModel> getDreams() async {
     await Future.delayed(const Duration(milliseconds: 500)); // 실제 네트워크 지연 시뮬레이션
     return _dreams;
+  }
+
+  @override
+  Future<DreamDetailModel> getDream(String dreamId) async {
+    await Future.delayed(const Duration(milliseconds: 500)); // 실제 네트워크 지연 시뮬레이션
+
+    final jsonString =
+        await rootBundle.loadString('lib/fixtures/dream_detail_$dreamId.json');
+    return dreamDetailFactory.fromJson(json.decode(jsonString));
   }
 
   @override

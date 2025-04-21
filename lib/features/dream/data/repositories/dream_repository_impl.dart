@@ -30,7 +30,17 @@ class DreamRepositoryImpl implements DreamRepository {
       final result = await dataSource.getDreams();
       return Right(result.toEntity());
     } catch (e) {
-      return Left(ServerFailure());
+      return Left(ServerFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, DreamDetail>> getDream(String dreamId) async {
+    try {
+      final result = await dataSource.getDream(dreamId);
+      return Right(result.toEntity());
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
     }
   }
 
@@ -40,7 +50,7 @@ class DreamRepositoryImpl implements DreamRepository {
       await dataSource.saveDream(_detailFactory.fromEntity(dream));
       return const Right(unit);
     } catch (e) {
-      return Left(ServerFailure());
+      return Left(ServerFailure(message: e.toString()));
     }
   }
 
@@ -50,7 +60,7 @@ class DreamRepositoryImpl implements DreamRepository {
       await dataSource.updateDream(_detailFactory.fromEntity(dream));
       return const Right(unit);
     } catch (e) {
-      return Left(ServerFailure());
+      return Left(ServerFailure(message: e.toString()));
     }
   }
 
@@ -60,7 +70,7 @@ class DreamRepositoryImpl implements DreamRepository {
       await dataSource.deleteDream(dreamId);
       return const Right(unit);
     } catch (e) {
-      return Left(ServerFailure());
+      return Left(ServerFailure(message: e.toString()));
     }
   }
 
@@ -70,7 +80,7 @@ class DreamRepositoryImpl implements DreamRepository {
       final result = await dataSource.searchDreams(query);
       return Right(result.toEntity());
     } catch (e) {
-      return Left(ServerFailure());
+      return Left(ServerFailure(message: e.toString()));
     }
   }
 
@@ -80,7 +90,7 @@ class DreamRepositoryImpl implements DreamRepository {
       final result = await dataSource.filterDreamsByMood(mood);
       return Right(result.toEntity());
     } catch (e) {
-      return Left(ServerFailure());
+      return Left(ServerFailure(message: e.toString()));
     }
   }
 
@@ -91,7 +101,7 @@ class DreamRepositoryImpl implements DreamRepository {
       final result = await dataSource.filterDreamsByDate(startDate, endDate);
       return Right(result.toEntity());
     } catch (e) {
-      return Left(ServerFailure());
+      return Left(ServerFailure(message: e.toString()));
     }
   }
 }

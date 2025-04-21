@@ -6,9 +6,7 @@ import 'package:dream_catcher/features/dream/domain/use-cases/delete_dream.dart'
 import 'package:dream_catcher/features/dream/domain/use-cases/filter_dreams_by_date.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/filter_dreams_by_mood.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/get_dreams.dart';
-import 'package:dream_catcher/features/dream/domain/use-cases/save_dream.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/search_dreams.dart';
-import 'package:dream_catcher/features/dream/domain/use-cases/update_dream.dart';
 import 'package:equatable/equatable.dart';
 
 part 'dream_list_event.dart';
@@ -16,8 +14,6 @@ part 'dream_list_state.dart';
 
 class DreamListBloc extends Bloc<DreamListEvent, DreamListState> {
   final GetDreams getDreams;
-  final SaveDream saveDream;
-  final UpdateDream updateDream;
   final DeleteDream deleteDream;
   final SearchDreams searchDreams;
   final FilterDreamsByMood filterDreamsByMood;
@@ -25,8 +21,6 @@ class DreamListBloc extends Bloc<DreamListEvent, DreamListState> {
 
   DreamListBloc({
     required this.getDreams,
-    required this.saveDream,
-    required this.updateDream,
     required this.deleteDream,
     required this.searchDreams,
     required this.filterDreamsByMood,

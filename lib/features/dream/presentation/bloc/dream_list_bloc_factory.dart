@@ -3,9 +3,7 @@ import 'package:dream_catcher/features/dream/domain/use-cases/delete_dream.dart'
 import 'package:dream_catcher/features/dream/domain/use-cases/filter_dreams_by_date.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/filter_dreams_by_mood.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/get_dreams.dart';
-import 'package:dream_catcher/features/dream/domain/use-cases/save_dream.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/search_dreams.dart';
-import 'package:dream_catcher/features/dream/domain/use-cases/update_dream.dart';
 import 'package:dream_catcher/features/dream/presentation/bloc/dream_list_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -17,8 +15,6 @@ class DreamListBlocFactory {
 
     return DreamListBloc(
       getDreams: locator<GetDreams>(),
-      saveDream: locator<SaveDream>(),
-      updateDream: locator<UpdateDream>(),
       deleteDream: locator<DeleteDream>(),
       searchDreams: locator<SearchDreams>(),
       filterDreamsByMood: locator<FilterDreamsByMood>(),
@@ -30,8 +26,6 @@ class DreamListBlocFactory {
   static DreamListBloc createWithRepository(DreamRepositoryImpl repository) {
     return DreamListBloc(
       getDreams: GetDreams(repository),
-      saveDream: SaveDream(repository),
-      updateDream: UpdateDream(repository),
       deleteDream: DeleteDream(repository),
       searchDreams: SearchDreams(repository),
       filterDreamsByMood: FilterDreamsByMood(repository),

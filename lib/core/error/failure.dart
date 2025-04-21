@@ -8,6 +8,18 @@ abstract class Failure extends Equatable {
   List<Object?> get props => properties;
 }
 
-class ServerFailure extends Failure {}
+class ServerFailure extends Failure {
+  final String? message;
+  const ServerFailure({this.message});
 
-class CacheFailure extends Failure {}
+  @override
+  List<Object?> get props => [message];
+}
+
+class CacheFailure extends Failure {
+  final String? message;
+  const CacheFailure({this.message});
+
+  @override
+  List<Object?> get props => [message];
+}

@@ -7,10 +7,12 @@ import 'package:dream_catcher/features/dream/domain/repositories/dream_repositor
 import 'package:dream_catcher/features/dream/domain/use-cases/delete_dream.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/filter_dreams_by_date.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/filter_dreams_by_mood.dart';
+import 'package:dream_catcher/features/dream/domain/use-cases/get_dream.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/get_dreams.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/save_dream.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/search_dreams.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/update_dream.dart';
+import 'package:dream_catcher/features/dream/presentation/bloc/dream_detail_bloc.dart';
 import 'package:dream_catcher/features/dream/presentation/bloc/dream_list_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -81,6 +83,7 @@ void _initRepositories() {
 
 /// 5. 유스케이스 초기화
 void _initUseCases() {
+  sl.registerLazySingleton(() => GetDream(sl<DreamRepository>()));
   sl.registerLazySingleton(() => GetDreams(sl<DreamRepository>()));
   sl.registerLazySingleton(() => SaveDream(sl<DreamRepository>()));
   sl.registerLazySingleton(() => UpdateDream(sl<DreamRepository>()));
@@ -92,11 +95,11 @@ void _initUseCases() {
 
 /// 6. Bloc 초기화
 void _initBloc() {
+  sl.registerFactory(() => DreamDetailBloc(getDream: sl<GetDream>()));
+
   sl.registerFactory(
     () => DreamListBloc(
       getDreams: sl<GetDreams>(),
-      saveDream: sl<SaveDream>(),
-      updateDream: sl<UpdateDream>(),
       deleteDream: sl<DeleteDream>(),
       searchDreams: sl<SearchDreams>(),
       filterDreamsByMood: sl<FilterDreamsByMood>(),

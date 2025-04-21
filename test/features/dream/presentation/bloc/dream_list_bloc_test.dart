@@ -7,9 +7,7 @@ import 'package:dream_catcher/features/dream/domain/use-cases/delete_dream.dart'
 import 'package:dream_catcher/features/dream/domain/use-cases/filter_dreams_by_date.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/filter_dreams_by_mood.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/get_dreams.dart';
-import 'package:dream_catcher/features/dream/domain/use-cases/save_dream.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/search_dreams.dart';
-import 'package:dream_catcher/features/dream/domain/use-cases/update_dream.dart';
 import 'package:dream_catcher/features/dream/presentation/bloc/dream_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -18,8 +16,6 @@ import 'package:mockito/mockito.dart';
 
 @GenerateNiceMocks([
   MockSpec<GetDreams>(),
-  MockSpec<SaveDream>(),
-  MockSpec<UpdateDream>(),
   MockSpec<DeleteDream>(),
   MockSpec<SearchDreams>(),
   MockSpec<FilterDreamsByMood>(),
@@ -29,8 +25,6 @@ import 'dream_list_bloc_test.mocks.dart';
 
 void main() {
   late MockGetDreams mockGetDreams;
-  late MockSaveDream mockSaveDream;
-  late MockUpdateDream mockUpdateDream;
   late MockDeleteDream mockDeleteDream;
   late MockSearchDreams mockSearchDreams;
   late MockFilterDreamsByMood mockFilterDreamsByMood;
@@ -38,8 +32,6 @@ void main() {
 
   setUp(() {
     mockGetDreams = MockGetDreams();
-    mockSaveDream = MockSaveDream();
-    mockUpdateDream = MockUpdateDream();
     mockDeleteDream = MockDeleteDream();
     mockSearchDreams = MockSearchDreams();
     mockFilterDreamsByMood = MockFilterDreamsByMood();
@@ -75,8 +67,6 @@ void main() {
   DreamListBloc buildBloc() {
     return DreamListBloc(
       getDreams: mockGetDreams,
-      saveDream: mockSaveDream,
-      updateDream: mockUpdateDream,
       deleteDream: mockDeleteDream,
       searchDreams: mockSearchDreams,
       filterDreamsByMood: mockFilterDreamsByMood,

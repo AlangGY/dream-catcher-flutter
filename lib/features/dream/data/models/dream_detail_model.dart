@@ -55,7 +55,7 @@ class DreamDetailModel extends Equatable implements Model<DreamDetail> {
       'title': title,
       'date': date.toIso8601String(),
       'mood': mood,
-      'color': color.value.toRadixString(16),
+      'color': color.value,
       'content': content,
       'tags': tags,
       'people': people,

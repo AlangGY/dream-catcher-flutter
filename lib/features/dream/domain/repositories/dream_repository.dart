@@ -6,6 +6,7 @@ import '../entities/dream_list.dart';
 
 abstract class DreamRepository {
   Future<Either<Failure, DreamList>> getDreams();
+  Future<Either<Failure, DreamDetail>> getDream(String dreamId);
   Future<Either<Failure, Unit>> saveDream(DreamDetail dream);
   Future<Either<Failure, Unit>> updateDream(DreamDetail dream);
   Future<Either<Failure, Unit>> deleteDream(String dreamId);

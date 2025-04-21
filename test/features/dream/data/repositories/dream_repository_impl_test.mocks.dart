@@ -8,9 +8,9 @@ import 'dart:async' as _i6;
 import 'package:dream_catcher/features/dream/data/data-sources/dream_data_source.dart'
     as _i5;
 import 'package:dream_catcher/features/dream/data/models/dream_detail_model.dart'
-    as _i4;
-import 'package:dream_catcher/features/dream/data/models/dream_list_item_model.dart'
     as _i3;
+import 'package:dream_catcher/features/dream/data/models/dream_list_item_model.dart'
+    as _i4;
 import 'package:dream_catcher/features/dream/data/models/dream_list_model.dart'
     as _i2;
 import 'package:dream_catcher/features/dream/domain/entities/dream_detail.dart'
@@ -43,9 +43,9 @@ class _FakeDreamListModel_0 extends _i1.SmartFake
         );
 }
 
-class _FakeDreamListItemModel_1 extends _i1.SmartFake
-    implements _i3.DreamListItemModel {
-  _FakeDreamListItemModel_1(
+class _FakeDreamDetailModel_1 extends _i1.SmartFake
+    implements _i3.DreamDetailModel {
+  _FakeDreamDetailModel_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -54,9 +54,9 @@ class _FakeDreamListItemModel_1 extends _i1.SmartFake
         );
 }
 
-class _FakeDreamDetailModel_2 extends _i1.SmartFake
-    implements _i4.DreamDetailModel {
-  _FakeDreamDetailModel_2(
+class _FakeDreamListItemModel_2 extends _i1.SmartFake
+    implements _i4.DreamListItemModel {
+  _FakeDreamListItemModel_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -93,7 +93,32 @@ class MockDreamDataSource extends _i1.Mock implements _i5.DreamDataSource {
       ) as _i6.Future<_i2.DreamListModel>);
 
   @override
-  _i6.Future<void> saveDream(_i4.DreamDetailModel? dream) =>
+  _i6.Future<_i3.DreamDetailModel> getDream(String? dreamId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getDream,
+          [dreamId],
+        ),
+        returnValue:
+            _i6.Future<_i3.DreamDetailModel>.value(_FakeDreamDetailModel_1(
+          this,
+          Invocation.method(
+            #getDream,
+            [dreamId],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i3.DreamDetailModel>.value(_FakeDreamDetailModel_1(
+          this,
+          Invocation.method(
+            #getDream,
+            [dreamId],
+          ),
+        )),
+      ) as _i6.Future<_i3.DreamDetailModel>);
+
+  @override
+  _i6.Future<void> saveDream(_i3.DreamDetailModel? dream) =>
       (super.noSuchMethod(
         Invocation.method(
           #saveDream,
@@ -104,7 +129,7 @@ class MockDreamDataSource extends _i1.Mock implements _i5.DreamDataSource {
       ) as _i6.Future<void>);
 
   @override
-  _i6.Future<void> updateDream(_i4.DreamDetailModel? dream) =>
+  _i6.Future<void> updateDream(_i3.DreamDetailModel? dream) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateDream,
@@ -264,102 +289,102 @@ class MockDreamListModelFactory extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockDreamListItemModelFactory extends _i1.Mock
-    implements _i3.DreamListItemModelFactory {
+    implements _i4.DreamListItemModelFactory {
   @override
-  _i3.DreamListItemModel fromEntity(_i7.DreamListItem? entity) =>
+  _i4.DreamListItemModel fromEntity(_i7.DreamListItem? entity) =>
       (super.noSuchMethod(
         Invocation.method(
           #fromEntity,
           [entity],
         ),
-        returnValue: _FakeDreamListItemModel_1(
+        returnValue: _FakeDreamListItemModel_2(
           this,
           Invocation.method(
             #fromEntity,
             [entity],
           ),
         ),
-        returnValueForMissingStub: _FakeDreamListItemModel_1(
+        returnValueForMissingStub: _FakeDreamListItemModel_2(
           this,
           Invocation.method(
             #fromEntity,
             [entity],
           ),
         ),
-      ) as _i3.DreamListItemModel);
+      ) as _i4.DreamListItemModel);
 
   @override
-  _i3.DreamListItemModel fromJson(Map<String, dynamic>? json) =>
+  _i4.DreamListItemModel fromJson(Map<String, dynamic>? json) =>
       (super.noSuchMethod(
         Invocation.method(
           #fromJson,
           [json],
         ),
-        returnValue: _FakeDreamListItemModel_1(
+        returnValue: _FakeDreamListItemModel_2(
           this,
           Invocation.method(
             #fromJson,
             [json],
           ),
         ),
-        returnValueForMissingStub: _FakeDreamListItemModel_1(
+        returnValueForMissingStub: _FakeDreamListItemModel_2(
           this,
           Invocation.method(
             #fromJson,
             [json],
           ),
         ),
-      ) as _i3.DreamListItemModel);
+      ) as _i4.DreamListItemModel);
 }
 
 /// A class which mocks [DreamDetailModelFactory].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockDreamDetailModelFactory extends _i1.Mock
-    implements _i4.DreamDetailModelFactory {
+    implements _i3.DreamDetailModelFactory {
   @override
-  _i4.DreamDetailModel fromEntity(_i8.DreamDetail? entity) =>
+  _i3.DreamDetailModel fromEntity(_i8.DreamDetail? entity) =>
       (super.noSuchMethod(
         Invocation.method(
           #fromEntity,
           [entity],
         ),
-        returnValue: _FakeDreamDetailModel_2(
+        returnValue: _FakeDreamDetailModel_1(
           this,
           Invocation.method(
             #fromEntity,
             [entity],
           ),
         ),
-        returnValueForMissingStub: _FakeDreamDetailModel_2(
+        returnValueForMissingStub: _FakeDreamDetailModel_1(
           this,
           Invocation.method(
             #fromEntity,
             [entity],
           ),
         ),
-      ) as _i4.DreamDetailModel);
+      ) as _i3.DreamDetailModel);
 
   @override
-  _i4.DreamDetailModel fromJson(Map<String, dynamic>? json) =>
+  _i3.DreamDetailModel fromJson(Map<String, dynamic>? json) =>
       (super.noSuchMethod(
         Invocation.method(
           #fromJson,
           [json],
         ),
-        returnValue: _FakeDreamDetailModel_2(
+        returnValue: _FakeDreamDetailModel_1(
           this,
           Invocation.method(
             #fromJson,
             [json],
           ),
         ),
-        returnValueForMissingStub: _FakeDreamDetailModel_2(
+        returnValueForMissingStub: _FakeDreamDetailModel_1(
           this,
           Invocation.method(
             #fromJson,
             [json],
           ),
         ),
-      ) as _i4.DreamDetailModel);
+      ) as _i3.DreamDetailModel);
 }

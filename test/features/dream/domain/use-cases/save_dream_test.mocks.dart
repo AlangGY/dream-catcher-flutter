@@ -69,6 +69,33 @@ class MockDreamRepository extends _i1.Mock implements _i3.DreamRepository {
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.DreamList>>);
 
   @override
+  _i4.Future<_i2.Either<_i5.Failure, _i7.DreamDetail>> getDream(
+          String? dreamId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getDream,
+          [dreamId],
+        ),
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i7.DreamDetail>>.value(
+            _FakeEither_0<_i5.Failure, _i7.DreamDetail>(
+          this,
+          Invocation.method(
+            #getDream,
+            [dreamId],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<_i2.Either<_i5.Failure, _i7.DreamDetail>>.value(
+                _FakeEither_0<_i5.Failure, _i7.DreamDetail>(
+          this,
+          Invocation.method(
+            #getDream,
+            [dreamId],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, _i7.DreamDetail>>);
+
+  @override
   _i4.Future<_i2.Either<_i5.Failure, _i2.Unit>> saveDream(
           _i7.DreamDetail? dream) =>
       (super.noSuchMethod(
