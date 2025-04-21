@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   final tDreamListItemModel = DreamListItemModel(
+    id: 'dream001',
     title: '바다에서 수영하는 꿈',
     date: DateTime(2024, 3, 15),
     mood: '평화로움',
@@ -17,6 +18,7 @@ void main() {
   );
 
   final tDreamListItem = DreamListItem(
+    id: 'dream001',
     title: '바다에서 수영하는 꿈',
     date: DateTime(2024, 3, 15),
     mood: '평화로움',
@@ -51,6 +53,7 @@ void main() {
 
       // assert
       final Map<String, dynamic> expectedJson = {
+        'id': 'dream001',
         'title': '바다에서 수영하는 꿈',
         'date': '2024-03-15T00:00:00.000',
         'mood': '평화로움',

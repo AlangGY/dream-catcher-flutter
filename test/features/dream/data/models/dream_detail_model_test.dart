@@ -47,7 +47,7 @@ void main() {
       final expectedMap = {
         'id': 'dream001',
         'title': '바다에서 수영하는 꿈',
-        'date': '2024-03-15T00:00:00.000',
+        'date': '2024-03-15T00:00:00.000Z',
         'mood': '평화로움',
         'color': 'ff6fafcc',
         'content':

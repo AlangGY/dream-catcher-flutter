@@ -46,6 +46,7 @@ void main() {
 
   group('getDreams', () {
     final tDreamListItem = DreamListItem(
+      id: 'dream001',
       title: '테스트 꿈',
       date: DateTime(2024, 3, 15),
       mood: '평화로움',
@@ -56,6 +57,7 @@ void main() {
     final tDreamList = DreamList(dreams: [tDreamListItem]);
 
     final tDreamListItemModel = DreamListItemModel(
+      id: 'dream001',
       title: '테스트 꿈',
       date: DateTime(2024, 3, 15),
       mood: '평화로움',
@@ -175,6 +177,7 @@ void main() {
     final tQuery = '테스트';
 
     final tDreamListItem = DreamListItem(
+      id: 'dream001',
       title: '테스트 꿈',
       date: DateTime(2024, 3, 15),
       mood: '평화로움',
@@ -185,6 +188,7 @@ void main() {
     final tDreamList = DreamList(dreams: [tDreamListItem]);
 
     final tDreamListItemModel = DreamListItemModel(
+      id: 'dream001',
       title: '테스트 꿈',
       date: DateTime(2024, 3, 15),
       mood: '평화로움',

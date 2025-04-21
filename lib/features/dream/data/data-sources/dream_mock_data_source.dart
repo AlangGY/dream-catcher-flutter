@@ -30,6 +30,7 @@ class DreamMockDataSource implements DreamDataSource {
   Future<void> saveDream(DreamDetailModel dream) async {
     await Future.delayed(const Duration(milliseconds: 500));
     final dreamListItem = DreamListItemModel(
+        id: dream.id,
         title: dream.title,
         date: dream.date,
         mood: dream.mood,
@@ -44,6 +45,7 @@ class DreamMockDataSource implements DreamDataSource {
     final index = _dreams.dreams.indexWhere((d) => d.title == dream.title);
     if (index != -1) {
       final dreamListItem = DreamListItemModel(
+          id: dream.id,
           title: dream.title,
           date: dream.date,
           mood: dream.mood,

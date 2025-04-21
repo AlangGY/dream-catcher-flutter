@@ -47,6 +47,7 @@ void main() {
   });
 
   final tDream = DreamListItem(
+    id: 'dream001',
     title: '바다에서 수영하는 꿈',
     date: DateTime(2024, 3, 15),
     mood: '평화로움',

@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 class DreamListItemModel extends Equatable implements Model<DreamListItem> {
+  final String id;
   final String title;
   final DateTime date;
   final String mood;
@@ -11,6 +12,7 @@ class DreamListItemModel extends Equatable implements Model<DreamListItem> {
   final String content;
 
   const DreamListItemModel({
+    required this.id,
     required this.title,
     required this.date,
     required this.mood,
@@ -25,6 +27,7 @@ class DreamListItemModel extends Equatable implements Model<DreamListItem> {
   @override
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'title': title,
       'date': date.toIso8601String(),
       'mood': mood,
@@ -36,6 +39,7 @@ class DreamListItemModel extends Equatable implements Model<DreamListItem> {
   @override
   DreamListItem toEntity() {
     return DreamListItem(
+      id: id,
       title: title,
       date: date,
       mood: mood,
@@ -57,12 +61,14 @@ class DreamListItemModelFactory
       mood: entity.mood,
       color: entity.color,
       content: entity.content,
+      id: entity.id,
     );
   }
 
   @override
   DreamListItemModel fromJson(Map<String, dynamic> json) {
     return DreamListItemModel(
+      id: json['id'],
       title: json['title'],
       date: DateTime.parse(json['date']),
       mood: json['mood'],

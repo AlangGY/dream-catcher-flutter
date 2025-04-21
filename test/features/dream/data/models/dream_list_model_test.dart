@@ -10,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   final tDreamListItemModel1 = DreamListItemModel(
+    id: 'dream001',
     title: '바다에서 수영하는 꿈',
     date: DateTime(2024, 3, 15),
     mood: '평화로움',
@@ -18,6 +19,7 @@ void main() {
   );
 
   final tDreamListItemModel2 = DreamListItemModel(
+    id: 'dream002',
     title: '하늘을 나는 꿈',
     date: DateTime(2024, 3, 12),
     mood: '신남',
