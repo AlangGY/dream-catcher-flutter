@@ -217,10 +217,12 @@ class DreamListContent extends StatelessWidget {
           return DreamListItem(
             dream: dream,
             onTap: () {
-              context.push(AppRoutePath.dreamDetail);
+              context.push(
+                '${AppRoutePath.dreamDetail}/${dream.id}',
+              );
             },
             onDelete: () {
-              onDeleteConfirm(context, dream.title);
+              onDeleteConfirm(context, dream.id);
             },
           );
         },

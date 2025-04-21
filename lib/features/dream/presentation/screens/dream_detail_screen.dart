@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import '../widgets/widgets.dart';
 
 class DreamDetailScreen extends StatefulWidget {
-  const DreamDetailScreen({super.key});
+  final String dreamId;
+
+  const DreamDetailScreen({super.key, required this.dreamId});
 
   @override
   State<DreamDetailScreen> createState() => _DreamDetailScreenState();
@@ -18,6 +20,7 @@ class _DreamDetailScreenState extends State<DreamDetailScreen> {
   void initState() {
     super.initState();
     // 임시로 샘플 데이터 사용
+    // 나중에 widget.dreamId를 사용하여 실제 꿈 데이터를 가져와야 함
     dream = DreamDetail.sample();
   }
 

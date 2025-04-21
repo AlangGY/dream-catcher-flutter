@@ -100,9 +100,12 @@ final routes = [
         ],
       ),
       GoRoute(
-        path: AppRoutePath.dreamDetail,
+        path: '${AppRoutePath.dreamDetail}/:id',
         name: AppRouteName.dreamDetail,
-        builder: (context, state) => const DreamDetailScreen(),
+        builder: (context, state) {
+          final String dreamId = state.pathParameters['id'] ?? '';
+          return DreamDetailScreen(dreamId: dreamId);
+        },
       ),
       GoRoute(
         path: AppRoutePath.dreamInterview,
