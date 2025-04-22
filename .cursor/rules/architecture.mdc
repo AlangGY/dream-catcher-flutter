@@ -1,0 +1,37 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# 클린 아키텍처 개요
+
+Dream Catcher 앱은 클린 아키텍처 원칙을 따릅니다. 이 앱은 다음과 같은 레이어로 구성되어 있습니다:
+
+## 레이어 구조
+
+1. **도메인 레이어** - 비즈니스 로직 캡슐화
+   - `lib/features/*/domain/entities/` - 핵심 비즈니스 모델
+   - `lib/features/*/domain/repositories/` - 레포지토리 인터페이스
+   - `lib/features/*/domain/usecases/` - 비즈니스 유스케이스
+
+2. **데이터 레이어** - 데이터 소스 관리 및 레포지토리 구현
+   - `lib/features/*/data/models/` - 데이터 모델
+   - `lib/features/*/data/repositories/` - 레포지토리 구현
+   - `lib/features/*/data/datasources/` - 로컬/원격 데이터 소스
+
+3. **프레젠테이션 레이어** - UI 및 상태 관리
+   - `lib/features/*/presentation/bloc/` - BLoC 상태 관리
+   - `lib/features/*/presentation/screens/` - 화면 UI
+   - `lib/features/*/presentation/widgets/` - 재사용 가능한 위젯
+
+## 의존성 방향
+각 레이어는 안쪽 레이어(더 추상적인 레이어)에만 의존합니다:
+- 프레젠테이션 → 도메인
+- 데이터 → 도메인
+
+도메인 레이어는 다른 어떤 레이어에도 의존하지 않습니다.
+
+## 주요 엔트리 포인트
+- [main.dart](mdc:lib/main.dart) - 앱의 시작점
+- [injection_container.dart](mdc:lib/injection_container.dart) - 의존성 주입 설정
+- [router.dart](mdc:lib/router.dart) - 앱 라우팅 설정

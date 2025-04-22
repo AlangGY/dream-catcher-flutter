@@ -1,0 +1,77 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# AI 역할 지침
+
+이 프로젝트에서 AI는 다음과 같은 역할과 지침을 따르게 됩니다.
+
+## 기본 정보
+- 프로젝트: 드림 캐쳐 (꿈 기록 및 AI 분석 앱)
+- 기술 스택: Flutter, Dart, 클린 아키텍처, BLoC 패턴
+- 개발 접근 방식: 테스트 주도 개발 (TDD)
+
+## 클린 아키텍처 구조
+프로젝트는 다음과 같은 레이어로 구성된 클린 아키텍처를 따릅니다:
+
+1. **도메인 레이어**
+   - Entities: 핵심 비즈니스 모델 (Interview, Message 등)
+   - Use Cases: 비즈니스 로직 캡슐화 (AddMessage, GetBotResponse 등)
+   - Repositories: 데이터 액세스 인터페이스 정의
+
+2. **데이터 레이어**
+   - Repositories Implementation: 도메인에 정의된 인터페이스 구현
+   - Data Sources: 로컬/원격 데이터 소스 관리
+   - Models: API/DB와의 통신을 위한 데이터 모델
+
+3. **프레젠테이션 레이어**
+   - Screens: UI 화면 구성
+   - Widgets: 재사용 가능한 UI 컴포넌트
+   - BLoCs: 비즈니스 로직과 UI 연결, 상태 관리
+
+4. **공통 요소**
+   - Dependency Injection: GetIt을 통한 의존성 주입
+   - Error Handling: 실패 처리 및 오류 전파 메커니즘
+
+이 구조는 각 레이어가 안쪽 레이어에만 의존하도록 하여 테스트 용이성과 유지보수성을 높입니다.
+
+## 중점 지원 영역
+1. **클린 아키텍처 구현 지원**
+   - 레이어 간 분리 및 의존성 역전 원칙 유지
+   - UseCase, Repository, Entity 설계 조언
+   - 의존성 주입 최적화 및 관리
+
+2. **상태 관리 최적화**
+   - BLoC 패턴 구현 개선
+   - 상태 변화 및 이벤트 처리 최적화
+   - 비동기 작업 처리 안정화
+
+3. **UI/UX 개선**
+   - 인터페이스 구성요소 최적화
+   - 애니메이션 및 사용자 경험 향상
+   - 접근성 및 사용성 개선
+
+4. **테스트 작성 지원**
+   - 유닛/위젯 테스트 작성 가이드
+   - 모킹 및 테스트 환경 설정
+   - 테스트 케이스 설계 최적화
+
+## 협업 방식
+- 코드 분석 및 버그 진단 제공
+- 코드 품질 및 아키텍처 개선 제안
+- 구현 방식에 대한 대안 제시
+- 한국어로 소통하며 명확한 설명 제공
+- 코드 작성 시 필요한 경우에만 주석 추가
+
+## 특별 고려사항
+- 비동기 작업 및 상태 관리에 특별한 주의
+- Flutter의 위젯 생명주기 고려
+- 메모리 및 성능 최적화 고려
+- 코드의 가독성과 유지보수성 강조
+- 각 레이어 간 명확한 경계 유지
+
+## 참조 파일
+- [dream_interview_bloc.dart](mdc:lib/features/dream/presentation/bloc/dream_interview_bloc.dart) - BLoC 패턴 구현 예시
+- [dream_interview_screen.dart](mdc:lib/features/dream/presentation/screens/dream_interview_screen.dart) - UI 구현 예시
+- [injection_container.dart](mdc:lib/injection_container.dart) - 의존성 주입 설정

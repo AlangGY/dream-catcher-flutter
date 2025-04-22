@@ -1,0 +1,107 @@
+---
+description: 
+globs: *_test.dart
+alwaysApply: false
+---
+# 테스트 가이드
+
+Dream Catcher 앱은 테스트 주도 개발(TDD) 접근 방식을 채택합니다.
+
+## 테스트 구조
+
+테스트는 프로덕션 코드 구조를 미러링합니다:
+```
+test/
+├── features/
+│   ├── dream/
+│   │   ├── data/
+│   │   │   ├── datasources/
+│   │   │   ├── models/
+│   │   │   └── repositories/
+│   │   ├── domain/
+│   │   │   ├── usecases/
+│   │   │   └── repositories/
+│   │   └── presentation/
+│   │       ├── bloc/
+│   │       └── pages/
+│   └── ...
+└── ...
+```
+
+## 테스트 종류
+
+1. **유닛 테스트**
+   - UseCase
+   - Repository
+   - DataSource
+   - BLoC
+   - Model
+
+2. **위젯 테스트**
+   - 중요한 UI 구성 요소
+
+3. **통합 테스트**
+   - 전체 기능 흐름
+
+## 테스트 패턴
+
+### BLoC 테스트
+
+BLoC 테스트는 `bloc_test` 패키지를 사용합니다:
+
+```dart
+blocTest<YourBloc, YourState>(
+  '테스트 설명',
+  build: () {
+    // 의존성 모킹
+    when(mockUseCase(any)).thenAnswer((_) async => Right(testData));
+    return YourBloc(useCase: mockUseCase);
+  },
+  act: (bloc) => bloc.add(YourEvent()),
+  expect: () => [
+    YourLoadingState(),
+    YourLoadedState(data: testData),
+  ],
+  verify: (_) {
+    verify(mockUseCase(any)).called(1);
+  },
+);
+```
+
+### Repository 테스트
+
+```dart
+test('성공 케이스', () async {
+  // 설정
+  when(mockDataSource.someMethod(any)).thenAnswer((_) async => tModel);
+  
+  // 실행
+  final result = await repository.someMethod(tParams);
+  
+  // 검증
+  expect(result, Right(tEntity));
+  verify(mockDataSource.someMethod(tParams)).called(1);
+});
+```
+
+## 모킹
+
+모킹에는 `mockito` 패키지를 사용합니다:
+
+```dart
+@GenerateMocks([YourUseCase, YourRepository])
+void main() {
+  late MockYourUseCase mockUseCase;
+  
+  setUp(() {
+    mockUseCase = MockYourUseCase();
+  });
+  
+  // 테스트...
+}
+```
+
+## 중요한 테스트 파일
+
+- [dream_interview_bloc_test.dart](mdc:test/features/dream/presentation/bloc/dream_interview_bloc_test.dart) - BLoC 테스트 예시
+- [add_message_test.dart](mdc:test/features/dream/domain/usecases/add_message_test.dart) - UseCase 테스트 예시

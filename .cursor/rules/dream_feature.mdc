@@ -1,0 +1,59 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Dream 기능 가이드
+
+Dream 기능은 사용자의 꿈을 기록하고 AI와 대화할 수 있는 기능을 제공합니다.
+
+## 주요 구성 요소
+
+### 도메인 레이어
+
+1. **Entities**
+   - `Interview` - 꿈 인터뷰 세션
+   - `Message` - 대화 메시지
+   - `SpeakerType` - 메시지 발신자 타입 (me, bot)
+
+2. **Use Cases**
+   - `StartInterview` - 새로운 인터뷰 시작
+   - `AddMessage` - 인터뷰에 메시지 추가
+   - `GetBotResponse` - AI 봇 응답 가져오기
+   - `ConvertVoiceToText` - 음성을 텍스트로 변환
+
+### 데이터 레이어
+
+1. **Repositories**
+   - `DreamRepository` - 꿈 관련 데이터 액세스 인터페이스
+   - `DreamRepositoryImpl` - 인터페이스 구현
+
+2. **Data Sources**
+   - `DreamLocalDataSource` - 로컬 저장소 액세스
+   - `DreamRemoteDataSource` - 원격 API 액세스
+
+### 프레젠테이션 레이어
+
+1. **BLoC**
+   - `DreamInterviewBloc` - 꿈 인터뷰 상태 관리
+   - `DreamInterviewEvent` - 인터뷰 이벤트
+   - `DreamInterviewState` - 인터뷰 상태
+
+2. **Screens**
+   - `DreamInterviewScreen` - 인터뷰 UI 화면
+
+3. **Widgets**
+   - `ChatMessage` - 채팅 메시지 위젯
+   - `DreamThinkingIndicator` - 봇 응답 중 표시기
+
+## 기능 흐름
+
+1. 사용자가 DreamInterviewScreen에서 새 인터뷰 시작
+2. AddMessageEvent 발생 → DreamInterviewBloc에서 처리
+3. 사용자 메시지가 추가되면 자동으로 봇 응답 요청
+4. 봇 응답을 받으면 UI 업데이트
+
+## 주요 파일
+- [dream_interview_screen.dart](mdc:lib/features/dream/presentation/screens/dream_interview_screen.dart) - 인터뷰 화면
+- [dream_interview_bloc.dart](mdc:lib/features/dream/presentation/bloc/dream_interview_bloc.dart) - 인터뷰 BLoC
+- [interview.dart](mdc:lib/features/dream/domain/entities/interview.dart) - 인터뷰 모델
