@@ -6,6 +6,7 @@ class DreamInputArea extends StatelessWidget {
   final Function(String) onSubmitted;
   final bool isRecording;
   final VoidCallback onRecordPressed;
+  final VoidCallback onRealTimeModePressed;
 
   const DreamInputArea({
     super.key,
@@ -13,6 +14,7 @@ class DreamInputArea extends StatelessWidget {
     required this.onSubmitted,
     required this.isRecording,
     required this.onRecordPressed,
+    required this.onRealTimeModePressed,
   });
 
   void _handleSubmit() {
@@ -25,7 +27,12 @@ class DreamInputArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+      padding: const EdgeInsets.only(
+        left: 16.0,
+        right: 16.0,
+        top: 12.0,
+        bottom: 36.0,
+      ),
       decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -62,17 +69,22 @@ class DreamInputArea extends StatelessWidget {
             icon: Icon(Icons.send, color: Theme.of(context).primaryColor),
             onPressed: _handleSubmit,
           ),
+          IconButton(
+            icon: Icon(
+              isRecording ? Icons.mic : Icons.mic_none,
+              color: Theme.of(context).primaryColor,
+            ),
+            onPressed: onRecordPressed,
+          ),
           FloatingActionButton(
             mini: true,
-            backgroundColor:
-                isRecording ? Colors.red : Theme.of(context).primaryColor,
-            elevation: 2,
-            onPressed: onRecordPressed,
+            backgroundColor: Theme.of(context).primaryColor,
+            onPressed: onRealTimeModePressed,
             child: Icon(
-              isRecording ? Icons.mic : Icons.mic_none,
-              color: Colors.white,
+              Icons.graphic_eq,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
-          ),
+          )
         ],
       ),
     );

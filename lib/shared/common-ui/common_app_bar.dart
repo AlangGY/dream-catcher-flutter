@@ -46,6 +46,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                   },
                 )
               : null),
+      automaticallyImplyLeading: automaticallyImplyLeading,
       actions: actions,
       bottom: bottom,
     );

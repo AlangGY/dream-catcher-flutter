@@ -1,15 +1,15 @@
 import 'package:dream_catcher/shared/common-ui/common-ui.dart';
 import 'package:flutter/material.dart';
 
-class ChatMessage extends StatelessWidget {
+class DreamChatMessage extends StatelessWidget {
   final String text;
   final bool isUserMessage;
 
-  const ChatMessage({
-    Key? key,
+  const DreamChatMessage({
+    super.key,
     required this.text,
     required this.isUserMessage,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

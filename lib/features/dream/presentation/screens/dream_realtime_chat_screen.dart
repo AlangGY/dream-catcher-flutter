@@ -1,12 +1,10 @@
-import 'dart:math';
-
-import 'package:dream_catcher/router.dart';
 import 'package:dream_catcher/shared/common-ui/common-ui.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
+import '../widgets/widgets.dart';
 
 class DreamRealtimeChatScreen extends StatefulWidget {
-  const DreamRealtimeChatScreen({Key? key}) : super(key: key);
+  const DreamRealtimeChatScreen({super.key});
 
   @override
   State<DreamRealtimeChatScreen> createState() =>
@@ -66,13 +64,6 @@ class _DreamRealtimeChatScreenState extends State<DreamRealtimeChatScreen>
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: Icon(Icons.file_download_outlined,
-                color: Theme.of(context).primaryColor),
-            onPressed: () {
-              // 저장 기능
-            },
-          ),
-          IconButton(
             icon: Icon(Icons.settings, color: Theme.of(context).primaryColor),
             onPressed: () {
               // 설정 기능
@@ -88,49 +79,9 @@ class _DreamRealtimeChatScreenState extends State<DreamRealtimeChatScreen>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // 파란색 원형 구름 이미지 (애니메이션)
-                  AnimatedBuilder(
-                    animation: _animationController,
-                    builder: (context, child) {
-                      return Container(
-                        width: 160,
-                        height: 160,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Theme.of(context)
-                                  .primaryColor
-                                  .withOpacity(0.4),
-                              blurRadius: 16,
-                              spreadRadius: 4,
-                            ),
-                          ],
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              Theme.of(context).primaryColor.withOpacity(0.2),
-                              Theme.of(context).primaryColor.withOpacity(0.3),
-                              Theme.of(context).primaryColor.withOpacity(0.4),
-                            ],
-                            stops: [
-                              0.2,
-                              0.5 +
-                                  0.1 *
-                                      sin(_animationController.value * 2 * pi),
-                              0.8,
-                            ],
-                          ),
-                        ),
-                        child: _isListening
-                            ? _buildAnimatedWaves()
-                            : Icon(
-                                Icons.cloud,
-                                size: 80,
-                                color: Colors.white.withOpacity(0.7),
-                              ),
-                      );
-                    },
+                  DreamAnimatedCloud(
+                    animationController: _animationController,
+                    isListening: _isListening,
                   ),
                   // 음성 인식 텍스트
                 ],
@@ -145,55 +96,14 @@ class _DreamRealtimeChatScreenState extends State<DreamRealtimeChatScreen>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // 마이크 버튼
-                GestureDetector(
+                const SizedBox(width: 80),
+                DreamMicButton(
+                  isListening: _isListening,
                   onTap: _toggleListening,
-                  child: Container(
-                    width: 70,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      color: _isListening
-                          ? Colors.red
-                          : Theme.of(context).primaryColor,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: (_isListening
-                                  ? Colors.red
-                                  : Theme.of(context).primaryColor)
-                              .withOpacity(0.3),
-                          blurRadius: 10,
-                          spreadRadius: 2,
-                        ),
-                      ],
-                    ),
-                    child: Icon(
-                      _isListening ? Icons.mic : Icons.mic_none,
-                      color: Colors.white,
-                      size: 30,
-                    ),
-                  ),
                 ),
                 const SizedBox(width: 30),
                 // 닫기 버튼
-                Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                    icon: Icon(Icons.close,
-                        color: Theme.of(context).primaryColor.withOpacity(0.5)),
-                    onPressed: () {
-                      try {
-                        context.pop();
-                      } catch (e) {
-                        context.go(AppRoutePath.home);
-                      }
-                    },
-                  ),
-                ),
+                const DreamCloseButton(),
               ],
             ),
           ),
@@ -201,47 +111,4 @@ class _DreamRealtimeChatScreenState extends State<DreamRealtimeChatScreen>
       ),
     );
   }
-
-  Widget _buildAnimatedWaves() {
-    return CustomPaint(
-      painter: WavePainter(
-        animation: _animationController,
-      ),
-      child: Container(),
-    );
-  }
-}
-
-class WavePainter extends CustomPainter {
-  final Animation<double> animation;
-
-  WavePainter({required this.animation}) : super(repaint: animation);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final centerX = size.width / 2;
-    final centerY = size.height / 2;
-    final radius = min(centerX, centerY);
-
-    for (int i = 0; i < 3; i++) {
-      final paint = Paint()
-        ..color = Colors.white.withOpacity(0.3 - (i * 0.1))
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 3;
-
-      final progress = (animation.value + (i * 0.2)) % 1.0;
-      final currentRadius = radius * progress * 1.2;
-
-      if (currentRadius > 0) {
-        canvas.drawCircle(
-          Offset(centerX, centerY),
-          currentRadius,
-          paint,
-        );
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }

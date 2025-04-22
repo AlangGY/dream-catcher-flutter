@@ -1,9 +1,11 @@
 import 'package:dream_catcher/features/dream/domain/entities/dream_interview.dart';
 import 'package:dream_catcher/features/dream/presentation/bloc/dream_interview_bloc.dart';
 import 'package:dream_catcher/injection_container.dart';
+import 'package:dream_catcher/router.dart';
 import 'package:dream_catcher/shared/common-ui/common-ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../widgets/widgets.dart';
 
@@ -121,6 +123,10 @@ class _DreamInterviewContentState extends State<_DreamInterviewContent>
     });
   }
 
+  void _handleRealTimeMode() {
+    context.push(AppRoutePath.dreamRealtimeChat);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<DreamInterviewBloc, DreamInterviewState>(
@@ -221,6 +227,7 @@ class _DreamInterviewContentState extends State<_DreamInterviewContent>
                 onSubmitted: _handleSubmitted,
                 isRecording: _isRecording || isVoiceRecognizing,
                 onRecordPressed: _toggleRecording,
+                onRealTimeModePressed: _handleRealTimeMode,
               ),
             ],
           ),
@@ -239,7 +246,7 @@ class _DreamInterviewContentState extends State<_DreamInterviewContent>
     bool showAdditional = false;
 
     if (isVoiceRecognizing) {
-      additionalWidget = _buildVoiceRecognizingIndicator();
+      additionalWidget = const VoiceRecognizingIndicator();
       showAdditional = true;
     } else if (isBotThinking) {
       additionalWidget = DreamThinkingIndicator(
@@ -258,30 +265,11 @@ class _DreamInterviewContentState extends State<_DreamInterviewContent>
         }
 
         final message = _messages[index];
-        return ChatMessage(
+        return DreamChatMessage(
           text: message.content,
           isUserMessage: message.speakerType == SpeakerType.me,
         );
       },
-    );
-  }
-
-  Widget _buildVoiceRecognizingIndicator() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
-      padding: const EdgeInsets.all(16.0),
-      alignment: Alignment.center,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.mic, color: Theme.of(context).primaryColor),
-          const SizedBox(width: 8),
-          Text(
-            '음성을 인식하는 중...',
-            style: TextStyle(color: Theme.of(context).primaryColor),
-          ),
-        ],
-      ),
     );
   }
 }
