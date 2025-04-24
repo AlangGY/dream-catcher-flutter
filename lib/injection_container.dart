@@ -1,5 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dream_catcher/core/network/network_info.dart';
+import 'package:dream_catcher/core/webrtc/index.dart';
+import 'package:dream_catcher/core/webrtc/openai_realtime_api_service.dart';
 import 'package:dream_catcher/features/dream/data/data-sources/dream_data_source.dart';
 import 'package:dream_catcher/features/dream/data/data-sources/dream_interview_data_source.dart';
 import 'package:dream_catcher/features/dream/data/data-sources/dream_interview_mock_data_source.dart';
@@ -25,11 +27,13 @@ import 'package:dream_catcher/features/dream/domain/use-cases/update_dream.dart'
 import 'package:dream_catcher/features/dream/presentation/bloc/dream_detail_bloc.dart';
 import 'package:dream_catcher/features/dream/presentation/bloc/dream_interview_bloc.dart';
 import 'package:dream_catcher/features/dream/presentation/bloc/dream_list_bloc.dart';
+import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
+import 'package:webrtc_interface/webrtc_interface.dart' show Navigator;
 
 /// Service Locator
 final GetIt sl = GetIt.instance;
@@ -72,6 +76,48 @@ void _initCore() {
     () => NetworkInfoImpl(
       connectivity: sl<Connectivity>(),
       internetConnectionChecker: sl<InternetConnectionChecker>(),
+    ),
+  );
+
+  // WebRTC 관련 서비스 등록
+  _initWebRtcServices();
+}
+
+/// WebRTC 서비스 초기화
+void _initWebRtcServices() async {
+  sl.registerLazySingleton<MediaDevices>(() => MediaDevices());
+  final configuration = <String, dynamic>{
+    'iceServers': [
+      {'urls': 'stun:stun.l.google.com:19302'},
+    ],
+  };
+  final peerConnection = await createPeerConnection(configuration);
+
+  sl.registerLazySingleton<RTCPeerConnection>(() => peerConnection);
+
+  // OpenAI WebRTC 클라이언트 등록
+  sl.registerFactory<WebRtcClient>(
+    () => OpenAIWebRtcClient(
+      enableLogging: true,
+      peerConnection: sl<RTCPeerConnection>(),
+      navigator: sl<Navigator>(),
+      apiService: sl<OpenAIRealtimeApiService>(),
+    ),
+  );
+
+  // WebRTC 서비스 등록
+  sl.registerLazySingleton<WebRtcService>(
+    () => WebRtcService(
+      client: sl<WebRtcClient>(),
+    ),
+  );
+
+  // OpenAI Realtime API 서비스 등록
+  sl.registerFactory<OpenAIRealtimeApiService>(
+    () => OpenAIRealtimeApiService(
+      apiKey: const String.fromEnvironment('OPENAI_API_KEY',
+          defaultValue: '<YOUR_API_KEY>'),
+      model: 'gpt-4o',
     ),
   );
 }
