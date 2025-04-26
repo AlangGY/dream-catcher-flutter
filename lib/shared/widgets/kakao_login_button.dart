@@ -5,10 +5,10 @@ class KakaoLoginButton extends StatelessWidget {
   final double height;
 
   const KakaoLoginButton({
-    Key? key,
+    super.key,
     required this.onPressed,
     this.height = 56,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

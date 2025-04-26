@@ -10,7 +10,6 @@ import 'package:mockito/mockito.dart';
 
 @GenerateNiceMocks([
   MockSpec<DreamInterviewDataSource>(),
-  MockSpec<DreamInterviewModelFactory>(),
   MockSpec<DreamInterviewMessageModelFactory>(),
 ])
 import 'dream_interview_repository_impl_test.mocks.dart';
@@ -18,17 +17,14 @@ import 'dream_interview_repository_impl_test.mocks.dart';
 void main() {
   late DreamInterviewRepositoryImpl repository;
   late MockDreamInterviewDataSource mockDataSource;
-  late MockDreamInterviewModelFactory mockModelFactory;
   late MockDreamInterviewMessageModelFactory mockMessageModelFactory;
 
   setUp(() {
     mockDataSource = MockDreamInterviewDataSource();
-    mockModelFactory = MockDreamInterviewModelFactory();
     mockMessageModelFactory = MockDreamInterviewMessageModelFactory();
 
     repository = DreamInterviewRepositoryImpl(
       dataSource: mockDataSource,
-      modelFactory: mockModelFactory,
       messageFactory: mockMessageModelFactory,
     );
   });
@@ -36,14 +32,14 @@ void main() {
   group('startInterview', () {
     final tInterviewModel = DreamInterviewModel(
       id: 'interview1',
-      messages: [],
+      messages: const [],
       date: DateTime(2024, 1, 1),
       isCompleted: false,
     );
 
     final tInterview = DreamInterview(
       id: 'interview1',
-      messages: [],
+      messages: const [],
       date: DateTime(2024, 1, 1),
       isCompleted: false,
     );
@@ -83,20 +79,20 @@ void main() {
   });
 
   group('addMessage', () {
-    final tInterviewId = 'interview1';
-    final tSpeakerType = SpeakerType.me;
-    final tContent = '안녕하세요';
+    const tInterviewId = 'interview1';
+    const tSpeakerType = SpeakerType.me;
+    const tContent = '안녕하세요';
 
     final tInterviewModel = DreamInterviewModel(
       id: tInterviewId,
-      messages: [],
+      messages: const [],
       date: DateTime(2024, 1, 1),
       isCompleted: false,
     );
 
     final tInterview = DreamInterview(
       id: tInterviewId,
-      messages: [],
+      messages: const [],
       date: DateTime(2024, 1, 1),
       isCompleted: false,
     );
@@ -139,7 +135,7 @@ void main() {
   });
 
   group('getBotResponse', () {
-    final tInterviewId = 'interview1';
+    const tInterviewId = 'interview1';
     final tMessage = DreamInterviewMessage(
       id: 'message1',
       speakerType: SpeakerType.me,
@@ -154,7 +150,7 @@ void main() {
     );
     final tPreviousMessages = [tMessage];
     final tMessageModels = [tMessageModel];
-    final tBotResponse = '안녕하세요, 무엇을 도와드릴까요?';
+    const tBotResponse = '안녕하세요, 무엇을 도와드릴까요?';
 
     test(
       '봇 응답을 성공적으로 가져오면 응답 문자열을 반환해야 한다',
@@ -170,7 +166,7 @@ void main() {
             await repository.getBotResponse(tInterviewId, tPreviousMessages);
 
         // assert
-        expect(result, Right(tBotResponse));
+        expect(result, const Right(tBotResponse));
         verify(mockMessageModelFactory.fromEntity(tMessage));
         verify(mockDataSource.getBotResponse(tInterviewId, tMessageModels));
         verifyNoMoreInteractions(mockDataSource);
@@ -200,7 +196,7 @@ void main() {
   });
 
   group('completeInterview', () {
-    final tInterviewId = 'interview1';
+    const tInterviewId = 'interview1';
 
     test(
       '인터뷰를 성공적으로 완료하면 Unit을 반환해야 한다',
@@ -238,17 +234,17 @@ void main() {
   });
 
   group('getCurrentInterview', () {
-    final tInterviewId = 'interview1';
+    const tInterviewId = 'interview1';
     final tInterviewModel = DreamInterviewModel(
       id: tInterviewId,
-      messages: [],
+      messages: const [],
       date: DateTime(2024, 1, 1),
       isCompleted: false,
     );
 
     final tInterview = DreamInterview(
       id: tInterviewId,
-      messages: [],
+      messages: const [],
       date: DateTime(2024, 1, 1),
       isCompleted: false,
     );
@@ -290,7 +286,7 @@ void main() {
 
   group('convertVoiceToText', () {
     final tAudioData = [1, 2, 3, 4, 5];
-    final tText = '안녕하세요';
+    const tText = '안녕하세요';
 
     test(
       '음성을 성공적으로 텍스트로 변환하면 텍스트 문자열을 반환해야 한다',
@@ -303,7 +299,7 @@ void main() {
         final result = await repository.convertVoiceToText(tAudioData);
 
         // assert
-        expect(result, Right(tText));
+        expect(result, const Right(tText));
         verify(mockDataSource.convertVoiceToText(tAudioData));
         verifyNoMoreInteractions(mockDataSource);
       },

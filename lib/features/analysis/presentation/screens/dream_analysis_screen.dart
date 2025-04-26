@@ -1,8 +1,8 @@
-import 'package:dream_catcher/shared/common-ui/common-ui.dart';
+import 'package:dream_catcher/shared/common-ui/common_ui.dart';
 import 'package:flutter/material.dart';
 
 class DreamAnalysisScreen extends StatefulWidget {
-  const DreamAnalysisScreen({Key? key}) : super(key: key);
+  const DreamAnalysisScreen({super.key});
 
   @override
   State<DreamAnalysisScreen> createState() => _DreamAnalysisScreenState();
@@ -114,7 +114,7 @@ class _DreamAnalysisScreenState extends State<DreamAnalysisScreen>
 
   Widget _buildMonthlyAnalysis() {
     // 월간 분석 화면 (주간과 유사하지만 데이터만 다름)
-    return Center(
+    return const Center(
       child: Text(
         '월간 분석 준비 중...',
         style: AppTextStyles.caption,
@@ -124,7 +124,7 @@ class _DreamAnalysisScreenState extends State<DreamAnalysisScreen>
 
   Widget _buildYearlyAnalysis() {
     // 연간 분석 화면 (주간과 유사하지만 데이터만 다름)
-    return Center(
+    return const Center(
       child: Text(
         '연간 분석 준비 중...',
         style: AppTextStyles.caption,
@@ -208,7 +208,7 @@ class _DreamAnalysisScreenState extends State<DreamAnalysisScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionTitle(
+        const SectionTitle(
           title: '감정 분포',
         ),
         CommonCard(
@@ -234,7 +234,7 @@ class _DreamAnalysisScreenState extends State<DreamAnalysisScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionTitle(
+        const SectionTitle(
           title: '꿈 테마',
         ),
         CommonCard(
@@ -297,7 +297,7 @@ class _DreamAnalysisScreenState extends State<DreamAnalysisScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionTitle(
+        const SectionTitle(
           title: '요일별 꿈 기록',
         ),
         CommonCard(
@@ -359,7 +359,7 @@ class _DreamAnalysisScreenState extends State<DreamAnalysisScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionTitle(
+        const SectionTitle(
           title: '꿈 인사이트',
         ),
         Column(

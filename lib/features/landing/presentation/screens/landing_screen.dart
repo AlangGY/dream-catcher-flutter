@@ -3,7 +3,7 @@ import 'package:dream_catcher/shared/widgets/kakao_login_button.dart';
 import 'package:flutter/material.dart';
 
 class LandingScreen extends StatefulWidget {
-  const LandingScreen({Key? key}) : super(key: key);
+  const LandingScreen({super.key});
 
   @override
   State<LandingScreen> createState() => _LandingScreenState();

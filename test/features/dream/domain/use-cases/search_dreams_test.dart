@@ -19,7 +19,7 @@ void main() {
     usecase = SearchDreams(mockRepository);
   });
 
-  final tQuery = '바다';
+  const tQuery = '바다';
 
   final tDreamList = DreamList(
     dreams: [
@@ -42,7 +42,7 @@ void main() {
           .thenAnswer((_) async => Right(tDreamList));
 
       // act
-      final result = await usecase(SearchDreamsParams(query: tQuery));
+      final result = await usecase(const SearchDreamsParams(query: tQuery));
 
       // assert
       expect(result, Right(tDreamList));

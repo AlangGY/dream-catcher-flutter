@@ -1,8 +1,8 @@
-import 'package:dream_catcher/shared/common-ui/common-ui.dart';
+import 'package:dream_catcher/shared/common-ui/common_ui.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -131,9 +131,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SectionTitle(
+          const SectionTitle(
             title: '나의 통계',
-            padding: const EdgeInsets.only(bottom: 16),
+            padding: EdgeInsets.only(bottom: 16),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

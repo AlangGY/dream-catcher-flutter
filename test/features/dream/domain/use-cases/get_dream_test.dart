@@ -19,7 +19,7 @@ void main() {
     usecase = GetDream(mockRepository);
   });
 
-  final tDreamId = 'dream001';
+  const tDreamId = 'dream001';
   final tDreamDetail = DreamDetail(
     id: tDreamId,
     title: '바다에서 수영하는 꿈',
@@ -27,8 +27,8 @@ void main() {
     mood: '평화로움',
     color: const Color(0xFF6699CC),
     content: '오늘 꿈에서 넓고 푸른 바다에서 수영을 하고 있었다.',
-    tags: ['바다', '수영', '물고기', '평화'],
-    people: ['없음'],
+    tags: const ['바다', '수영', '물고기', '평화'],
+    people: const ['없음'],
     clearness: 4,
     lucidity: 2,
     symbolism: '자유, 평화, 새로운 시작',
@@ -44,7 +44,7 @@ void main() {
           .thenAnswer((_) async => Right(tDreamDetail));
 
       // act
-      final result = await usecase(GetDreamParams(dreamId: tDreamId));
+      final result = await usecase(const GetDreamParams(dreamId: tDreamId));
 
       // assert
       expect(result, Right(tDreamDetail));

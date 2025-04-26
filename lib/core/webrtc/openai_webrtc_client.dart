@@ -243,12 +243,10 @@ class OpenAIWebRtcClient implements WebRtcClient {
   @override
   Future<void> disconnect() async {
     _log('연결 종료 중...');
-    if (_peerConnection != null) {
-      await _peerConnection.close();
-      _isConnected = false;
-      _eventController.add(WebRtcEvent(WebRtcEventType.disconnected));
-      _log('연결 종료됨');
-    }
+    await _peerConnection.close();
+    _isConnected = false;
+    _eventController.add(WebRtcEvent(WebRtcEventType.disconnected));
+    _log('연결 종료됨');
   }
 
   @override

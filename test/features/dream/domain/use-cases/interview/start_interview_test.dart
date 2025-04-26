@@ -20,7 +20,7 @@ void main() {
 
   final tDreamInterview = DreamInterview(
     id: 'interview123',
-    messages: [],
+    messages: const [],
     date: DateTime(2024, 3, 15),
     isCompleted: false,
   );

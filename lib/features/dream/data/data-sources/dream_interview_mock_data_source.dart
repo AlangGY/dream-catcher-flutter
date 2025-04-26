@@ -6,7 +6,9 @@ import 'package:dream_catcher/features/dream/domain/entities/dream_interview.dar
 import 'package:uuid/uuid.dart';
 
 class DreamInterviewMockDataSource implements DreamInterviewDataSource {
+  // ignore: unused_field
   static const _modelFactory = DreamInterviewModelFactory();
+  // ignore: unused_field
   static const _messageFactory = DreamInterviewMessageModelFactory();
 
   final Map<String, DreamInterviewModel> _activeInterviews = {};

@@ -18,14 +18,14 @@ void main() {
   });
 
   final tAudioData = List<int>.generate(1000, (i) => i % 256); // 샘플 오디오 데이터
-  final tTextResult = '저는 바다에서 수영하는 꿈을 꾸었어요';
+  const tTextResult = '저는 바다에서 수영하는 꿈을 꾸었어요';
 
   test(
     '음성 데이터를 텍스트로 변환한다',
     () async {
       // arrange
       when(mockRepository.convertVoiceToText(tAudioData))
-          .thenAnswer((_) async => Right(tTextResult));
+          .thenAnswer((_) async => const Right(tTextResult));
 
       // act
       final result = await usecase(
@@ -35,7 +35,7 @@ void main() {
       );
 
       // assert
-      expect(result, Right(tTextResult));
+      expect(result, const Right(tTextResult));
       verify(mockRepository.convertVoiceToText(tAudioData));
       verifyNoMoreInteractions(mockRepository);
     },

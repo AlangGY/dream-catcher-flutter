@@ -6,23 +6,16 @@ import 'package:dream_catcher/features/dream/domain/entities/dream_detail.dart';
 import '../../../../core/error/failure.dart';
 import '../../domain/entities/dream_list.dart';
 import '../../domain/repositories/dream_repository.dart';
-import '../models/dream_list_item_model.dart';
-import '../models/dream_list_model.dart';
 
 class DreamRepositoryImpl implements DreamRepository {
   final DreamDataSource dataSource;
-  final DreamListModelFactory _listFactory;
-  final DreamListItemModelFactory _itemFactory;
+
   final DreamDetailModelFactory _detailFactory;
 
   DreamRepositoryImpl({
     required this.dataSource,
-    DreamListModelFactory? listFactory,
-    DreamListItemModelFactory? itemFactory,
     DreamDetailModelFactory? detailFactory,
-  })  : _listFactory = listFactory ?? const DreamListModelFactory(),
-        _itemFactory = itemFactory ?? const DreamListItemModelFactory(),
-        _detailFactory = detailFactory ?? const DreamDetailModelFactory();
+  }) : _detailFactory = detailFactory ?? const DreamDetailModelFactory();
 
   @override
   Future<Either<Failure, DreamList>> getDreams() async {

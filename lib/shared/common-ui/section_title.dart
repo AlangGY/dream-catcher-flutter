@@ -8,11 +8,11 @@ class SectionTitle extends StatelessWidget {
   final EdgeInsetsGeometry padding;
 
   const SectionTitle({
-    Key? key,
+    super.key,
     required this.title,
     this.trailing,
     this.padding = const EdgeInsets.only(bottom: 16),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +40,12 @@ class SectionTitleWithMore extends StatelessWidget {
   final EdgeInsetsGeometry padding;
 
   const SectionTitleWithMore({
-    Key? key,
+    super.key,
     required this.title,
     this.moreText = '모두 보기',
     required this.onMoreTap,
     this.padding = const EdgeInsets.only(bottom: 16),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

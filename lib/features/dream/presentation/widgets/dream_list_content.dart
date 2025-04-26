@@ -12,10 +12,10 @@ class DreamListContent extends StatelessWidget {
   final Function(BuildContext, String) onDeleteConfirm;
 
   const DreamListContent({
-    Key? key,
+    super.key,
     required this.state,
     required this.onDeleteConfirm,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

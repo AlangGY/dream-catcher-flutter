@@ -27,7 +27,7 @@ void main() {
           .thenAnswer((_) async => const Right(unit));
 
       // act
-      final result = await usecase(DeleteDreamParams(dreamId: tDreamId));
+      final result = await usecase(const DeleteDreamParams(dreamId: tDreamId));
 
       // assert
       expect(result, const Right(unit));

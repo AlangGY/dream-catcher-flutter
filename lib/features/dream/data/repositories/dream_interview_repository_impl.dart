@@ -7,15 +7,12 @@ import 'package:dream_catcher/features/dream/domain/repositories/dream_interview
 
 class DreamInterviewRepositoryImpl implements DreamInterviewRepository {
   final DreamInterviewDataSource dataSource;
-  final DreamInterviewModelFactory _modelFactory;
   final DreamInterviewMessageModelFactory _messageFactory;
 
   DreamInterviewRepositoryImpl({
     required this.dataSource,
-    DreamInterviewModelFactory? modelFactory,
     DreamInterviewMessageModelFactory? messageFactory,
-  })  : _modelFactory = modelFactory ?? const DreamInterviewModelFactory(),
-        _messageFactory =
+  }) : _messageFactory =
             messageFactory ?? const DreamInterviewMessageModelFactory();
 
   @override

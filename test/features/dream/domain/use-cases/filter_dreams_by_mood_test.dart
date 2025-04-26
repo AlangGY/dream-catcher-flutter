@@ -42,7 +42,7 @@ void main() {
           .thenAnswer((_) async => Right(tDreamList));
 
       // act
-      final result = await usecase(FilterDreamsByMoodParams(mood: tMood));
+      final result = await usecase(const FilterDreamsByMoodParams(mood: tMood));
 
       // assert
       expect(result, Right(tDreamList));

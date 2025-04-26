@@ -1,5 +1,6 @@
 /// UI 컴포넌트 라이브러리
 /// 이 파일을 통해 모든 UI 요소를 한 번에 import 할 수 있습니다.
+library;
 
 // 공통 앱바
 export 'common_app_bar.dart';

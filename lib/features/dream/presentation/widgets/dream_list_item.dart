@@ -1,7 +1,7 @@
 import 'package:dream_catcher/features/dream/domain/entities/dream_list.dart'
     as entity;
 import 'package:dream_catcher/router.dart';
-import 'package:dream_catcher/shared/common-ui/common-ui.dart';
+import 'package:dream_catcher/shared/common-ui/common_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';

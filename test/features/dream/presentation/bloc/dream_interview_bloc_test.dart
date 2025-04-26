@@ -74,7 +74,7 @@ void main() {
   final tAudioData = [1, 2, 3, 4, 5];
   const tVoiceText = '저는 어젯밤에 바다에서 수영하는 꿈을 꾸었어요';
 
-  void _setupFromStartInterview() {
+  void setupFromStartInterview() {
     when(mockStartInterview()).thenAnswer((_) async => Right(tInterview));
     bloc.add(const StartInterviewEvent());
   }
@@ -132,7 +132,7 @@ void main() {
     const tSpeakerType = SpeakerType.me;
 
     setUp(() {
-      _setupFromStartInterview();
+      setupFromStartInterview();
     });
 
     final tNewInterview = tInterview.copyWith(
@@ -200,7 +200,7 @@ void main() {
     final tPreviousMessages = [tMessage];
 
     setUp(() {
-      _setupFromStartInterview();
+      setupFromStartInterview();
     });
 
     blocTest<DreamInterviewBloc, DreamInterviewState>(
@@ -318,7 +318,7 @@ void main() {
 
   group('ConvertVoiceToTextEvent', () {
     setUp(() {
-      _setupFromStartInterview();
+      setupFromStartInterview();
     });
 
     blocTest<DreamInterviewBloc, DreamInterviewState>(

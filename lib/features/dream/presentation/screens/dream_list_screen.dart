@@ -1,7 +1,7 @@
 import 'package:dream_catcher/features/dream/presentation/bloc/dream_list_bloc.dart';
 import 'package:dream_catcher/injection_container.dart';
 import 'package:dream_catcher/router.dart';
-import 'package:dream_catcher/shared/common-ui/common-ui.dart';
+import 'package:dream_catcher/shared/common-ui/common_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -188,10 +188,10 @@ class DreamListContent extends StatelessWidget {
   final Function(BuildContext, String) onDeleteConfirm;
 
   const DreamListContent({
-    Key? key,
+    super.key,
     required this.state,
     required this.onDeleteConfirm,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -259,9 +259,9 @@ class DreamEmptyState extends StatelessWidget {
   final VoidCallback onActionPressed;
 
   const DreamEmptyState({
-    Key? key,
+    super.key,
     required this.onActionPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -31,7 +31,7 @@ class DreamInterviewBloc
     required this.completeInterview,
     required this.convertVoiceToText,
     required this.getCurrentInterview,
-  }) : super(DreamInterviewInitial()) {
+  }) : super(const DreamInterviewInitial()) {
     on<StartInterviewEvent>(_onStartInterview);
     on<AddMessageEvent>(_onAddMessage);
     on<GetBotResponseEvent>(_onGetBotResponse);
@@ -161,7 +161,7 @@ class DreamInterviewBloc
 
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
-      case ServerFailure:
+      case ServerFailure _:
         final serverFailure = failure as ServerFailure;
         return serverFailure.message ?? '서버 오류가 발생했습니다.';
       default:

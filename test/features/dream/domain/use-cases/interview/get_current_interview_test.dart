@@ -18,7 +18,7 @@ void main() {
     usecase = GetCurrentInterview(mockRepository);
   });
 
-  final tInterviewId = 'interview123';
+  const tInterviewId = 'interview123';
   final tMessages = [
     DreamInterviewMessage(
       id: 'bot1',
@@ -50,7 +50,7 @@ void main() {
 
       // act
       final result = await usecase(
-        InterviewIdParams(
+        const InterviewIdParams(
           interviewId: tInterviewId,
         ),
       );

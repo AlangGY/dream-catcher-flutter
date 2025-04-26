@@ -1,7 +1,7 @@
 import 'package:dream_catcher/features/dream/domain/entities/dream_detail.dart';
 import 'package:dream_catcher/features/dream/presentation/bloc/dream_detail_bloc.dart';
 import 'package:dream_catcher/injection_container.dart';
-import 'package:dream_catcher/shared/common-ui/common-ui.dart';
+import 'package:dream_catcher/shared/common-ui/common_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

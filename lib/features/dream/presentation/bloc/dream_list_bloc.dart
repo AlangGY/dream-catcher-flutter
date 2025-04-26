@@ -121,7 +121,7 @@ class DreamListBloc extends Bloc<DreamListEvent, DreamListState> {
 
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
-      case ServerFailure:
+      case ServerFailure _:
         return '서버 오류가 발생했습니다.';
       default:
         return '예상치 못한 오류가 발생했습니다.';

@@ -1,9 +1,9 @@
-import 'package:dream_catcher/shared/common-ui/common-ui.dart';
+import 'package:dream_catcher/shared/common-ui/common_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class DreamAlarmScreen extends StatefulWidget {
-  const DreamAlarmScreen({Key? key}) : super(key: key);
+  const DreamAlarmScreen({super.key});
 
   @override
   State<DreamAlarmScreen> createState() => _DreamAlarmScreenState();
@@ -102,7 +102,7 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
         });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('알람이 삭제되었습니다'),
+            content: const Text('알람이 삭제되었습니다'),
             backgroundColor: Theme.of(context).primaryColor,
             action: SnackBarAction(
               label: '실행 취소',
@@ -402,7 +402,7 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
                         ),
                         IconButton(
                           icon:
-                              Icon(Icons.close, color: const Color(0xFF8080B2)),
+                              const Icon(Icons.close, color: Color(0xFF8080B2)),
                           onPressed: () {
                             context.pop();
                           },
@@ -733,9 +733,9 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
             onChanged(value);
           },
           activeColor: Theme.of(context).primaryColor,
-          trackColor: MaterialStateProperty.resolveWith<Color>(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.selected)) {
+          trackColor: WidgetStateProperty.resolveWith<Color>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.selected)) {
                 return const Color(0xFFE1E1F9);
               }
               return const Color(0xFFE0E0E0);
@@ -761,7 +761,7 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
             '꿈 알람이란?',
             style: AppTextStyles.heading2(context),
           ),
-          content: Column(
+          content: const Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -769,22 +769,22 @@ class _DreamAlarmScreenState extends State<DreamAlarmScreen> {
                 '꿈 알람은 정해진 시간에 꿈 인터뷰를 시작하도록 알림을 제공합니다.',
                 style: AppTextStyles.body,
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               Text(
                 '• 취침 전: 잠들기 전 꿈을 기록하고 싶은 의도 설정',
                 style: AppTextStyles.caption,
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Text(
                 '• 기상 직후: 깨어난 직후 꿈을 기억하기 쉬울 때 알림',
                 style: AppTextStyles.caption,
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Text(
                 '• 반복 설정: 특정 요일에만 알람이 울리도록 설정 가능',
                 style: AppTextStyles.caption,
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               Text(
                 '알람이 울리면 꿈 인터뷰가 자동으로 시작되어 AI와 대화를 통해 꿈을 기록할 수 있습니다.',
                 style: AppTextStyles.body,

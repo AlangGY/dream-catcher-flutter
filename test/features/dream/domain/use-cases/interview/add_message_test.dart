@@ -18,9 +18,9 @@ void main() {
     usecase = AddMessage(mockRepository);
   });
 
-  final tInterviewId = 'interview123';
-  final tSpeakerType = SpeakerType.me;
-  final tContent = '저는 바다에서 수영하는 꿈을 꾸었어요';
+  const tInterviewId = 'interview123';
+  const tSpeakerType = SpeakerType.me;
+  const tContent = '저는 바다에서 수영하는 꿈을 꾸었어요';
 
   final tMessage = DreamInterviewMessage(
     id: 'msg123',
@@ -45,7 +45,7 @@ void main() {
 
       // act
       final result = await usecase(
-        AddMessageParams(
+        const AddMessageParams(
           interviewId: tInterviewId,
           speakerType: tSpeakerType,
           content: tContent,

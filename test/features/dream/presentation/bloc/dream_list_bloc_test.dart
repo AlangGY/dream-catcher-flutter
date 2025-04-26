@@ -82,7 +82,8 @@ void main() {
     blocTest<DreamListBloc, DreamListState>(
       'GetDreamsEvent가 실패하면 DreamListError 상태로 전환',
       build: () {
-        when(mockGetDreams()).thenAnswer((_) async => Left(ServerFailure()));
+        when(mockGetDreams())
+            .thenAnswer((_) async => const Left(ServerFailure()));
         return buildBloc();
       },
       act: (bloc) => bloc.add(const GetDreamsEvent()),
@@ -113,7 +114,8 @@ void main() {
             state.searchQuery == tQuery),
       ],
       verify: (_) {
-        verify(mockSearchDreams(SearchDreamsParams(query: tQuery))).called(1);
+        verify(mockSearchDreams(const SearchDreamsParams(query: tQuery)))
+            .called(1);
       },
     );
   });

@@ -2,7 +2,7 @@ import 'package:dream_catcher/features/dream/domain/entities/dream_interview.dar
 import 'package:dream_catcher/features/dream/presentation/bloc/dream_interview_bloc.dart';
 import 'package:dream_catcher/injection_container.dart';
 import 'package:dream_catcher/router.dart';
-import 'package:dream_catcher/shared/common-ui/common-ui.dart';
+import 'package:dream_catcher/shared/common-ui/common_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -96,7 +96,7 @@ class _DreamInterviewContentState extends State<_DreamInterviewContent>
         // 실제 구현에서는 음성 데이터를 캡처하여 전달
         // 현재는 더미 데이터 사용
         context.read<DreamInterviewBloc>().add(
-              ConvertVoiceToTextEvent(audioData: [1, 2, 3, 4, 5]),
+              const ConvertVoiceToTextEvent(audioData: [1, 2, 3, 4, 5]),
             );
       }
     });

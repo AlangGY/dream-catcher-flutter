@@ -8,12 +8,12 @@ class TagChip extends StatelessWidget {
   final bool showHashtag;
 
   const TagChip({
-    Key? key,
+    super.key,
     required this.label,
     this.color,
     this.onTap,
     this.showHashtag = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +48,12 @@ class TagsWrap extends StatelessWidget {
   final bool showHashtag;
 
   const TagsWrap({
-    Key? key,
+    super.key,
     required this.tags,
     this.tagColor,
     this.onTagTap,
     this.showHashtag = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

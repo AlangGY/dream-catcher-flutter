@@ -87,7 +87,7 @@ class DreamInterviewModelFactory
       id: entity.id,
       messages: entity.messages
           .map((message) =>
-              DreamInterviewMessageModelFactory().fromEntity(message))
+              const DreamInterviewMessageModelFactory().fromEntity(message))
           .toList(),
       date: entity.date,
       isCompleted: entity.isCompleted,
@@ -99,7 +99,7 @@ class DreamInterviewModelFactory
     return DreamInterviewModel(
       id: json['id'],
       messages: (json['messages'] as List)
-          .map((messageJson) => DreamInterviewMessageModelFactory()
+          .map((messageJson) => const DreamInterviewMessageModelFactory()
               .fromJson(messageJson as Map<String, dynamic>))
           .toList(),
       date: DateTime.parse(json['date']),

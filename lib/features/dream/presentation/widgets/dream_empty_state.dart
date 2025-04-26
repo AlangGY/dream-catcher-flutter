@@ -1,13 +1,13 @@
-import 'package:dream_catcher/shared/common-ui/common-ui.dart';
+import 'package:dream_catcher/shared/common-ui/common_ui.dart';
 import 'package:flutter/material.dart';
 
 class DreamEmptyState extends StatelessWidget {
   final VoidCallback onActionPressed;
 
   const DreamEmptyState({
-    Key? key,
+    super.key,
     required this.onActionPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

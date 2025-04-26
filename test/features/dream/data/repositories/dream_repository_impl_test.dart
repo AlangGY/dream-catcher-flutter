@@ -17,8 +17,6 @@ import 'package:mockito/mockito.dart';
 @GenerateNiceMocks(
   [
     MockSpec<DreamDataSource>(),
-    MockSpec<DreamListModelFactory>(),
-    MockSpec<DreamListItemModelFactory>(),
     MockSpec<DreamDetailModelFactory>(),
   ],
 )
@@ -27,19 +25,14 @@ import 'dream_repository_impl_test.mocks.dart';
 void main() {
   late DreamRepositoryImpl repository;
   late MockDreamDataSource mockDataSource;
-  late MockDreamListModelFactory mockListFactory;
-  late MockDreamListItemModelFactory mockItemFactory;
   late MockDreamDetailModelFactory mockDetailFactory;
   setUp(() {
     mockDataSource = MockDreamDataSource();
-    mockListFactory = MockDreamListModelFactory();
-    mockItemFactory = MockDreamListItemModelFactory();
+
     mockDetailFactory = MockDreamDetailModelFactory();
 
     repository = DreamRepositoryImpl(
       dataSource: mockDataSource,
-      listFactory: mockListFactory,
-      itemFactory: mockItemFactory,
       detailFactory: mockDetailFactory,
     );
   });
@@ -111,8 +104,8 @@ void main() {
       mood: '평화로움',
       color: const Color(0xFF6699CC),
       content: '오늘 꿈에서 넓고 푸른 바다에서 수영을 하고 있었다.',
-      tags: ['바다', '수영', '물고기', '평화'],
-      people: ['없음'],
+      tags: const ['바다', '수영', '물고기', '평화'],
+      people: const ['없음'],
       clearness: 4,
       lucidity: 2,
       symbolism: '자유, 평화, 새로운 시작',
@@ -127,8 +120,8 @@ void main() {
       mood: '평화로움',
       color: const Color(0xFF6699CC),
       content: '오늘 꿈에서 넓고 푸른 바다에서 수영을 하고 있었다.',
-      tags: ['바다', '수영', '물고기', '평화'],
-      people: ['없음'],
+      tags: const ['바다', '수영', '물고기', '평화'],
+      people: const ['없음'],
       clearness: 4,
       lucidity: 2,
       symbolism: '자유, 평화, 새로운 시작',
@@ -178,8 +171,8 @@ void main() {
       mood: '설렘',
       color: const Color(0xFF66CC99),
       content: '새로운 꿈 내용',
-      tags: ['태그1', '태그2'],
-      people: ['사람1', '사람2'],
+      tags: const ['태그1', '태그2'],
+      people: const ['사람1', '사람2'],
       clearness: 5,
       lucidity: 3,
       symbolism: '기회',
@@ -193,8 +186,8 @@ void main() {
       mood: '설렘',
       color: const Color(0xFF66CC99),
       content: '새로운 꿈 내용',
-      tags: ['태그1', '태그2'],
-      people: ['사람1', '사람2'],
+      tags: const ['태그1', '태그2'],
+      people: const ['사람1', '사람2'],
       clearness: 5,
       lucidity: 3,
       symbolism: '기회',
@@ -243,7 +236,7 @@ void main() {
   });
 
   group('searchDreams', () {
-    final tQuery = '테스트';
+    const tQuery = '테스트';
 
     final tDreamListItem = DreamListItem(
       id: 'dream001',

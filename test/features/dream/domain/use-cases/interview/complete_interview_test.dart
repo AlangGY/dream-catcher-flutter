@@ -17,7 +17,7 @@ void main() {
     usecase = CompleteInterview(mockRepository);
   });
 
-  final tInterviewId = 'interview123';
+  const tInterviewId = 'interview123';
 
   test(
     '인터뷰를 완료하고 꿈 기록으로 저장한다',
@@ -28,7 +28,7 @@ void main() {
 
       // act
       final result = await usecase(
-        CompleteInterviewParams(
+        const CompleteInterviewParams(
           interviewId: tInterviewId,
         ),
       );

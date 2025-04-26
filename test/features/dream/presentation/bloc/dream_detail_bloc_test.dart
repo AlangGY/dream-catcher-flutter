@@ -53,13 +53,13 @@ void main() {
         when(mockGetDream(any)).thenAnswer((_) async => Right(tDreamDetail));
         return bloc;
       },
-      act: (bloc) => bloc.add(LoadDreamEvent(dreamId: tDreamId)),
+      act: (bloc) => bloc.add(const LoadDreamEvent(dreamId: tDreamId)),
       expect: () => [
         DreamDetailLoading(),
         DreamDetailLoaded(dream: tDreamDetail),
       ],
       verify: (bloc) {
-        verify(mockGetDream(GetDreamParams(dreamId: tDreamId)));
+        verify(mockGetDream(const GetDreamParams(dreamId: tDreamId)));
       },
     );
 
@@ -68,16 +68,17 @@ void main() {
     blocTest<DreamDetailBloc, DreamDetailState>(
       '꿈 정보를 불러오는데 실패하면 [DreamDetailLoading, DreamDetailError] 상태를 출력해야 함',
       build: () {
-        when(mockGetDream(any)).thenAnswer((_) async => Left(tServerFailure));
+        when(mockGetDream(any))
+            .thenAnswer((_) async => const Left(tServerFailure));
         return bloc;
       },
-      act: (bloc) => bloc.add(LoadDreamEvent(dreamId: tDreamId)),
+      act: (bloc) => bloc.add(const LoadDreamEvent(dreamId: tDreamId)),
       expect: () => [
         DreamDetailLoading(),
         DreamDetailError(message: tServerFailure.toString()),
       ],
       verify: (bloc) {
-        verify(mockGetDream(GetDreamParams(dreamId: tDreamId)));
+        verify(mockGetDream(const GetDreamParams(dreamId: tDreamId)));
       },
     );
   });

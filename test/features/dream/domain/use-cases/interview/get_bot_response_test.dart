@@ -18,7 +18,7 @@ void main() {
     usecase = GetBotResponse(mockRepository);
   });
 
-  final tInterviewId = 'interview123';
+  const tInterviewId = 'interview123';
   final tPreviousMessages = [
     DreamInterviewMessage(
       id: 'bot1',
@@ -34,14 +34,14 @@ void main() {
     ),
   ];
 
-  final tResponseContent = '그 꿈에서 어떤 감정을 느끼셨나요?';
+  const tResponseContent = '그 꿈에서 어떤 감정을 느끼셨나요?';
 
   test(
     'API를 통해 봇의 응답을 가져온다',
     () async {
       // arrange
       when(mockRepository.getBotResponse(tInterviewId, tPreviousMessages))
-          .thenAnswer((_) async => Right(tResponseContent));
+          .thenAnswer((_) async => const Right(tResponseContent));
 
       // act
       final result = await usecase(
@@ -52,7 +52,7 @@ void main() {
       );
 
       // assert
-      expect(result, Right(tResponseContent));
+      expect(result, const Right(tResponseContent));
       verify(mockRepository.getBotResponse(tInterviewId, tPreviousMessages));
       verifyNoMoreInteractions(mockRepository);
     },

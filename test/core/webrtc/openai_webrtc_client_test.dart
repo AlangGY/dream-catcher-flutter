@@ -27,9 +27,6 @@ void main() {
   late MockNavigator mockNavigator;
   late MockMediaDevices mockMediaDevices;
 
-  const testUrl = 'https://test.openai.com';
-  const testToken = 'test-token';
-
   setUp(() async {
     mockPeerConnection = MockRTCPeerConnection();
     mockLocalStream = MockMediaStream();

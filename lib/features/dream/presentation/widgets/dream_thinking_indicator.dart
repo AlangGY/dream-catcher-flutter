@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:dream_catcher/shared/common-ui/common-ui.dart';
+import 'package:dream_catcher/shared/common-ui/common_ui.dart';
 import 'package:flutter/material.dart';
 
 class DreamThinkingIndicator extends StatelessWidget {

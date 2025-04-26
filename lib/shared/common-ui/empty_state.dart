@@ -9,12 +9,12 @@ class EmptyStateWidget extends StatelessWidget {
   final VoidCallback? onAction;
 
   const EmptyStateWidget({
-    Key? key,
+    super.key,
     required this.message,
     this.icon = Icons.hourglass_empty,
     this.actionLabel,
     this.onAction,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,6 @@ class EmptyStateWidget extends StatelessWidget {
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: onAction,
-                child: Text(actionLabel!),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,
                   foregroundColor: Colors.white,
@@ -49,6 +48,7 @@ class EmptyStateWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
+                child: Text(actionLabel!),
               ),
             ],
           ],
@@ -63,9 +63,9 @@ class LoadingStateWidget extends StatelessWidget {
   final String? message;
 
   const LoadingStateWidget({
-    Key? key,
+    super.key,
     this.message,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

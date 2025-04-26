@@ -1,5 +1,5 @@
 import 'package:dream_catcher/features/dream/domain/entities/dream_detail.dart';
-import 'package:dream_catcher/shared/common-ui/common-ui.dart';
+import 'package:dream_catcher/shared/common-ui/common_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
