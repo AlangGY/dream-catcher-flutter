@@ -105,12 +105,15 @@ void main() {
       color: const Color(0xFF6699CC),
       content: '오늘 꿈에서 넓고 푸른 바다에서 수영을 하고 있었다.',
       tags: const ['바다', '수영', '물고기', '평화'],
-      people: const ['없음'],
-      clearness: 4,
-      lucidity: 2,
-      symbolism: '자유, 평화, 새로운 시작',
       interpretation:
           '바다는 내면의 감정과 무의식을 상징한다고 하는데, 푸른 바다에서 자유롭게 수영하는 꿈은 현재 내 마음이 평화롭고 안정되어 있음을 의미하는 것 같다.',
+      suggestedActions: const [
+        "바다에서 수영하는 꿈은 현재 내 마음이 평화롭고 안정되어 있음을 의미하는 것 같다.",
+        "바다에서 수영하는 꿈은 현재 내 마음이 평화롭고 안정되어 있음을 의미하는 것 같다.",
+        "바다에서 수영하는 꿈은 현재 내 마음이 평화롭고 안정되어 있음을 의미하는 것 같다."
+      ],
+      createdAt: DateTime(2024, 3, 15),
+      updatedAt: DateTime(2024, 3, 15),
     );
 
     final tDreamDetailModel = DreamDetailModel(
@@ -121,12 +124,15 @@ void main() {
       color: const Color(0xFF6699CC),
       content: '오늘 꿈에서 넓고 푸른 바다에서 수영을 하고 있었다.',
       tags: const ['바다', '수영', '물고기', '평화'],
-      people: const ['없음'],
-      clearness: 4,
-      lucidity: 2,
-      symbolism: '자유, 평화, 새로운 시작',
       interpretation:
           '바다는 내면의 감정과 무의식을 상징한다고 하는데, 푸른 바다에서 자유롭게 수영하는 꿈은 현재 내 마음이 평화롭고 안정되어 있음을 의미하는 것 같다.',
+      suggestedActions: const [
+        "바다에서 수영하는 꿈은 현재 내 마음이 평화롭고 안정되어 있음을 의미하는 것 같다.",
+        "바다에서 수영하는 꿈은 현재 내 마음이 평화롭고 안정되어 있음을 의미하는 것 같다.",
+        "바다에서 수영하는 꿈은 현재 내 마음이 평화롭고 안정되어 있음을 의미하는 것 같다."
+      ],
+      createdAt: DateTime(2024, 3, 15),
+      updatedAt: DateTime(2024, 3, 15),
     );
 
     test(
@@ -172,11 +178,14 @@ void main() {
       color: const Color(0xFF66CC99),
       content: '새로운 꿈 내용',
       tags: const ['태그1', '태그2'],
-      people: const ['사람1', '사람2'],
-      clearness: 5,
-      lucidity: 3,
-      symbolism: '기회',
       interpretation: '새로운 꿈은 새로운 기회를 의미합니다.',
+      suggestedActions: const [
+        "바다에서 수영하는 꿈은 현재 내 마음이 평화롭고 안정되어 있음을 의미하는 것 같다.",
+        "바다에서 수영하는 꿈은 현재 내 마음이 평화롭고 안정되어 있음을 의미하는 것 같다.",
+        "바다에서 수영하는 꿈은 현재 내 마음이 평화롭고 안정되어 있음을 의미하는 것 같다."
+      ],
+      createdAt: DateTime(2024, 3, 15),
+      updatedAt: DateTime(2024, 3, 15),
     );
 
     final tDreamDetailModel = DreamDetailModel(
@@ -187,11 +196,14 @@ void main() {
       color: const Color(0xFF66CC99),
       content: '새로운 꿈 내용',
       tags: const ['태그1', '태그2'],
-      people: const ['사람1', '사람2'],
-      clearness: 5,
-      lucidity: 3,
-      symbolism: '기회',
       interpretation: '새로운 꿈은 새로운 기회를 의미합니다.',
+      suggestedActions: const [
+        "바다에서 수영하는 꿈은 현재 내 마음이 평화롭고 안정되어 있음을 의미하는 것 같다.",
+        "바다에서 수영하는 꿈은 현재 내 마음이 평화롭고 안정되어 있음을 의미하는 것 같다.",
+        "바다에서 수영하는 꿈은 현재 내 마음이 평화롭고 안정되어 있음을 의미하는 것 같다."
+      ],
+      createdAt: DateTime(2024, 3, 15),
+      updatedAt: DateTime(2024, 3, 15),
     );
 
     test(

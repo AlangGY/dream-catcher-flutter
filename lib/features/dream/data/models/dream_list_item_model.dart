@@ -72,7 +72,9 @@ class DreamListItemModelFactory
       title: json['title'],
       date: DateTime.parse(json['date']),
       mood: json['mood'],
-      color: Color(json['color']),
+      color: Color(
+        int.parse(json['color'].toString().replaceAll('#', ''), radix: 16),
+      ).withAlpha(255),
       content: json['content'],
     );
   }

@@ -11,11 +11,10 @@ class DreamDetailModel extends Equatable implements Model<DreamDetail> {
   final Color color;
   final String content;
   final List<String> tags;
-  final List<String> people;
-  final int clearness;
-  final int lucidity;
-  final String symbolism;
   final String interpretation;
+  final List<String> suggestedActions;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   const DreamDetailModel({
     required this.id,
@@ -25,11 +24,10 @@ class DreamDetailModel extends Equatable implements Model<DreamDetail> {
     required this.color,
     required this.content,
     required this.tags,
-    required this.people,
-    required this.clearness,
-    required this.lucidity,
-    required this.symbolism,
     required this.interpretation,
+    required this.suggestedActions,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   @override
@@ -41,10 +39,6 @@ class DreamDetailModel extends Equatable implements Model<DreamDetail> {
         color.toString(),
         content,
         tags,
-        people,
-        clearness,
-        lucidity,
-        symbolism,
         interpretation
       ];
 
@@ -55,14 +49,16 @@ class DreamDetailModel extends Equatable implements Model<DreamDetail> {
       'title': title,
       'date': date.toIso8601String(),
       'mood': mood,
-      'color': color.value,
+      'color': "#${color.value.toRadixString(16).substring(2).padLeft(6, '0')}",
       'content': content,
-      'tags': tags,
-      'people': people,
-      'clearness': clearness,
-      'lucidity': lucidity,
-      'symbolism': symbolism,
-      'interpretation': interpretation,
+      "analysis": {
+        "interpretation": interpretation,
+        "keywords": tags,
+        "emotionalTone": mood,
+        "suggestedActions": suggestedActions,
+      },
+      "createdAt": date.toIso8601String(),
+      "updatedAt": date.toIso8601String(),
     };
   }
 
@@ -76,11 +72,10 @@ class DreamDetailModel extends Equatable implements Model<DreamDetail> {
       color: color,
       content: content,
       tags: tags,
-      people: people,
-      clearness: clearness,
-      lucidity: lucidity,
-      symbolism: symbolism,
       interpretation: interpretation,
+      suggestedActions: suggestedActions,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
     );
   }
 }
@@ -99,11 +94,10 @@ class DreamDetailModelFactory
       color: entity.color,
       content: entity.content,
       tags: entity.tags,
-      people: entity.people,
-      clearness: entity.clearness,
-      lucidity: entity.lucidity,
-      symbolism: entity.symbolism,
       interpretation: entity.interpretation,
+      suggestedActions: entity.suggestedActions,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
     );
   }
 
@@ -114,14 +108,20 @@ class DreamDetailModelFactory
       title: json['title'],
       date: DateTime.parse(json['date']),
       mood: json['mood'],
-      color: Color(json['color']),
+      color: Color(
+        int.parse(json['color'].toString().replaceAll('#', ''), radix: 16),
+      ).withAlpha(255),
       content: json['content'],
-      tags: List<String>.from(json['tags']),
-      people: List<String>.from(json['people']),
-      clearness: json['clearness'],
-      lucidity: json['lucidity'],
-      symbolism: json['symbolism'],
-      interpretation: json['interpretation'],
+      tags: json['analysis'] != null
+          ? List<String>.from(json['analysis']['keywords'])
+          : [],
+      interpretation:
+          json['analysis'] != null ? json['analysis']['interpretation'] : '',
+      suggestedActions: json['analysis'] != null
+          ? List<String>.from(json['analysis']['suggestedActions'])
+          : [],
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
     );
   }
 }

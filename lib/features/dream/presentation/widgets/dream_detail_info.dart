@@ -22,13 +22,38 @@ class DreamDetailInfo extends StatelessWidget {
         CommonCard(
           child: Column(
             children: [
-              _buildDetailItem(context, '등장인물', _formatList(dream.people)),
+              _buildDetailItem(
+                context,
+                '감정',
+                Text(
+                  dream.mood,
+                  style: AppTextStyles.body,
+                ),
+              ),
               const Divider(),
-              _buildDetailItem(context, '선명도', '${dream.clearness}/5'),
-              const Divider(),
-              _buildDetailItem(context, '자각몽 여부', '${dream.lucidity}/5'),
-              const Divider(),
-              _buildDetailItem(context, '상징', dream.symbolism),
+              _buildDetailItem(
+                context,
+                '색상',
+                Row(
+                  children: [
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: dream.color,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: const SizedBox(
+                        width: 20,
+                        height: 20,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      "#${dream.color.value.toRadixString(16).substring(2).padLeft(6, '0')}",
+                      style: AppTextStyles.body,
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -36,7 +61,8 @@ class DreamDetailInfo extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailItem(BuildContext context, String label, String value) {
+  Widget _buildDetailItem(
+      BuildContext context, String label, Widget valueChild) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
@@ -46,10 +72,7 @@ class DreamDetailInfo extends StatelessWidget {
             label,
             style: AppTextStyles.bodyEmphasis(context),
           ),
-          Text(
-            value,
-            style: AppTextStyles.body,
-          ),
+          valueChild
         ],
       ),
     );

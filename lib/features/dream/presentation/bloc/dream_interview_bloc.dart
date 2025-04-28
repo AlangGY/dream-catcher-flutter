@@ -160,9 +160,9 @@ class DreamInterviewBloc
   }
 
   String _mapFailureToMessage(Failure failure) {
-    switch (failure.runtimeType) {
+    switch (failure) {
       case ServerFailure _:
-        final serverFailure = failure as ServerFailure;
+        final serverFailure = failure;
         return serverFailure.message ?? '서버 오류가 발생했습니다.';
       default:
         return '예상치 못한 오류가 발생했습니다.';
