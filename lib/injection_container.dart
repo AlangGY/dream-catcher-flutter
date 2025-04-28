@@ -5,7 +5,9 @@ import 'package:dream_catcher/core/webrtc/openai_realtime_api_service.dart';
 import 'package:dream_catcher/features/dream/data/data-sources/dream_data_source.dart';
 import 'package:dream_catcher/features/dream/data/data-sources/dream_interview_data_source.dart';
 import 'package:dream_catcher/features/dream/data/data-sources/dream_interview_mock_data_source.dart';
-import 'package:dream_catcher/features/dream/data/data-sources/dream_mock_data_source.dart';
+import 'package:dream_catcher/features/dream/data/data-sources/dream_remote_data_source.dart';
+import 'package:dream_catcher/features/dream/data/models/dream_detail_model.dart';
+import 'package:dream_catcher/features/dream/data/models/dream_list_model.dart';
 import 'package:dream_catcher/features/dream/data/repositories/dream_interview_repository_impl.dart';
 import 'package:dream_catcher/features/dream/data/repositories/dream_repository_impl.dart';
 import 'package:dream_catcher/features/dream/domain/repositories/dream_interview_repository.dart';
@@ -125,8 +127,12 @@ void _initWebRtcServices() async {
 /// 3. 데이터 소스 초기화
 Future<void> _initDataSources() async {
   // Dream 데이터 소스
-  final dreamDataSource = DreamMockDataSource();
-  await dreamDataSource.init();
+  final dreamDataSource = DreamRemoteDataSource(
+    client: sl<http.Client>(),
+    baseUrl: 'http://localhost:3000',
+    dreamListModelFactory: const DreamListModelFactory(),
+    dreamDetailModelFactory: const DreamDetailModelFactory(),
+  );
   sl.registerLazySingleton<DreamDataSource>(
     () => dreamDataSource,
   );
