@@ -10,9 +10,10 @@ class DreamDetail extends Equatable {
   final String content;
   final List<String> tags;
   final String interpretation;
-  final List<String> suggestedActions;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final int clarity;
+  final int vividness;
 
   const DreamDetail({
     required this.id,
@@ -23,9 +24,10 @@ class DreamDetail extends Equatable {
     required this.content,
     required this.tags,
     required this.interpretation,
-    required this.suggestedActions,
     required this.createdAt,
     required this.updatedAt,
+    required this.clarity,
+    required this.vividness,
   });
 
   @override
@@ -38,7 +40,8 @@ class DreamDetail extends Equatable {
         content,
         tags,
         interpretation,
-        suggestedActions,
+        clarity,
+        vividness,
       ];
 
   // 임시 데이터 생성을 위한 팩토리 메서드
@@ -57,9 +60,10 @@ class DreamDetail extends Equatable {
       interpretation:
           '바다는 내면의 감정과 무의식을 상징한다고 하는데, 푸른 바다에서 자유롭게 수영하는 꿈은 현재 내 마음이 평화롭고 '
           '안정되어 있음을 의미하는 것 같다. 물고기와의 소통은 내 무의식과 대화를 나누는 것으로 해석할 수 있을 것 같다.',
-      suggestedActions: const [],
       createdAt: DateTime(2023, 5, 15),
       updatedAt: DateTime(2023, 5, 15),
+      clarity: 5,
+      vividness: 5,
     );
   }
 }

@@ -12,9 +12,10 @@ class DreamDetailModel extends Equatable implements Model<DreamDetail> {
   final String content;
   final List<String> tags;
   final String interpretation;
-  final List<String> suggestedActions;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final int clarity;
+  final int vividness;
 
   const DreamDetailModel({
     required this.id,
@@ -25,9 +26,10 @@ class DreamDetailModel extends Equatable implements Model<DreamDetail> {
     required this.content,
     required this.tags,
     required this.interpretation,
-    required this.suggestedActions,
     required this.createdAt,
     required this.updatedAt,
+    required this.clarity,
+    required this.vividness,
   });
 
   @override
@@ -39,7 +41,9 @@ class DreamDetailModel extends Equatable implements Model<DreamDetail> {
         color.toString(),
         content,
         tags,
-        interpretation
+        interpretation,
+        clarity,
+        vividness,
       ];
 
   @override
@@ -54,8 +58,8 @@ class DreamDetailModel extends Equatable implements Model<DreamDetail> {
       "analysis": {
         "interpretation": interpretation,
         "keywords": tags,
-        "emotionalTone": mood,
-        "suggestedActions": suggestedActions,
+        "clarity": clarity,
+        "vividness": vividness,
       },
       "createdAt": date.toIso8601String(),
       "updatedAt": date.toIso8601String(),
@@ -73,9 +77,10 @@ class DreamDetailModel extends Equatable implements Model<DreamDetail> {
       content: content,
       tags: tags,
       interpretation: interpretation,
-      suggestedActions: suggestedActions,
       createdAt: createdAt,
       updatedAt: updatedAt,
+      clarity: clarity,
+      vividness: vividness,
     );
   }
 }
@@ -95,9 +100,10 @@ class DreamDetailModelFactory
       content: entity.content,
       tags: entity.tags,
       interpretation: entity.interpretation,
-      suggestedActions: entity.suggestedActions,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
+      clarity: entity.clarity,
+      vividness: entity.vividness,
     );
   }
 
@@ -117,9 +123,8 @@ class DreamDetailModelFactory
           : [],
       interpretation:
           json['analysis'] != null ? json['analysis']['interpretation'] : '',
-      suggestedActions: json['analysis'] != null
-          ? List<String>.from(json['analysis']['suggestedActions'])
-          : [],
+      clarity: json['analysis'] != null ? json['analysis']['clarity'] : 0,
+      vividness: json['analysis'] != null ? json['analysis']['vividness'] : 0,
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
     );
