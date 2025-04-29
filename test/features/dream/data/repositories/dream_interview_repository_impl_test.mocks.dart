@@ -79,14 +79,14 @@ class MockDreamInterviewDataSource extends _i1.Mock
       ) as _i4.Future<_i2.DreamInterviewModel>);
 
   @override
-  _i4.Future<_i2.DreamInterviewModel> addMessage(
+  _i4.Future<_i2.DreamInterviewModel> answerMessage(
     String? interviewId,
     _i5.SpeakerType? speakerType,
     String? content,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
-          #addMessage,
+          #answerMessage,
           [
             interviewId,
             speakerType,
@@ -97,7 +97,7 @@ class MockDreamInterviewDataSource extends _i1.Mock
             _FakeDreamInterviewModel_0(
           this,
           Invocation.method(
-            #addMessage,
+            #answerMessage,
             [
               interviewId,
               speakerType,
@@ -109,7 +109,7 @@ class MockDreamInterviewDataSource extends _i1.Mock
             _FakeDreamInterviewModel_0(
           this,
           Invocation.method(
-            #addMessage,
+            #answerMessage,
             [
               interviewId,
               speakerType,
@@ -179,94 +179,6 @@ class MockDreamInterviewDataSource extends _i1.Mock
           ),
         )),
       ) as _i4.Future<_i2.DreamInterviewModel>);
-
-  @override
-  _i4.Future<String> getBotResponse(
-    String? interviewId,
-    List<_i2.DreamInterviewMessageModel>? previousMessages,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getBotResponse,
-          [
-            interviewId,
-            previousMessages,
-          ],
-        ),
-        returnValue: _i4.Future<String>.value(_i6.dummyValue<String>(
-          this,
-          Invocation.method(
-            #getBotResponse,
-            [
-              interviewId,
-              previousMessages,
-            ],
-          ),
-        )),
-        returnValueForMissingStub:
-            _i4.Future<String>.value(_i6.dummyValue<String>(
-          this,
-          Invocation.method(
-            #getBotResponse,
-            [
-              interviewId,
-              previousMessages,
-            ],
-          ),
-        )),
-      ) as _i4.Future<String>);
-}
-
-/// A class which mocks [DreamInterviewModelFactory].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockDreamInterviewModelFactory extends _i1.Mock
-    implements _i2.DreamInterviewModelFactory {
-  @override
-  _i2.DreamInterviewModel fromEntity(_i5.DreamInterview? entity) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #fromEntity,
-          [entity],
-        ),
-        returnValue: _FakeDreamInterviewModel_0(
-          this,
-          Invocation.method(
-            #fromEntity,
-            [entity],
-          ),
-        ),
-        returnValueForMissingStub: _FakeDreamInterviewModel_0(
-          this,
-          Invocation.method(
-            #fromEntity,
-            [entity],
-          ),
-        ),
-      ) as _i2.DreamInterviewModel);
-
-  @override
-  _i2.DreamInterviewModel fromJson(Map<String, dynamic>? json) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #fromJson,
-          [json],
-        ),
-        returnValue: _FakeDreamInterviewModel_0(
-          this,
-          Invocation.method(
-            #fromJson,
-            [json],
-          ),
-        ),
-        returnValueForMissingStub: _FakeDreamInterviewModel_0(
-          this,
-          Invocation.method(
-            #fromJson,
-            [json],
-          ),
-        ),
-      ) as _i2.DreamInterviewModel);
 }
 
 /// A class which mocks [DreamInterviewMessageModelFactory].

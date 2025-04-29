@@ -4,9 +4,10 @@ import 'package:dream_catcher/core/webrtc/index.dart';
 import 'package:dream_catcher/core/webrtc/openai_realtime_api_service.dart';
 import 'package:dream_catcher/features/dream/data/data-sources/dream_data_source.dart';
 import 'package:dream_catcher/features/dream/data/data-sources/dream_interview_data_source.dart';
-import 'package:dream_catcher/features/dream/data/data-sources/dream_interview_mock_data_source.dart';
+import 'package:dream_catcher/features/dream/data/data-sources/dream_interview_remote_data_source.dart';
 import 'package:dream_catcher/features/dream/data/data-sources/dream_remote_data_source.dart';
 import 'package:dream_catcher/features/dream/data/models/dream_detail_model.dart';
+import 'package:dream_catcher/features/dream/data/models/dream_interview_model.dart';
 import 'package:dream_catcher/features/dream/data/models/dream_list_model.dart';
 import 'package:dream_catcher/features/dream/data/repositories/dream_interview_repository_impl.dart';
 import 'package:dream_catcher/features/dream/data/repositories/dream_repository_impl.dart';
@@ -20,7 +21,6 @@ import 'package:dream_catcher/features/dream/domain/use-cases/get_dreams.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/interview/add_message.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/interview/complete_interview.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/interview/convert_voice_to_text.dart';
-import 'package:dream_catcher/features/dream/domain/use-cases/interview/get_bot_response.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/interview/get_current_interview.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/interview/start_interview.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/save_dream.dart';
@@ -137,9 +137,15 @@ Future<void> _initDataSources() async {
     () => dreamDataSource,
   );
 
+  final dreamInterviewDataSource = DreamInterviewRemoteDataSource(
+    client: sl<http.Client>(),
+    baseUrl: 'http://localhost:3000',
+    dreamInterviewModelFactory: const DreamInterviewModelFactory(),
+  );
+
   // DreamInterview 데이터 소스
   sl.registerLazySingleton<DreamInterviewDataSource>(
-    () => DreamInterviewMockDataSource(uuid: sl<Uuid>()),
+    () => dreamInterviewDataSource,
   );
 }
 
@@ -177,8 +183,6 @@ void _initUseCases() {
       () => StartInterview(sl<DreamInterviewRepository>()));
   sl.registerLazySingleton(() => AddMessage(sl<DreamInterviewRepository>()));
   sl.registerLazySingleton(
-      () => GetBotResponse(sl<DreamInterviewRepository>()));
-  sl.registerLazySingleton(
       () => CompleteInterview(sl<DreamInterviewRepository>()));
   sl.registerLazySingleton(
       () => ConvertVoiceToText(sl<DreamInterviewRepository>()));
@@ -207,7 +211,6 @@ void _initBloc() {
     () => DreamInterviewBloc(
       startInterview: sl<StartInterview>(),
       addMessage: sl<AddMessage>(),
-      getBotResponse: sl<GetBotResponse>(),
       completeInterview: sl<CompleteInterview>(),
       convertVoiceToText: sl<ConvertVoiceToText>(),
       getCurrentInterview: sl<GetCurrentInterview>(),

@@ -40,7 +40,7 @@ void main() {
     '인터뷰에 새 메시지를 추가한다',
     () async {
       // arrange
-      when(mockRepository.addMessage(tInterviewId, tSpeakerType, tContent))
+      when(mockRepository.answerMessage(tInterviewId, tSpeakerType, tContent))
           .thenAnswer((_) async => Right(tDreamInterview));
 
       // act
@@ -54,7 +54,8 @@ void main() {
 
       // assert
       expect(result, Right(tDreamInterview));
-      verify(mockRepository.addMessage(tInterviewId, tSpeakerType, tContent));
+      verify(
+          mockRepository.answerMessage(tInterviewId, tSpeakerType, tContent));
       verifyNoMoreInteractions(mockRepository);
     },
   );

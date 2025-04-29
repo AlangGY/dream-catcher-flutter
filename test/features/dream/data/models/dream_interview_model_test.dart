@@ -41,17 +41,17 @@ void main() {
       // assert
       expect(botJson, {
         'id': 'msg1',
-        'speakerType': 1, // SpeakerType.bot의 인덱스
-        'content':
+        'speaker': 'AI',
+        'message':
             '안녕하세요. 꿈 기록을 도와드릴 AI 인터뷰어입니다. 최근에 기억나는, 인상깊었던 꿈에 대해 이야기해 주세요.',
-        'timestamp': botMessageTime.toIso8601String(),
+        'sentAt': botMessageTime.toIso8601String(),
       });
 
       expect(userJson, {
         'id': 'msg2',
-        'speakerType': 0, // SpeakerType.me의 인덱스
-        'content': '저는 바다에서 수영하는 꿈을 꾸었어요. 파란 바다였고 물고기들과 함께 헤엄치고 있었습니다.',
-        'timestamp': userMessageTime.toIso8601String(),
+        'speaker': 'USER',
+        'message': '저는 바다에서 수영하는 꿈을 꾸었어요. 파란 바다였고 물고기들과 함께 헤엄치고 있었습니다.',
+        'sentAt': userMessageTime.toIso8601String(),
       });
     });
 
@@ -59,17 +59,17 @@ void main() {
       // arrange
       final botJsonMap = {
         'id': 'msg1',
-        'speakerType': 1,
-        'content':
+        'speaker': 'AI',
+        'message':
             '안녕하세요. 꿈 기록을 도와드릴 AI 인터뷰어입니다. 최근에 기억나는, 인상깊었던 꿈에 대해 이야기해 주세요.',
-        'timestamp': botMessageTime.toIso8601String(),
+        'sentAt': botMessageTime.toIso8601String(),
       };
 
       final userJsonMap = {
         'id': 'msg2',
-        'speakerType': 0,
-        'content': '저는 바다에서 수영하는 꿈을 꾸었어요. 파란 바다였고 물고기들과 함께 헤엄치고 있었습니다.',
-        'timestamp': userMessageTime.toIso8601String(),
+        'speaker': 'USER',
+        'message': '저는 바다에서 수영하는 꿈을 꾸었어요. 파란 바다였고 물고기들과 함께 헤엄치고 있었습니다.',
+        'sentAt': userMessageTime.toIso8601String(),
       };
 
       // act

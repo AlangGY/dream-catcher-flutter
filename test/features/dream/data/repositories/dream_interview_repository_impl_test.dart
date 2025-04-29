@@ -101,16 +101,17 @@ void main() {
       '메시지를 성공적으로 추가하면 업데이트된 DreamInterview를 반환해야 한다',
       () async {
         // arrange
-        when(mockDataSource.addMessage(tInterviewId, tSpeakerType, tContent))
+        when(mockDataSource.answerMessage(tInterviewId, tSpeakerType, tContent))
             .thenAnswer((_) async => tInterviewModel);
 
         // act
-        final result =
-            await repository.addMessage(tInterviewId, tSpeakerType, tContent);
+        final result = await repository.answerMessage(
+            tInterviewId, tSpeakerType, tContent);
 
         // assert
         expect(result, Right(tInterview));
-        verify(mockDataSource.addMessage(tInterviewId, tSpeakerType, tContent));
+        verify(
+            mockDataSource.answerMessage(tInterviewId, tSpeakerType, tContent));
         verifyNoMoreInteractions(mockDataSource);
       },
     );
@@ -119,77 +120,17 @@ void main() {
       '메시지 추가 중 예외가 발생하면 ServerFailure를 반환해야 한다',
       () async {
         // arrange
-        when(mockDataSource.addMessage(tInterviewId, tSpeakerType, tContent))
+        when(mockDataSource.answerMessage(tInterviewId, tSpeakerType, tContent))
             .thenThrow(Exception());
 
         // act
-        final result =
-            await repository.addMessage(tInterviewId, tSpeakerType, tContent);
+        final result = await repository.answerMessage(
+            tInterviewId, tSpeakerType, tContent);
 
         // assert
         expect(result, isA<Left<Failure, DreamInterview>>());
-        verify(mockDataSource.addMessage(tInterviewId, tSpeakerType, tContent));
-        verifyNoMoreInteractions(mockDataSource);
-      },
-    );
-  });
-
-  group('getBotResponse', () {
-    const tInterviewId = 'interview1';
-    final tMessage = DreamInterviewMessage(
-      id: 'message1',
-      speakerType: SpeakerType.me,
-      content: '안녕하세요',
-      timestamp: DateTime(2024, 1, 1),
-    );
-    final tMessageModel = DreamInterviewMessageModel(
-      id: 'message1',
-      speakerType: SpeakerType.me,
-      content: '안녕하세요',
-      timestamp: DateTime(2024, 1, 1),
-    );
-    final tPreviousMessages = [tMessage];
-    final tMessageModels = [tMessageModel];
-    const tBotResponse = '안녕하세요, 무엇을 도와드릴까요?';
-
-    test(
-      '봇 응답을 성공적으로 가져오면 응답 문자열을 반환해야 한다',
-      () async {
-        // arrange
-        when(mockMessageModelFactory.fromEntity(tMessage))
-            .thenReturn(tMessageModel);
-        when(mockDataSource.getBotResponse(tInterviewId, tMessageModels))
-            .thenAnswer((_) async => tBotResponse);
-
-        // act
-        final result =
-            await repository.getBotResponse(tInterviewId, tPreviousMessages);
-
-        // assert
-        expect(result, const Right(tBotResponse));
-        verify(mockMessageModelFactory.fromEntity(tMessage));
-        verify(mockDataSource.getBotResponse(tInterviewId, tMessageModels));
-        verifyNoMoreInteractions(mockDataSource);
-      },
-    );
-
-    test(
-      '봇 응답 가져오기 중 예외가 발생하면 ServerFailure를 반환해야 한다',
-      () async {
-        // arrange
-        when(mockMessageModelFactory.fromEntity(tMessage))
-            .thenReturn(tMessageModel);
-        when(mockDataSource.getBotResponse(tInterviewId, tMessageModels))
-            .thenThrow(Exception());
-
-        // act
-        final result =
-            await repository.getBotResponse(tInterviewId, tPreviousMessages);
-
-        // assert
-        expect(result, isA<Left<Failure, String>>());
-        verify(mockMessageModelFactory.fromEntity(tMessage));
-        verify(mockDataSource.getBotResponse(tInterviewId, tMessageModels));
+        verify(
+            mockDataSource.answerMessage(tInterviewId, tSpeakerType, tContent));
         verifyNoMoreInteractions(mockDataSource);
       },
     );

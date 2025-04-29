@@ -13,7 +13,7 @@ class AddMessage extends UseCase<DreamInterview, AddMessageParams> {
 
   @override
   Future<Either<Failure, DreamInterview>> call(AddMessageParams params) {
-    return repository.addMessage(
+    return repository.answerMessage(
       params.interviewId,
       params.speakerType,
       params.content,

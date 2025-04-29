@@ -26,11 +26,11 @@ class DreamInterviewRepositoryImpl implements DreamInterviewRepository {
   }
 
   @override
-  Future<Either<Failure, DreamInterview>> addMessage(
+  Future<Either<Failure, DreamInterview>> answerMessage(
       String interviewId, SpeakerType speakerType, String content) async {
     try {
       final result =
-          await dataSource.addMessage(interviewId, speakerType, content);
+          await dataSource.answerMessage(interviewId, speakerType, content);
       return Right(result.toEntity());
     } catch (e) {
       return Left(ServerFailure(message: e.toString()));
@@ -64,22 +64,6 @@ class DreamInterviewRepositoryImpl implements DreamInterviewRepository {
     try {
       final result = await dataSource.getCurrentInterview(interviewId);
       return Right(result.toEntity());
-    } catch (e) {
-      return Left(ServerFailure(message: e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, String>> getBotResponse(
-      String interviewId, List<DreamInterviewMessage> previousMessages) async {
-    try {
-      // 도메인 엔티티를 데이터 모델로 변환
-      final messageModels =
-          previousMessages.map(_messageFactory.fromEntity).toList();
-
-      final result =
-          await dataSource.getBotResponse(interviewId, messageModels);
-      return Right(result);
     } catch (e) {
       return Left(ServerFailure(message: e.toString()));
     }

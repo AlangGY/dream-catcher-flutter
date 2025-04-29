@@ -3,20 +3,16 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i6;
+import 'dart:async' as _i5;
 
 import 'package:dream_catcher/features/dream/data/data-sources/dream_data_source.dart'
-    as _i5;
+    as _i4;
 import 'package:dream_catcher/features/dream/data/models/dream_detail_model.dart'
     as _i3;
-import 'package:dream_catcher/features/dream/data/models/dream_list_item_model.dart'
-    as _i4;
 import 'package:dream_catcher/features/dream/data/models/dream_list_model.dart'
     as _i2;
 import 'package:dream_catcher/features/dream/domain/entities/dream_detail.dart'
-    as _i8;
-import 'package:dream_catcher/features/dream/domain/entities/dream_list.dart'
-    as _i7;
+    as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -54,28 +50,17 @@ class _FakeDreamDetailModel_1 extends _i1.SmartFake
         );
 }
 
-class _FakeDreamListItemModel_2 extends _i1.SmartFake
-    implements _i4.DreamListItemModel {
-  _FakeDreamListItemModel_2(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [DreamDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockDreamDataSource extends _i1.Mock implements _i5.DreamDataSource {
+class MockDreamDataSource extends _i1.Mock implements _i4.DreamDataSource {
   @override
-  _i6.Future<_i2.DreamListModel> getDreams() => (super.noSuchMethod(
+  _i5.Future<_i2.DreamListModel> getDreams() => (super.noSuchMethod(
         Invocation.method(
           #getDreams,
           [],
         ),
-        returnValue: _i6.Future<_i2.DreamListModel>.value(_FakeDreamListModel_0(
+        returnValue: _i5.Future<_i2.DreamListModel>.value(_FakeDreamListModel_0(
           this,
           Invocation.method(
             #getDreams,
@@ -83,24 +68,24 @@ class MockDreamDataSource extends _i1.Mock implements _i5.DreamDataSource {
           ),
         )),
         returnValueForMissingStub:
-            _i6.Future<_i2.DreamListModel>.value(_FakeDreamListModel_0(
+            _i5.Future<_i2.DreamListModel>.value(_FakeDreamListModel_0(
           this,
           Invocation.method(
             #getDreams,
             [],
           ),
         )),
-      ) as _i6.Future<_i2.DreamListModel>);
+      ) as _i5.Future<_i2.DreamListModel>);
 
   @override
-  _i6.Future<_i3.DreamDetailModel> getDream(String? dreamId) =>
+  _i5.Future<_i3.DreamDetailModel> getDream(String? dreamId) =>
       (super.noSuchMethod(
         Invocation.method(
           #getDream,
           [dreamId],
         ),
         returnValue:
-            _i6.Future<_i3.DreamDetailModel>.value(_FakeDreamDetailModel_1(
+            _i5.Future<_i3.DreamDetailModel>.value(_FakeDreamDetailModel_1(
           this,
           Invocation.method(
             #getDream,
@@ -108,55 +93,55 @@ class MockDreamDataSource extends _i1.Mock implements _i5.DreamDataSource {
           ),
         )),
         returnValueForMissingStub:
-            _i6.Future<_i3.DreamDetailModel>.value(_FakeDreamDetailModel_1(
+            _i5.Future<_i3.DreamDetailModel>.value(_FakeDreamDetailModel_1(
           this,
           Invocation.method(
             #getDream,
             [dreamId],
           ),
         )),
-      ) as _i6.Future<_i3.DreamDetailModel>);
+      ) as _i5.Future<_i3.DreamDetailModel>);
 
   @override
-  _i6.Future<void> saveDream(_i3.DreamDetailModel? dream) =>
+  _i5.Future<void> saveDream(_i3.DreamDetailModel? dream) =>
       (super.noSuchMethod(
         Invocation.method(
           #saveDream,
           [dream],
         ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i6.Future<void> updateDream(_i3.DreamDetailModel? dream) =>
+  _i5.Future<void> updateDream(_i3.DreamDetailModel? dream) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateDream,
           [dream],
         ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i6.Future<void> deleteDream(String? dreamId) => (super.noSuchMethod(
+  _i5.Future<void> deleteDream(String? dreamId) => (super.noSuchMethod(
         Invocation.method(
           #deleteDream,
           [dreamId],
         ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  _i6.Future<_i2.DreamListModel> searchDreams(String? query) =>
+  _i5.Future<_i2.DreamListModel> searchDreams(String? query) =>
       (super.noSuchMethod(
         Invocation.method(
           #searchDreams,
           [query],
         ),
-        returnValue: _i6.Future<_i2.DreamListModel>.value(_FakeDreamListModel_0(
+        returnValue: _i5.Future<_i2.DreamListModel>.value(_FakeDreamListModel_0(
           this,
           Invocation.method(
             #searchDreams,
@@ -164,23 +149,23 @@ class MockDreamDataSource extends _i1.Mock implements _i5.DreamDataSource {
           ),
         )),
         returnValueForMissingStub:
-            _i6.Future<_i2.DreamListModel>.value(_FakeDreamListModel_0(
+            _i5.Future<_i2.DreamListModel>.value(_FakeDreamListModel_0(
           this,
           Invocation.method(
             #searchDreams,
             [query],
           ),
         )),
-      ) as _i6.Future<_i2.DreamListModel>);
+      ) as _i5.Future<_i2.DreamListModel>);
 
   @override
-  _i6.Future<_i2.DreamListModel> filterDreamsByMood(String? mood) =>
+  _i5.Future<_i2.DreamListModel> filterDreamsByMood(String? mood) =>
       (super.noSuchMethod(
         Invocation.method(
           #filterDreamsByMood,
           [mood],
         ),
-        returnValue: _i6.Future<_i2.DreamListModel>.value(_FakeDreamListModel_0(
+        returnValue: _i5.Future<_i2.DreamListModel>.value(_FakeDreamListModel_0(
           this,
           Invocation.method(
             #filterDreamsByMood,
@@ -188,17 +173,17 @@ class MockDreamDataSource extends _i1.Mock implements _i5.DreamDataSource {
           ),
         )),
         returnValueForMissingStub:
-            _i6.Future<_i2.DreamListModel>.value(_FakeDreamListModel_0(
+            _i5.Future<_i2.DreamListModel>.value(_FakeDreamListModel_0(
           this,
           Invocation.method(
             #filterDreamsByMood,
             [mood],
           ),
         )),
-      ) as _i6.Future<_i2.DreamListModel>);
+      ) as _i5.Future<_i2.DreamListModel>);
 
   @override
-  _i6.Future<_i2.DreamListModel> filterDreamsByDate(
+  _i5.Future<_i2.DreamListModel> filterDreamsByDate(
     DateTime? startDate,
     DateTime? endDate,
   ) =>
@@ -210,7 +195,7 @@ class MockDreamDataSource extends _i1.Mock implements _i5.DreamDataSource {
             endDate,
           ],
         ),
-        returnValue: _i6.Future<_i2.DreamListModel>.value(_FakeDreamListModel_0(
+        returnValue: _i5.Future<_i2.DreamListModel>.value(_FakeDreamListModel_0(
           this,
           Invocation.method(
             #filterDreamsByDate,
@@ -221,7 +206,7 @@ class MockDreamDataSource extends _i1.Mock implements _i5.DreamDataSource {
           ),
         )),
         returnValueForMissingStub:
-            _i6.Future<_i2.DreamListModel>.value(_FakeDreamListModel_0(
+            _i5.Future<_i2.DreamListModel>.value(_FakeDreamListModel_0(
           this,
           Invocation.method(
             #filterDreamsByDate,
@@ -231,110 +216,7 @@ class MockDreamDataSource extends _i1.Mock implements _i5.DreamDataSource {
             ],
           ),
         )),
-      ) as _i6.Future<_i2.DreamListModel>);
-}
-
-/// A class which mocks [DreamListModelFactory].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockDreamListModelFactory extends _i1.Mock
-    implements _i2.DreamListModelFactory {
-  @override
-  _i2.DreamListModel fromEntity(_i7.DreamList? entity) => (super.noSuchMethod(
-        Invocation.method(
-          #fromEntity,
-          [entity],
-        ),
-        returnValue: _FakeDreamListModel_0(
-          this,
-          Invocation.method(
-            #fromEntity,
-            [entity],
-          ),
-        ),
-        returnValueForMissingStub: _FakeDreamListModel_0(
-          this,
-          Invocation.method(
-            #fromEntity,
-            [entity],
-          ),
-        ),
-      ) as _i2.DreamListModel);
-
-  @override
-  _i2.DreamListModel fromJson(Map<String, dynamic>? json) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #fromJson,
-          [json],
-        ),
-        returnValue: _FakeDreamListModel_0(
-          this,
-          Invocation.method(
-            #fromJson,
-            [json],
-          ),
-        ),
-        returnValueForMissingStub: _FakeDreamListModel_0(
-          this,
-          Invocation.method(
-            #fromJson,
-            [json],
-          ),
-        ),
-      ) as _i2.DreamListModel);
-}
-
-/// A class which mocks [DreamListItemModelFactory].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockDreamListItemModelFactory extends _i1.Mock
-    implements _i4.DreamListItemModelFactory {
-  @override
-  _i4.DreamListItemModel fromEntity(_i7.DreamListItem? entity) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #fromEntity,
-          [entity],
-        ),
-        returnValue: _FakeDreamListItemModel_2(
-          this,
-          Invocation.method(
-            #fromEntity,
-            [entity],
-          ),
-        ),
-        returnValueForMissingStub: _FakeDreamListItemModel_2(
-          this,
-          Invocation.method(
-            #fromEntity,
-            [entity],
-          ),
-        ),
-      ) as _i4.DreamListItemModel);
-
-  @override
-  _i4.DreamListItemModel fromJson(Map<String, dynamic>? json) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #fromJson,
-          [json],
-        ),
-        returnValue: _FakeDreamListItemModel_2(
-          this,
-          Invocation.method(
-            #fromJson,
-            [json],
-          ),
-        ),
-        returnValueForMissingStub: _FakeDreamListItemModel_2(
-          this,
-          Invocation.method(
-            #fromJson,
-            [json],
-          ),
-        ),
-      ) as _i4.DreamListItemModel);
+      ) as _i5.Future<_i2.DreamListModel>);
 }
 
 /// A class which mocks [DreamDetailModelFactory].
@@ -343,7 +225,7 @@ class MockDreamListItemModelFactory extends _i1.Mock
 class MockDreamDetailModelFactory extends _i1.Mock
     implements _i3.DreamDetailModelFactory {
   @override
-  _i3.DreamDetailModel fromEntity(_i8.DreamDetail? entity) =>
+  _i3.DreamDetailModel fromEntity(_i6.DreamDetail? entity) =>
       (super.noSuchMethod(
         Invocation.method(
           #fromEntity,

@@ -55,7 +55,7 @@ class DreamInterviewMockDataSource implements DreamInterviewDataSource {
   }
 
   @override
-  Future<DreamInterviewModel> addMessage(
+  Future<DreamInterviewModel> answerMessage(
       String interviewId, SpeakerType speakerType, String content) async {
     // 네트워크 지연 시뮬레이션
     await Future.delayed(const Duration(milliseconds: 300));

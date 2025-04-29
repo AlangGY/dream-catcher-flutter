@@ -69,14 +69,14 @@ class MockDreamInterviewRepository extends _i1.Mock
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.DreamInterview>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.DreamInterview>> addMessage(
+  _i4.Future<_i2.Either<_i5.Failure, _i6.DreamInterview>> answerMessage(
     String? interviewId,
     _i6.SpeakerType? speakerType,
     String? content,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
-          #addMessage,
+          #answerMessage,
           [
             interviewId,
             speakerType,
@@ -88,7 +88,7 @@ class MockDreamInterviewRepository extends _i1.Mock
                 _FakeEither_0<_i5.Failure, _i6.DreamInterview>(
           this,
           Invocation.method(
-            #addMessage,
+            #answerMessage,
             [
               interviewId,
               speakerType,
@@ -101,7 +101,7 @@ class MockDreamInterviewRepository extends _i1.Mock
                 _FakeEither_0<_i5.Failure, _i6.DreamInterview>(
           this,
           Invocation.method(
-            #addMessage,
+            #answerMessage,
             [
               interviewId,
               speakerType,
@@ -110,44 +110,6 @@ class MockDreamInterviewRepository extends _i1.Mock
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.DreamInterview>>);
-
-  @override
-  _i4.Future<_i2.Either<_i5.Failure, String>> getBotResponse(
-    String? interviewId,
-    List<_i6.DreamInterviewMessage>? previousMessages,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getBotResponse,
-          [
-            interviewId,
-            previousMessages,
-          ],
-        ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, String>>.value(
-            _FakeEither_0<_i5.Failure, String>(
-          this,
-          Invocation.method(
-            #getBotResponse,
-            [
-              interviewId,
-              previousMessages,
-            ],
-          ),
-        )),
-        returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, String>>.value(
-                _FakeEither_0<_i5.Failure, String>(
-          this,
-          Invocation.method(
-            #getBotResponse,
-            [
-              interviewId,
-              previousMessages,
-            ],
-          ),
-        )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, String>>);
 
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i2.Unit>> completeInterview(

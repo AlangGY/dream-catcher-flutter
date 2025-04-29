@@ -77,16 +77,6 @@ class _DreamInterviewContentState extends State<_DreamInterviewContent>
     // 별도로 봇 응답 요청하지 않음
   }
 
-  // 사용자 메시지가 추가된 후 봇 응답을 요청하는 메서드
-  void _requestBotResponse() {
-    if (_currentInterview != null) {
-      context.read<DreamInterviewBloc>().add(GetBotResponseEvent(
-            interviewId: _currentInterview!.id,
-            previousMessages: _messages,
-          ));
-    }
-  }
-
   void _toggleRecording() {
     setState(() {
       _isRecording = !_isRecording;
@@ -139,12 +129,6 @@ class _DreamInterviewContentState extends State<_DreamInterviewContent>
         }
         if (state is DreamInterviewLoaded) {
           _scrollToBottom();
-
-          // 마지막 메시지가 사용자 메시지인 경우 봇 응답 요청
-          if (_messages.isNotEmpty &&
-              _messages.last.speakerType == SpeakerType.me) {
-            _requestBotResponse();
-          }
         } else if (state is BotResponseLoadingState) {
           _scrollToBottom();
         } else if (state is VoiceToTextLoaded) {

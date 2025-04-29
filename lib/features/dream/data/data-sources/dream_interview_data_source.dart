@@ -6,7 +6,7 @@ abstract class DreamInterviewDataSource {
   Future<DreamInterviewModel> startInterview();
 
   /// 인터뷰에 새 메시지를 추가합니다.
-  Future<DreamInterviewModel> addMessage(
+  Future<DreamInterviewModel> answerMessage(
       String interviewId, SpeakerType speakerType, String content);
 
   /// 인터뷰를 완료하고 꿈 기록으로 저장합니다.
@@ -17,8 +17,4 @@ abstract class DreamInterviewDataSource {
 
   /// 진행 중인 인터뷰를 가져옵니다.
   Future<DreamInterviewModel> getCurrentInterview(String interviewId);
-
-  /// API를 통해 봇의 다음 응답을 가져옵니다.
-  Future<String> getBotResponse(
-      String interviewId, List<DreamInterviewMessageModel> previousMessages);
 }

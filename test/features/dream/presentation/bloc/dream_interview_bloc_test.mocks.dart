@@ -14,13 +14,11 @@ import 'package:dream_catcher/features/dream/domain/repositories/dream_interview
 import 'package:dream_catcher/features/dream/domain/use-cases/interview/add_message.dart'
     as _i8;
 import 'package:dream_catcher/features/dream/domain/use-cases/interview/complete_interview.dart'
-    as _i10;
-import 'package:dream_catcher/features/dream/domain/use-cases/interview/convert_voice_to_text.dart'
-    as _i11;
-import 'package:dream_catcher/features/dream/domain/use-cases/interview/get_bot_response.dart'
     as _i9;
+import 'package:dream_catcher/features/dream/domain/use-cases/interview/convert_voice_to_text.dart'
+    as _i10;
 import 'package:dream_catcher/features/dream/domain/use-cases/interview/get_current_interview.dart'
-    as _i12;
+    as _i11;
 import 'package:dream_catcher/features/dream/domain/use-cases/interview/start_interview.dart'
     as _i4;
 import 'package:mockito/mockito.dart' as _i1;
@@ -150,55 +148,10 @@ class MockAddMessage extends _i1.Mock implements _i8.AddMessage {
       ) as _i5.Future<_i3.Either<_i6.Failure, _i7.DreamInterview>>);
 }
 
-/// A class which mocks [GetBotResponse].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockGetBotResponse extends _i1.Mock implements _i9.GetBotResponse {
-  @override
-  _i2.DreamInterviewRepository get repository => (super.noSuchMethod(
-        Invocation.getter(#repository),
-        returnValue: _FakeDreamInterviewRepository_0(
-          this,
-          Invocation.getter(#repository),
-        ),
-        returnValueForMissingStub: _FakeDreamInterviewRepository_0(
-          this,
-          Invocation.getter(#repository),
-        ),
-      ) as _i2.DreamInterviewRepository);
-
-  @override
-  _i5.Future<_i3.Either<_i6.Failure, String>> call(
-          _i9.BotResponseParams? params) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #call,
-          [params],
-        ),
-        returnValue: _i5.Future<_i3.Either<_i6.Failure, String>>.value(
-            _FakeEither_1<_i6.Failure, String>(
-          this,
-          Invocation.method(
-            #call,
-            [params],
-          ),
-        )),
-        returnValueForMissingStub:
-            _i5.Future<_i3.Either<_i6.Failure, String>>.value(
-                _FakeEither_1<_i6.Failure, String>(
-          this,
-          Invocation.method(
-            #call,
-            [params],
-          ),
-        )),
-      ) as _i5.Future<_i3.Either<_i6.Failure, String>>);
-}
-
 /// A class which mocks [CompleteInterview].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockCompleteInterview extends _i1.Mock implements _i10.CompleteInterview {
+class MockCompleteInterview extends _i1.Mock implements _i9.CompleteInterview {
   @override
   _i2.DreamInterviewRepository get repository => (super.noSuchMethod(
         Invocation.getter(#repository),
@@ -214,7 +167,7 @@ class MockCompleteInterview extends _i1.Mock implements _i10.CompleteInterview {
 
   @override
   _i5.Future<_i3.Either<_i6.Failure, _i3.Unit>> call(
-          _i10.CompleteInterviewParams? params) =>
+          _i9.CompleteInterviewParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
@@ -244,7 +197,7 @@ class MockCompleteInterview extends _i1.Mock implements _i10.CompleteInterview {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockConvertVoiceToText extends _i1.Mock
-    implements _i11.ConvertVoiceToText {
+    implements _i10.ConvertVoiceToText {
   @override
   _i2.DreamInterviewRepository get repository => (super.noSuchMethod(
         Invocation.getter(#repository),
@@ -260,7 +213,7 @@ class MockConvertVoiceToText extends _i1.Mock
 
   @override
   _i5.Future<_i3.Either<_i6.Failure, String>> call(
-          _i11.AudioDataParams? params) =>
+          _i10.AudioDataParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
@@ -290,7 +243,7 @@ class MockConvertVoiceToText extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGetCurrentInterview extends _i1.Mock
-    implements _i12.GetCurrentInterview {
+    implements _i11.GetCurrentInterview {
   @override
   _i2.DreamInterviewRepository get repository => (super.noSuchMethod(
         Invocation.getter(#repository),
@@ -306,7 +259,7 @@ class MockGetCurrentInterview extends _i1.Mock
 
   @override
   _i5.Future<_i3.Either<_i6.Failure, _i7.DreamInterview>> call(
-          _i12.InterviewIdParams? params) =>
+          _i11.InterviewIdParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,

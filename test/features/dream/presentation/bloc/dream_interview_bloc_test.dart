@@ -5,7 +5,6 @@ import 'package:dream_catcher/features/dream/domain/entities/dream_interview.dar
 import 'package:dream_catcher/features/dream/domain/use-cases/interview/add_message.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/interview/complete_interview.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/interview/convert_voice_to_text.dart';
-import 'package:dream_catcher/features/dream/domain/use-cases/interview/get_bot_response.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/interview/get_current_interview.dart';
 import 'package:dream_catcher/features/dream/domain/use-cases/interview/start_interview.dart';
 import 'package:dream_catcher/features/dream/presentation/bloc/dream_interview_bloc.dart';
@@ -16,7 +15,6 @@ import 'package:mockito/mockito.dart';
 @GenerateNiceMocks([
   MockSpec<StartInterview>(),
   MockSpec<AddMessage>(),
-  MockSpec<GetBotResponse>(),
   MockSpec<CompleteInterview>(),
   MockSpec<ConvertVoiceToText>(),
   MockSpec<GetCurrentInterview>(),
@@ -26,7 +24,6 @@ import 'dream_interview_bloc_test.mocks.dart';
 void main() {
   late MockStartInterview mockStartInterview;
   late MockAddMessage mockAddMessage;
-  late MockGetBotResponse mockGetBotResponse;
   late MockCompleteInterview mockCompleteInterview;
   late MockConvertVoiceToText mockConvertVoiceToText;
   late MockGetCurrentInterview mockGetCurrentInterview;
@@ -35,7 +32,6 @@ void main() {
   setUp(() {
     mockStartInterview = MockStartInterview();
     mockAddMessage = MockAddMessage();
-    mockGetBotResponse = MockGetBotResponse();
     mockCompleteInterview = MockCompleteInterview();
     mockConvertVoiceToText = MockConvertVoiceToText();
     mockGetCurrentInterview = MockGetCurrentInterview();
@@ -43,7 +39,6 @@ void main() {
     bloc = DreamInterviewBloc(
       startInterview: mockStartInterview,
       addMessage: mockAddMessage,
-      getBotResponse: mockGetBotResponse,
       completeInterview: mockCompleteInterview,
       convertVoiceToText: mockConvertVoiceToText,
       getCurrentInterview: mockGetCurrentInterview,
@@ -135,14 +130,18 @@ void main() {
       setupFromStartInterview();
     });
 
-    final tNewInterview = tInterview.copyWith(
+    final tUserMessagedInterview = tInterview.copyWith(
       messages: [...tInterview.messages, tMessage],
+    );
+    final tBotMessagedInterview = tInterview.copyWith(
+      messages: [...tUserMessagedInterview.messages, tBotMessage],
     );
     blocTest<DreamInterviewBloc, DreamInterviewState>(
       '메시지 추가가 성공적으로 처리되면 DreamInterviewLoaded 상태로 전환',
       seed: () => DreamInterviewLoaded(interview: tInterview),
       build: () {
-        when(mockAddMessage(any)).thenAnswer((_) async => Right(tNewInterview));
+        when(mockAddMessage(any))
+            .thenAnswer((_) async => Right(tBotMessagedInterview));
         return bloc;
       },
       act: (bloc) async {
@@ -153,10 +152,11 @@ void main() {
         ));
       },
       expect: () => [
+        isA<BotResponseLoadingState>(),
         isA<DreamInterviewLoaded>().having(
           (state) => state.interview,
           'interview',
-          tNewInterview,
+          tBotMessagedInterview,
         ),
       ],
       verify: (_) {
@@ -183,6 +183,7 @@ void main() {
         content: tContent,
       )),
       expect: () => [
+        isA<BotResponseLoadingState>(),
         isA<DreamInterviewError>().having(
           (state) => state.message,
           'error message',
@@ -191,80 +192,6 @@ void main() {
       ],
       verify: (_) {
         verify(mockAddMessage(any)).called(1);
-      },
-    );
-  });
-
-  group('GetBotResponseEvent', () {
-    const tBotResponse = '안녕하세요, 무엇을 도와드릴까요?';
-    final tPreviousMessages = [tMessage];
-
-    setUp(() {
-      setupFromStartInterview();
-    });
-
-    blocTest<DreamInterviewBloc, DreamInterviewState>(
-      '봇 응답 요청이 성공적으로 처리되면 DreamInterviewBotResponseLoaded 상태로 전환',
-      seed: () => DreamInterviewLoaded(interview: tInterview),
-      build: () {
-        when(mockGetBotResponse(any))
-            .thenAnswer((_) async => const Right(tBotResponse));
-        when(mockAddMessage(any)).thenAnswer((_) async => Right(tInterview));
-        return bloc;
-      },
-      act: (bloc) => bloc.add(GetBotResponseEvent(
-        interviewId: tInterviewId,
-        previousMessages: tPreviousMessages,
-      )),
-      expect: () => [
-        isA<BotResponseLoadingState>().having(
-          (state) => state.interview,
-          'interview',
-          tInterview,
-        ),
-        isA<DreamInterviewBotResponseLoaded>().having(
-          (state) => state.response,
-          'response',
-          tBotResponse,
-        ),
-        isA<DreamInterviewLoaded>(),
-      ],
-      verify: (_) {
-        verify(mockGetBotResponse(BotResponseParams(
-          interviewId: tInterviewId,
-          previousMessages: tPreviousMessages,
-        ))).called(1);
-        verify(mockAddMessage(const AddMessageParams(
-          interviewId: tInterviewId,
-          speakerType: SpeakerType.bot,
-          content: tBotResponse,
-        ))).called(1);
-      },
-    );
-
-    blocTest<DreamInterviewBloc, DreamInterviewState>(
-      '봇 응답 요청 중 오류 발생 시 DreamInterviewError 상태로 전환',
-      seed: () => DreamInterviewLoaded(interview: tInterview),
-      build: () {
-        when(mockGetBotResponse(any)).thenAnswer(
-          (_) async => const Left(ServerFailure(message: '봇 응답 요청 실패')),
-        );
-        return bloc;
-      },
-      act: (bloc) => bloc.add(GetBotResponseEvent(
-        interviewId: tInterviewId,
-        previousMessages: tPreviousMessages,
-      )),
-      expect: () => [
-        isA<BotResponseLoadingState>(),
-        isA<DreamInterviewError>().having(
-          (state) => state.message,
-          'error message',
-          '봇 응답 요청 실패',
-        ),
-      ],
-      verify: (_) {
-        verify(mockGetBotResponse(any)).called(1);
       },
     );
   });

@@ -26,19 +26,6 @@ class AddMessageEvent extends DreamInterviewEvent {
   List<Object?> get props => [interviewId, speakerType, content];
 }
 
-class GetBotResponseEvent extends DreamInterviewEvent {
-  final String interviewId;
-  final List<DreamInterviewMessage> previousMessages;
-
-  const GetBotResponseEvent({
-    required this.interviewId,
-    required this.previousMessages,
-  });
-
-  @override
-  List<Object?> get props => [interviewId, previousMessages];
-}
-
 class CompleteInterviewEvent extends DreamInterviewEvent {
   final String interviewId;
 

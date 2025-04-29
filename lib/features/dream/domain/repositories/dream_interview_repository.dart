@@ -8,12 +8,8 @@ abstract class DreamInterviewRepository {
   Future<Either<Failure, DreamInterview>> startInterview();
 
   /// 인터뷰에 새 메시지를 추가합니다.
-  Future<Either<Failure, DreamInterview>> addMessage(
+  Future<Either<Failure, DreamInterview>> answerMessage(
       String interviewId, SpeakerType speakerType, String content);
-
-  /// API를 통해 봇의 다음 응답을 가져옵니다.
-  Future<Either<Failure, String>> getBotResponse(
-      String interviewId, List<DreamInterviewMessage> previousMessages);
 
   /// 인터뷰를 완료하고 꿈 기록으로 저장합니다.
   Future<Either<Failure, Unit>> completeInterview(String interviewId);

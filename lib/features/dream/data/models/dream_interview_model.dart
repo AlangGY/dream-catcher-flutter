@@ -24,7 +24,7 @@ class DreamInterviewModel extends Equatable implements Model<DreamInterview> {
       'id': id,
       'messages': messages.map((message) => message.toJson()).toList(),
       'date': date.toIso8601String(),
-      'isCompleted': isCompleted,
+      'status': isCompleted ? 'COMPLETED' : 'IN_PROGRESS',
     };
   }
 
@@ -58,11 +58,12 @@ class DreamInterviewMessageModel extends Equatable
 
   @override
   Map<String, dynamic> toJson() {
+    final speaker = speakerType == SpeakerType.me ? 'USER' : 'AI';
     return {
       'id': id,
-      'speakerType': speakerType.index,
-      'content': content,
-      'timestamp': timestamp.toIso8601String(),
+      'speaker': speaker,
+      'message': content,
+      'sentAt': timestamp.toIso8601String(),
     };
   }
 
@@ -98,12 +99,14 @@ class DreamInterviewModelFactory
   DreamInterviewModel fromJson(Map<String, dynamic> json) {
     return DreamInterviewModel(
       id: json['id'],
-      messages: (json['messages'] as List)
-          .map((messageJson) => const DreamInterviewMessageModelFactory()
-              .fromJson(messageJson as Map<String, dynamic>))
-          .toList(),
-      date: DateTime.parse(json['date']),
-      isCompleted: json['isCompleted'],
+      messages: json['messages'] != null
+          ? (json['messages'] as List)
+              .map((messageJson) => const DreamInterviewMessageModelFactory()
+                  .fromJson(messageJson as Map<String, dynamic>))
+              .toList()
+          : [],
+      date: DateTime.parse(json['createdAt']),
+      isCompleted: json['status'] == 'COMPLETED',
     );
   }
 }
@@ -124,11 +127,13 @@ class DreamInterviewMessageModelFactory
 
   @override
   DreamInterviewMessageModel fromJson(Map<String, dynamic> json) {
+    final speakerType =
+        json['speaker'] == 'USER' ? SpeakerType.me : SpeakerType.bot;
     return DreamInterviewMessageModel(
       id: json['id'],
-      speakerType: SpeakerType.values[json['speakerType']],
-      content: json['content'],
-      timestamp: DateTime.parse(json['timestamp']),
+      speakerType: speakerType,
+      content: json['message'],
+      timestamp: DateTime.parse(json['sentAt']),
     );
   }
 }
