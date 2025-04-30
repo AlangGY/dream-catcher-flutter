@@ -35,6 +35,8 @@ void main() {
       messages: const [],
       date: DateTime(2024, 1, 1),
       isCompleted: false,
+      createdAt: DateTime(2024, 1, 1),
+      updatedAt: DateTime(2024, 1, 1),
     );
 
     final tInterview = DreamInterview(
@@ -88,6 +90,8 @@ void main() {
       messages: const [],
       date: DateTime(2024, 1, 1),
       isCompleted: false,
+      createdAt: DateTime(2024, 1, 1),
+      updatedAt: DateTime(2024, 1, 1),
     );
 
     final tInterview = DreamInterview(
@@ -181,6 +185,8 @@ void main() {
       messages: const [],
       date: DateTime(2024, 1, 1),
       isCompleted: false,
+      createdAt: DateTime(2024, 1, 1),
+      updatedAt: DateTime(2024, 1, 1),
     );
 
     final tInterview = DreamInterview(

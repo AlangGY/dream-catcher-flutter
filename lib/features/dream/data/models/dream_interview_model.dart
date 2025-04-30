@@ -7,24 +7,30 @@ class DreamInterviewModel extends Equatable implements Model<DreamInterview> {
   final List<DreamInterviewMessageModel> messages;
   final DateTime date;
   final bool isCompleted;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   const DreamInterviewModel({
     required this.id,
     required this.messages,
     required this.date,
     required this.isCompleted,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   @override
-  List<Object?> get props => [id, messages, date.toString(), isCompleted];
+  List<Object?> get props =>
+      [id, messages, date.toString(), isCompleted, createdAt, updatedAt];
 
   @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'messages': messages.map((message) => message.toJson()).toList(),
-      'date': date.toIso8601String(),
       'status': isCompleted ? 'COMPLETED' : 'IN_PROGRESS',
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
     };
   }
 
@@ -92,6 +98,8 @@ class DreamInterviewModelFactory
           .toList(),
       date: entity.date,
       isCompleted: entity.isCompleted,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
     );
   }
 
@@ -107,6 +115,8 @@ class DreamInterviewModelFactory
           : [],
       date: DateTime.parse(json['createdAt']),
       isCompleted: json['status'] == 'COMPLETED',
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
     );
   }
 }

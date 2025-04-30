@@ -30,6 +30,8 @@ void main() {
     messages: [tBotMessage, tUserMessage],
     date: botMessageTime,
     isCompleted: false,
+    createdAt: botMessageTime,
+    updatedAt: botMessageTime,
   );
 
   group('DreamInterviewMessageModel 테스트', () {

@@ -48,6 +48,8 @@ class DreamInterviewMockDataSource implements DreamInterviewDataSource {
       messages: [message],
       date: now,
       isCompleted: false,
+      createdAt: now,
+      updatedAt: now,
     );
 
     _activeInterviews[id] = interview;
@@ -78,6 +80,8 @@ class DreamInterviewMockDataSource implements DreamInterviewDataSource {
       messages: updatedMessages,
       date: currentInterview.date,
       isCompleted: currentInterview.isCompleted,
+      createdAt: currentInterview.createdAt,
+      updatedAt: DateTime.now(),
     );
 
     _activeInterviews[interviewId] = updatedInterview;
@@ -99,6 +103,8 @@ class DreamInterviewMockDataSource implements DreamInterviewDataSource {
       messages: currentInterview.messages,
       date: currentInterview.date,
       isCompleted: true,
+      createdAt: currentInterview.createdAt,
+      updatedAt: DateTime.now(),
     );
 
     _activeInterviews[interviewId] = updatedInterview;
